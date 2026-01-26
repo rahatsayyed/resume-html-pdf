@@ -1,96 +1,138 @@
-\documentclass[11pt,a4paper]{moderncv}
+\documentclass[11pt,a4paper]{article}
 
 % --------------------
-% Style configuration
+% Page + font
 % --------------------
-\moderncvstyle{banking} % Banking style for standard look
-\moderncvcolor{black}
+\usepackage[margin=0.35in]{geometry}
+% \usepackage{fontspec}
+% \setmainfont[
+%   Ligatures=TeX,
+%   BoldFont = Source Sans 3 SemiBold
+% ]{Source Sans 3}
 
-\usepackage[scale=0.75]{geometry} % Standard margins
-\usepackage{lmodern}
 \usepackage[hidelinks]{hyperref}
+\usepackage{tabularx}
+\usepackage{xcolor}
 
-% Load centralized content
+\pagenumbering{gobble}
+\setlength{\parindent}{0pt}
+
+% --------------------
+% Native list tuning
+% --------------------
+\setlength{\itemsep}{2pt}
+\setlength{\topsep}{2pt}
+\setlength{\parsep}{0pt}
+\setlength{\leftmargini}{14pt}
+
+% --------------------
+% Custom section command (no titlesec)
+% --------------------
+\newcommand{\resumesection}[1]{%
+  \vspace{12pt}
+  {\large\bfseries\MakeUppercase{#1}}\par
+  \vspace{4pt}
+  \hrule
+  \vspace{6pt}
+}
+
+% --------------------
+% Centralized content
+% --------------------
 \input{content.tex}
+\newcommand{\sep}{\;\;\textbullet\;\;} % Space + bullet + space in heading section links
+\linespread{0.95} % line height don't goe below 0.9
 
 % --------------------
-% Header Info
+% Ultra-tight bullet list
 % --------------------
-\name{\FullName}{}
-\title{\JobTitle}
+\newenvironment{tightitemize}
+{
+  \begin{itemize}
+    \setlength{\itemsep}{-2pt}
+    \setlength{\topsep}{-2pt}
+    \setlength{\partopsep}{0pt}
+    \setlength{\parsep}{0pt}
+}
+{
+  \end{itemize}
+}
 
-\phone[mobile]{\Phone}
-\email{\Email}
-\homepage{\Website}
-\social[github]{\Github}
-\social[linkedin]{\LinkedIn}
-
+% ----------------------
+% Document
+% ----------------------
 \begin{document}
-\makecvtitle
 
-%====================
+% ======================================================
+% HEADER
+% ======================================================
+\begin{center}
+  {\LARGE \textbf{\FullName}} \\[4pt]
+
+  {\JobTitle} \\[4pt]
+
+  \Address
+  \sep \href{mailto:\Email}{\Email}
+  \sep \href{\Website}{\Website}
+  \sep \href{\Github}{\Github}
+  \sep \href{\LinkedIn}{\LinkedIn}
+\end{center}
+
+\vspace{6pt}
+
+% ======================================================
 % SUMMARY
-%====================
-\section{Professional Summary}
-\small{\SummaryText}
+% ======================================================
+\resumesection{Professional Summary}
+\SummaryText
 
-%====================
+% ======================================================
 % SKILLS
-%====================
-\section{Technical Skills}
-\cvitem{Languages}{\SkillsLanguages}
-\cvitem{Blockchain}{\SkillsBlockchain}
-\cvitem{Frontend}{\SkillsFrontend}
-\cvitem{Backend}{\SkillsBackend}
-\cvitem{Databases}{\SkillsDB}
+% ======================================================
+\resumesection{Technical Skills}
+\Skills
 
-%====================
+% ======================================================
 % EXPERIENCE
-%====================
-\section{Professional Experience}
+% ======================================================
+\resumesection{Professional Experience}
 
-\cventry
-  {\KonmaDates}
-  {\KonmaRole}
-  {\KonmaCompany}
-  {}
-  {}
-  {
-    \begin{itemize}
-      \KonmaBullets
-    \end{itemize}
-  }
+% ---- Konma Role ----
+\begin{tabularx}{\textwidth}{@{}X r@{}}
+  \textbf{\KonmaRole, \KonmaCompany} & \textit{\KonmaDates}
+\end{tabularx}\vspace{-6pt}
 
-\cventry
-  {}
-  {Independent \& Academic Projects}
-  {}
-  {}
-  {}
-  {
-    \begin{itemize}
-      \ProjectsBullets
-    \end{itemize}
-  }
+\begin{tightitemize}
+  \KonmaBullets
+\end{tightitemize}
 
-%====================
+% ---- Projects ----
+\begin{tabularx}{\textwidth}{@{}X r@{}}
+  \textbf{Independent \& Academic Projects}
+\end{tabularx}\vspace{-6pt}
+
+
+\begin{tightitemize}
+  \ProjectsBullets
+\end{tightitemize}
+
+% ======================================================
 % EDUCATION
-%====================
-\section{Education}
-\cventry
-  {\GradYear}
-  {\Degree}
-  {\University}
-  {}
-  {}
-  {}
+% ======================================================
+\resumesection{Education}
 
-%====================
+\begin{tabularx}{\textwidth}{@{}X r@{}}
+  \textbf{\Degree} & \textit{\GradYear}
+\end{tabularx}
+\University
+
+% ======================================================
 % CERTIFICATIONS
-%====================
-\section{Certifications}
-\begin{itemize}
-\Certifications
-\end{itemize}
+% ======================================================
+\resumesection{Certifications}
+
+\begin{tightitemize}
+  \Certifications
+\end{tightitemize}
 
 \end{document}
