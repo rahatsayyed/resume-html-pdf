@@ -79,17 +79,33 @@
 \makeatletter
 
 % job renderer
-\newcommand{\job}[4]{%
-  \begin{tabularx}{\textwidth}{@{}X r@{}}
-    \textbf{#1%
-      \ifx#2\empty\else, #2\fi
-    } & \textit{#3}
-  \end{tabularx}\vspace{-6pt}
+\newcommand{\job}[5]{%
+  % ---- Role (strong) ----
+  \textbf{#1}\par\vspace{0pt}
 
+  % ---- Company + Dates ----
+  \begin{tabularx}{\textwidth}{@{}X r@{}}
+    {\itshape
+      \ifx#2\empty
+        % no company
+      \else
+        \ifx#3\empty
+          #2
+        \else
+          \href{#3}{#2}
+        \fi
+      \fi
+    }
+    &
+    {\itshape #4}
+  \end{tabularx}\vspace{-10pt}
+
+  % ---- Bullets ----
   \begin{tightitemize}
-    #4
+    #5
   \end{tightitemize}
 }
+
 
 % loop executor
 \newcommand{\RenderJobs}{%
