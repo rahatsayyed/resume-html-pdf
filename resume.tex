@@ -51,14 +51,33 @@
   \end{itemize}
 }
 
+\newcommand{\sep}{\;\;\textbullet\;\;} % Space + bullet + space in heading section links
 % --------------------
 % Automatic registries
 % --------------------
 \makeatletter
 
+\newcommand{\HeaderRegistry}{}
 \newcommand{\JobRegistry}{}
 \newcommand{\EducationRegistry}{}
 \newcommand{\CertificationRegistry}{}
+
+\newcommand{\DeclareHeaderItem}[3]{%
+  % store renderer macro
+  \expandafter\newcommand\csname header@#1\endcsname{%
+    \ifx#3\empty
+      #2%
+    \else
+      \href{#3}{#2}%
+    \fi
+  }%
+  % append to registry
+  \ifx\HeaderRegistry\@empty
+    \gdef\HeaderRegistry{header@#1}%
+  \else
+    \g@addto@macro\HeaderRegistry{,header@#1}%
+  \fi
+}
 
 \newcommand{\DeclareJob}[2]{%
   \expandafter\newcommand\csname #1\endcsname{#2}%
@@ -81,6 +100,7 @@
 % Rendering engines
 % --------------------
 \makeatletter
+
 
 % --- Job Renderer ---
 \newcommand{\job}[5]{%
@@ -125,6 +145,21 @@
 
 
 % --- Loop Executors ---
+\newcount\HeaderItemIndex
+
+\newcommand{\RenderHeaderItems}{%
+  \HeaderItemIndex=0
+  \@for\headermacro:=\HeaderRegistry\do{%
+    \ifnum\HeaderItemIndex>1
+      \sep
+    \fi
+    \advance\HeaderItemIndex by 1
+    \csname\headermacro\endcsname
+  }%
+}
+
+
+
 \newcommand{\RenderJobs}{%
   \@for\jobmacro:=\JobRegistry\do{\csname\jobmacro\endcsname}%
 }
@@ -144,7 +179,6 @@
 % Centralized content
 % --------------------
 \input{content.tex}
-\newcommand{\sep}{\;\;\textbullet\;\;} % Space + bullet + space in heading section links
 \linespread{0.95} % line height don't goe below 0.9
 
 
@@ -160,12 +194,8 @@
   {\LARGE \textbf{\FullName}} \\[4pt]
 
   {\JobTitle} \\[4pt]
+  \RenderHeaderItems
 
-  \Address
-  \sep \href{mailto:\Email}{\Email}
-  \sep \href{\Website}{\Website}
-  \sep \href{\Github}{\Github}
-  \sep \href{\LinkedIn}{\LinkedIn}
 \end{center}
 
 \vspace{6pt}
