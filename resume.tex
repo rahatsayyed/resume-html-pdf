@@ -37,19 +37,12 @@
 }
 
 % --------------------
-% Centralized content
-% --------------------
-\input{content.tex}
-\newcommand{\sep}{\;\;\textbullet\;\;} % Space + bullet + space in heading section links
-\linespread{0.95} % line height don't goe below 0.9
-
-% --------------------
 % Ultra-tight bullet list
 % --------------------
 \newenvironment{tightitemize}
 {
   \begin{itemize}
-    \setlength{\itemsep}{-2pt}
+    \setlength{\itemsep}{-4pt}
     \setlength{\topsep}{-2pt}
     \setlength{\partopsep}{0pt}
     \setlength{\parsep}{0pt}
@@ -57,6 +50,66 @@
 {
   \end{itemize}
 }
+
+% --------------------
+% Automatic job registry
+% --------------------
+\makeatletter
+
+\newcommand{\JobRegistry}{}  % internal list
+
+\newcommand{\DeclareJob}[2]{%
+  % define the job macro
+  \expandafter\newcommand\csname #1\endcsname{#2}%
+  % append macro name to registry
+  \ifx\JobRegistry\@empty
+    \gdef\JobRegistry{#1}%
+  \else
+    \g@addto@macro\JobRegistry{,#1}%
+  \fi
+}
+
+\makeatother
+
+
+
+% --------------------
+% Job rendering engine
+% --------------------
+\makeatletter
+
+% job renderer
+\newcommand{\job}[4]{%
+  \begin{tabularx}{\textwidth}{@{}X r@{}}
+    \textbf{#1%
+      \ifx#2\empty\else, #2\fi
+    } & \textit{#3}
+  \end{tabularx}\vspace{-6pt}
+
+  \begin{tightitemize}
+    #4
+  \end{tightitemize}
+}
+
+% loop executor
+\newcommand{\RenderJobs}{%
+  \@for\jobmacro:=\JobRegistry\do{%
+    \csname\jobmacro\endcsname
+  }%
+}
+
+
+
+\makeatother
+
+
+% --------------------
+% Centralized content
+% --------------------
+\input{content.tex}
+\newcommand{\sep}{\;\;\textbullet\;\;} % Space + bullet + space in heading section links
+\linespread{0.95} % line height don't goe below 0.9
+
 
 % ----------------------
 % Document
@@ -96,25 +149,7 @@
 % EXPERIENCE
 % ======================================================
 \resumesection{Professional Experience}
-
-% ---- Konma Role ----
-\begin{tabularx}{\textwidth}{@{}X r@{}}
-  \textbf{\KonmaRole, \KonmaCompany} & \textit{\KonmaDates}
-\end{tabularx}\vspace{-6pt}
-
-\begin{tightitemize}
-  \KonmaBullets
-\end{tightitemize}
-
-% ---- Projects ----
-\begin{tabularx}{\textwidth}{@{}X r@{}}
-  \textbf{Independent \& Academic Projects}
-\end{tabularx}\vspace{-6pt}
-
-
-\begin{tightitemize}
-  \ProjectsBullets
-\end{tightitemize}
+\RenderJobs
 
 % ======================================================
 % EDUCATION
