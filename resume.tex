@@ -1,0 +1,96 @@
+\documentclass[11pt,a4paper]{moderncv}
+
+% --------------------
+% Style configuration
+% --------------------
+\moderncvstyle{banking} % Banking style for standard look
+\moderncvcolor{black}
+
+\usepackage[scale=0.75]{geometry} % Standard margins
+\usepackage{lmodern}
+\usepackage[hidelinks]{hyperref}
+
+% Load centralized content
+\input{content.tex}
+
+% --------------------
+% Header Info
+% --------------------
+\name{\FullName}{}
+\title{\JobTitle}
+
+\phone[mobile]{\Phone}
+\email{\Email}
+\homepage{\Website}
+\social[github]{\Github}
+\social[linkedin]{\LinkedIn}
+
+\begin{document}
+\makecvtitle
+
+%====================
+% SUMMARY
+%====================
+\section{Professional Summary}
+\small{\SummaryText}
+
+%====================
+% SKILLS
+%====================
+\section{Technical Skills}
+\cvitem{Languages}{\SkillsLanguages}
+\cvitem{Blockchain}{\SkillsBlockchain}
+\cvitem{Frontend}{\SkillsFrontend}
+\cvitem{Backend}{\SkillsBackend}
+\cvitem{Databases}{\SkillsDB}
+
+%====================
+% EXPERIENCE
+%====================
+\section{Professional Experience}
+
+\cventry
+  {\KonmaDates}
+  {\KonmaRole}
+  {\KonmaCompany}
+  {}
+  {}
+  {
+    \begin{itemize}
+      \KonmaBullets
+    \end{itemize}
+  }
+
+\cventry
+  {}
+  {Independent \& Academic Projects}
+  {}
+  {}
+  {}
+  {
+    \begin{itemize}
+      \ProjectsBullets
+    \end{itemize}
+  }
+
+%====================
+% EDUCATION
+%====================
+\section{Education}
+\cventry
+  {\GradYear}
+  {\Degree}
+  {\University}
+  {}
+  {}
+  {}
+
+%====================
+% CERTIFICATIONS
+%====================
+\section{Certifications}
+\begin{itemize}
+\Certifications
+\end{itemize}
+
+\end{document}
