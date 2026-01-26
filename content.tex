@@ -63,16 +63,43 @@ Strong focus on Cardano ecosystem, frontend engineering, and secure distributed 
 %====================
 % EDUCATION
 %====================
-\newcommand{\Degree}{Bachelors’ of Engineering: Computer Engineering}
-\newcommand{\University}{Keystone School of Engineering, Pune}
-\newcommand{\GradYear}{2023}
+% \DeclareEducation{EduName}{\education{Degree}{University}{Dates}{BulletPoint}}
+\DeclareEducation{EduOne}{
+  \education
+    {Bachelors’ of Engineering: Computer Engineering}
+    {Keystone School of Engineering, Pune}
+    {2023}
+    {}
+}
 
 %====================
 % CERTIFICATIONS
 %====================
-\newcommand{\Certifications}{
-\item Certified Aiken Developer — Emurgo Academy (2024)
-\item Cardano Blockchain Certified Associate — Cardano Foundation (2023)
-\item Ethereum and Solidity Intensive Program — Codedamn
-\item Haskell \& Plutus Training — Konma
+% \DeclareCertification{CertName}{\certification{CertName}{IssuingOrganization(Year)}{BulletPoint}}
+\DeclareCertification{CertAiken}{
+  \certification
+    {Certified Aiken Developer}
+    {Emurgo Academy (2024)}
+    {}
+}
+
+\DeclareCertification{CertCardano}{
+  \certification
+    {Cardano Blockchain Certified Associate}
+    {Cardano Foundation (2023)}
+    {}
+}
+
+\DeclareCertification{CertEth}{
+  \certification
+    {Ethereum and Solidity Intensive Program}
+    {Codedamn}
+    {}
+}
+
+\DeclareCertification{CertHaskell}{
+  \certification
+    {Haskell \& Plutus Training}
+    {Konma}
+    {}
 }

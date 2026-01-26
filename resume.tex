@@ -52,69 +52,90 @@
 }
 
 % --------------------
-% Automatic job registry
+% Automatic registries
 % --------------------
 \makeatletter
 
-\newcommand{\JobRegistry}{}  % internal list
+\newcommand{\JobRegistry}{}
+\newcommand{\EducationRegistry}{}
+\newcommand{\CertificationRegistry}{}
 
 \newcommand{\DeclareJob}[2]{%
-  % define the job macro
   \expandafter\newcommand\csname #1\endcsname{#2}%
-  % append macro name to registry
-  \ifx\JobRegistry\@empty
-    \gdef\JobRegistry{#1}%
-  \else
-    \g@addto@macro\JobRegistry{,#1}%
-  \fi
+  \ifx\JobRegistry\@empty \gdef\JobRegistry{#1}\else \g@addto@macro\JobRegistry{,#1}\fi
+}
+
+\newcommand{\DeclareEducation}[2]{%
+  \expandafter\newcommand\csname #1\endcsname{#2}%
+  \ifx\EducationRegistry\@empty \gdef\EducationRegistry{#1}\else \g@addto@macro\EducationRegistry{,#1}\fi
+}
+
+\newcommand{\DeclareCertification}[2]{%
+  \expandafter\newcommand\csname #1\endcsname{#2}%
+  \ifx\CertificationRegistry\@empty \gdef\CertificationRegistry{#1}\else \g@addto@macro\CertificationRegistry{,#1}\fi
 }
 
 \makeatother
 
-
-
 % --------------------
-% Job rendering engine
+% Rendering engines
 % --------------------
 \makeatletter
 
-% job renderer
+% --- Job Renderer ---
 \newcommand{\job}[5]{%
-  % ---- Role (strong) ----
   \textbf{#1}\par\vspace{0pt}
-
-  % ---- Company + Dates ----
   \begin{tabularx}{\textwidth}{@{}X r@{}}
-    {\itshape
-      \ifx#2\empty
-        % no company
-      \else
-        \ifx#3\empty
-          #2
-        \else
-          \href{#3}{#2}
-        \fi
-      \fi
-    }
-    &
-    {\itshape #4}
+    {\itshape \ifx#2\empty \else \ifx#3\empty #2 \else \href{#3}{#2} \fi \fi} & {\itshape #4}
   \end{tabularx}\vspace{-10pt}
+  \begin{tightitemize} #5 \end{tightitemize}
+}
 
-  % ---- Bullets ----
-  \begin{tightitemize}
-    #5
-  \end{tightitemize}
+% --- Education Renderer ---
+% Usage: \education{Degree}{University}{Dates}{Bullets}
+% --- Education Renderer ---
+% Usage: \education{Degree}{University}{Dates}{Bullets}
+\newcommand{\education}[4]{%
+  \textbf{#1}\par\vspace{0pt}
+  \begin{tabularx}{\textwidth}{@{}X r@{}}
+    {\itshape #2} & {\itshape #3}
+  \end{tabularx}
+  \ifx#4\empty
+  % no bullets
+  \else
+    \vspace{-20pt}
+    \begin{tightitemize} #4 \end{tightitemize}
+  \fi
+}
+
+% --- Certification Renderer ---
+% Usage: \certification{Name}{Issuer/Date}{Bullets}
+\newcommand{\certification}[3]{%
+\begin{tabularx}{\textwidth}{@{}X r@{}}
+  \textbf{#1}\par\vspace{0pt}
+    {\itshape \empty} & {\itshape #2}
+  \end{tabularx}\vspace{0pt}
+  \ifx#3\empty
+  % no bullets
+  \else
+    \vspace{-20pt}
+    \begin{tightitemize} #3 \end{tightitemize}
+    \fi
 }
 
 
-% loop executor
+% --- Loop Executors ---
 \newcommand{\RenderJobs}{%
-  \@for\jobmacro:=\JobRegistry\do{%
-    \csname\jobmacro\endcsname
-  }%
+  \@for\jobmacro:=\JobRegistry\do{\csname\jobmacro\endcsname}%
 }
 
+\newcommand{\RenderEducation}{%
+  \@for\edmacros:=\EducationRegistry\do{\csname\edmacros\endcsname}%
+}
 
+\newcommand{\RenderCertifications}{%
+  \@for\certmacro:=\CertificationRegistry\do{\csname\certmacro\endcsname}%
+}
 
 \makeatother
 
@@ -171,19 +192,12 @@
 % EDUCATION
 % ======================================================
 \resumesection{Education}
-
-\begin{tabularx}{\textwidth}{@{}X r@{}}
-  \textbf{\Degree} & \textit{\GradYear}
-\end{tabularx}
-\University
+\RenderEducation
 
 % ======================================================
 % CERTIFICATIONS
 % ======================================================
 \resumesection{Certifications}
-
-\begin{tightitemize}
-  \Certifications
-\end{tightitemize}
+\RenderCertifications
 
 \end{document}
