@@ -5,11 +5,10 @@
 % --------------------
 \usepackage[margin=0.35in]{geometry}
 
-% \usepackage[T1]{fontenc}
-% \usepackage{lmodern}
 % \renewcommand{\familydefault}{\sfdefault}
-% \usepackage{fontspec}
-% \setmainfont{Inter}
+% Inter font via CTAN package (works with LuaLaTeX, XeLaTeX, and pdfLaTeX)
+% See: https://ctan.org/tex-archive/fonts/inter
+\usepackage[sfdefault]{inter}
 
 
 
@@ -194,7 +193,7 @@
 \newcommand{\RenderHeaderItems}{%
   \HeaderItemIndex=0
   \@for\headermacro:=\HeaderRegistry\do{%
-    \ifnum\HeaderItemIndex=0
+    \ifnum\HeaderItemIndex<2
       % First item, do nothing
     \else
       \ifnum\HeaderItemIndex=4
