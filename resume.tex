@@ -4,15 +4,38 @@
 % Page + font
 % --------------------
 \usepackage[margin=0.35in]{geometry}
+
+% \usepackage[T1]{fontenc}
+% \usepackage{lmodern}
+% \renewcommand{\familydefault}{\sfdefault}
 % \usepackage{fontspec}
-% \setmainfont[
-%   Ligatures=TeX,
-%   BoldFont = Source Sans 3 SemiBold
-% ]{Source Sans 3}
+% \setmainfont{Inter}
+
+
+
 
 \usepackage[hidelinks]{hyperref}
-\usepackage{tabularx}
 \usepackage{xcolor}
+% --------------------
+% Typography tuning
+% --------------------
+% \linespread{1.05}                 % readable but tight
+\linespread{0.95} % line height don't goe below 0.9
+% \setlength{\parskip}{2pt}         % small paragraph spacing
+
+% --------------------
+% Font sizing
+% --------------------
+\newcommand{\NameSize}{\fontsize{20}{22}\selectfont}
+\newcommand{\SectionSize}{\fontsize{13}{15}\selectfont}
+\newcommand{\BodySize}{\fontsize{11}{13}\selectfont}
+
+% --------------------
+% Vertical rhythm
+% --------------------
+\newcommand{\SectionGapBefore}{10pt}
+\newcommand{\SectionGapAfter}{6pt}
+\newcommand{\JobGap}{0pt}
 
 \pagenumbering{gobble}
 \setlength{\parindent}{0pt}
@@ -29,11 +52,11 @@
 % Custom section command (no titlesec)
 % --------------------
 \newcommand{\resumesection}[1]{%
-  \vspace{12pt}
-  {\large\bfseries\MakeUppercase{#1}}\par
-  \vspace{4pt}
+ \vspace{\SectionGapBefore}
+  {\SectionSize\bfseries\MakeUppercase{#1}}\par
+  \vspace{3pt}
   \hrule
-  \vspace{6pt}
+  \vspace{\SectionGapAfter}
 }
 
 % --------------------
@@ -104,44 +127,65 @@
 
 % --- Job Renderer ---
 \newcommand{\job}[5]{%
-  \textbf{#1}\par\vspace{0pt}
-  \begin{tabularx}{\textwidth}{@{}X r@{}}
-    {\itshape \ifx#2\empty \else \ifx#3\empty #2 \else \href{#3}{#2} \fi \fi} & {\itshape #4}
-  \end{tabularx}\vspace{-10pt}
-  \begin{tightitemize} #5 \end{tightitemize}
+  % ---- Role ----
+  {\BodySize\bfseries #1}\par
+
+  % ---- Company + Dates ----
+  {\BodySize\itshape
+  \ifx#2\empty
+  %
+  \else
+  \ifx#3\empty
+  #2
+  \else
+  \href{#3}{#2}
+  \fi
+  \fi
+  \hfill
+  #4
+  }\par
+  \vspace{-10pt}
+  % ---- Bullets ----
+  \begin{tightitemize}
+    #5
+  \end{tightitemize}
+
+  \vspace{\JobGap}
 }
+
 
 % --- Education Renderer ---
 % Usage: \education{Degree}{University}{Dates}{Bullets}
-% --- Education Renderer ---
-% Usage: \education{Degree}{University}{Dates}{Bullets}
 \newcommand{\education}[4]{%
-  \textbf{#1}\par\vspace{0pt}
-  \begin{tabularx}{\textwidth}{@{}X r@{}}
-    {\itshape #2} & {\itshape #3}
-  \end{tabularx}
+  {\BodySize\bfseries #1}\par
+  {\BodySize\itshape #2 \hfill #3}\par
+
   \ifx#4\empty
-  % no bullets
   \else
-    \vspace{-20pt}
-    \begin{tightitemize} #4 \end{tightitemize}
+    \begin{tightitemize}
+      #4
+    \end{tightitemize}
   \fi
+
+  \vspace{\JobGap}
 }
+
 
 % --- Certification Renderer ---
 % Usage: \certification{Name}{Issuer/Date}{Bullets}
 \newcommand{\certification}[3]{%
-\begin{tabularx}{\textwidth}{@{}X r@{}}
-  \textbf{#1}\par\vspace{0pt}
-    {\itshape \empty} & {\itshape #2}
-  \end{tabularx}\vspace{0pt}
+  {\BodySize \textbf{#1} \hfill \itshape #2}\par
+
   \ifx#3\empty
-  % no bullets
   \else
-    \vspace{-20pt}
-    \begin{tightitemize} #3 \end{tightitemize}
-    \fi
+    \begin{tightitemize}
+      #3
+    \end{tightitemize}
+  \fi
+
+  \vspace{2pt}
 }
+
 
 
 % --- Loop Executors ---
@@ -150,11 +194,17 @@
 \newcommand{\RenderHeaderItems}{%
   \HeaderItemIndex=0
   \@for\headermacro:=\HeaderRegistry\do{%
-    \ifnum\HeaderItemIndex>1
-      \sep
+    \ifnum\HeaderItemIndex=0
+      % First item, do nothing
+    \else
+      \ifnum\HeaderItemIndex=4
+        \\[3pt] % Line break before the 4th item (index 3)
+      \else
+        \sep % Separator otherwise
+      \fi
     \fi
-    \advance\HeaderItemIndex by 1
     \csname\headermacro\endcsname
+    \advance\HeaderItemIndex by 1
   }%
 }
 
@@ -179,22 +229,21 @@
 % Centralized content
 % --------------------
 \input{content.tex}
-\linespread{0.95} % line height don't goe below 0.9
+
 
 
 % ----------------------
 % Document
 % ----------------------
 \begin{document}
-
+\BodySize
 % ======================================================
 % HEADER
 % ======================================================
 \begin{center}
-  {\LARGE \textbf{\FullName}} \\[4pt]
-
-  {\JobTitle} \\[4pt]
-  \RenderHeaderItems
+  {\NameSize\bfseries \FullName} \\[4pt]
+  {\BodySize \JobTitle} \\[4pt]
+  {\BodySize \RenderHeaderItems}
 
 \end{center}
 
