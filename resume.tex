@@ -161,6 +161,7 @@
 
   \ifx#4\empty
   \else
+    \vspace{-10pt}
     \begin{tightitemize}
       #4
     \end{tightitemize}
@@ -173,11 +174,12 @@
 % --- Certification Renderer ---
 % Usage: \certification{Name}{Issuer/Date}{Bullets}
 \newcommand{\certification}[3]{%
-  {\BodySize \textbf{#1} \hfill \itshape #2}\par
+  {\BodySize #1 \hfill \itshape #2}\par
 
   \ifx#3\empty
   \else
-    \begin{tightitemize}
+  \vspace{-10pt}
+  \begin{tightitemize}
       #3
     \end{tightitemize}
   \fi
