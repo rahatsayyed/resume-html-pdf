@@ -1,0 +1,18 @@
+{
+  "name": "node",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "angular-expressions": "^1.5.1",
+    "docxtemplater": "^3.67.6",
+    "fs-extra": "^11.3.3",
+    "pizzip": "^3.2.0"
+  }
+}

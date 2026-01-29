@@ -1,0 +1,699 @@
+{
+  "success": true,
+  "data": {
+    "resumes": [
+      {
+        "id": "7cbe55fa-fc90-4639-8427-6699f0919bad",
+        "userId": "bca602dd-c773-4548-9e29-d33df798bdd1",
+        "mongoId": "",
+        "title": "Rahat Sayyed",
+        "order": 0,
+        "feedbackToken": "j423k0eurr",
+        "webToken": "w0f4aim4wh",
+        "uuid": "11111111-1111-1111-1111-111111111111",
+        "feedbackEnabled": false,
+        "webResumeLive": true,
+        "webResumeDownloadBtn": false,
+        "webResumeSearchIndex": true,
+        "webResumeCached": true,
+        "personalDetails": {
+          "age": "",
+          "phone": "+91 9075459597",
+          "photo": {},
+          "gender": "",
+          "social": {
+            "github": {
+              "link": "https://github.com/rahatsayyed",
+              "display": "github.com/rahatsayyed"
+            },
+            "linkedIn": {
+              "link": "https://linkedin.com/in/rahatsayyed",
+              "display": "linkedin.com/in/rahatsayyed"
+            }
+          },
+          "address": "",
+          "website": "rahatsayyed.xyz",
+          "birthday": { "day": "", "year": "", "month": "" },
+          "fullName": "Rahat Sayyed",
+          "jobTitle": "",
+          "military": "",
+          "passport": "",
+          "usAddress": false,
+          "birthdayStr": "",
+          "nationality": "",
+          "websiteLink": "https://rahatsayyed.xyz",
+          "detailsOrder": [
+            "website",
+            "linkedIn",
+            "github",
+            "displayEmail",
+            "phone",
+            "address"
+          ],
+          "displayEmail": "rahxtsayyed@gmail.com",
+          "maritalStatus": "",
+          "drivingLicense": "",
+          "showPlaceholder": false
+        },
+        "content": {
+          "work": {
+            "entries": [
+              {
+                "id": "wS_T5GSBg9rj23sI6dm9w",
+                "endDate": {
+                  "hide": false,
+                  "year": null,
+                  "month": null,
+                  "ongoing": true,
+                  "onlyYear": false,
+                  "customOngoingWord": "present"
+                },
+                "employer": "Konma Dao",
+                "jobTitle": "Web 3.0 Developer",
+                "location": "",
+                "startDate": {
+                  "hide": false,
+                  "year": "2023",
+                  "month": "02",
+                  "ongoing": false,
+                  "onlyYear": true
+                },
+                "updatedAt": "2025-03-11T11:28:03.248Z",
+                "endDateNew": "present",
+                "isNewEntry": false,
+                "description": "<ul><li data-indent=\"1\"><p data-indent=\"1\">Volunteered for Unikron, a Multichain Meta DEX &amp; Yield Aggregator, by incorporating Next.js and Lucid.js for frontend and blockchain interactions, boosting swap success ratio to 95% through DEX aggregation</p></li><li data-indent=\"1\"><p data-indent=\"1\">Constructed secure Aiken based smart contracts for a carbon credit marketplace, achieving a 99.9% uptime for trading and eliminating double spending vulnerabilities, improving environmental project investment</p></li><li data-indent=\"1\"><p data-indent=\"1\">Refine Karbon Ledger’s smart contracts, cutting transaction fees by 35% and designing an architecture that eliminates 100% of security vulnerabilities</p></li><li data-indent=\"1\"><p data-indent=\"1\">Build a secure carbon credit marketplace and registry for 300+ verified offset projects, using Lucid.js and Mesh.js for seamless Cardano blockchain integration</p></li><li data-indent=\"1\"><p data-indent=\"1\">Engineered robust frontend solutions utilizing Next.js, integrating with a Haskell backend and RESTful APIs, enabling trust less bridge functionality and increasing overall platform security by 15%</p></li><li data-indent=\"1\"><p data-indent=\"1\">Drive the execution of the Cardano Meta DEX V1 roadmap, ensuring alignment with Q1/2025 milestones to accelerate adoption</p></li><li data-indent=\"1\"><p data-indent=\"1\">Developed 5+ reusable React.js components for the Cardano Meta DEX front-end, leading to a 40% reduction in development time for new feature implementation and improved code maintainability</p></li><li data-indent=\"1\"><p data-indent=\"1\">Engage with 5+ developer communities, fostering 10+ open-source contributions monthly, maintaining 100% up-to-date documentation, and guiding teams on Cardano-based solutions</p></li><li data-indent=\"1\"><p data-indent=\"1\">Designed and audited 7+ proof-of-concept smart contracts for decentralized applications (dApps) using Aiken, improving code maintainability and reducing development time by 20%</p></li><li data-indent=\"1\"><p data-indent=\"1\">Led a 10-day bootcamp, equipping developers with Aiken expertise through hands on training and real world smart contract development</p></li></ul>",
+                "employerLink": "https://www.konma.io/",
+                "startDateNew": "2023",
+                "showPlaceholder": false
+              },
+              {
+                "id": "e13ac72f-6108-4966-b209-783995fc4eba",
+                "employer": "",
+                "jobTitle": "Independent and Academic Projects",
+                "location": "",
+                "updatedAt": "2025-04-05T07:10:37.195Z",
+                "endDateNew": "",
+                "isNewEntry": false,
+                "description": "<p><em>Talendro –&#160;</em></p><ul><li data-indent=\"1\">Initiated and managed relationships with customers; wrote and executed business plan that resulted in 80% increase in customer engagement&#160;</li><li data-indent=\"1\"><p data-indent=\"1\">Constructed 8+ Aiken-based smart contracts, implementing secure escrow payments and slashing mechanisms, facilitating over 200 successful transactions with zero reported disputes on the decentralized platform</p></li><li data-indent=\"1\"><p data-indent=\"1\">Implemented transparent user profiles using Lucid.js and Mesh.js on the blockchain, achieving full data provenance and reducing disputes related to reputation by 35% within 6 months</p></li><li data-indent=\"1\"><p data-indent=\"1\">Engineered a reputation-based staking mechanism for Talendro, a decentralized freelance platform on Cardano, increasing trust between 70+ freelancers and clients by ensuring secure and transparent dispute resolution processes</p></li></ul><p data-indent=\"1\"></p><p></p><p><em>HirEx –&#160;</em></p><ul><li data-indent=\"1\"><p data-indent=\"1\">Collaborated to construct an automated hiring platform, reducing time-to-hire by 60% through AI-driven assessments</p></li><li data-indent=\"1\"><p data-indent=\"1\">Built a speech-to-text transcription system, leveraging RESTful APIs, cutting administrative overhead by 40%</p></li><li data-indent=\"1\"><p data-indent=\"1\">Applied tone analysis for verbal communication, improving evaluation accuracy by 25%</p></li></ul><p></p><p></p><p><em>ConnectingDots –</em></p><ul><li data-indent=\"1\"><p data-indent=\"1\">Led the development of a matching algorithm, boosting successful mentor mentee pairings by 40%</p></li><li data-indent=\"1\"><p data-indent=\"1\">Designed a profile system utilizing MongoDB for structured data storage, reducing mismatches by 30%</p></li><li data-indent=\"1\"><p data-indent=\"1\">Engineered a calendar and scheduling tool, improving meeting coordination by 50% using React.js and Node.js</p></li></ul>",
+                "employerLink": "",
+                "startDateNew": "",
+                "showPlaceholder": false
+              }
+            ],
+            "iconKey": "briefcase",
+            "displayName": "Professional Experience",
+            "sectionType": "work"
+          },
+          "skill": {
+            "entries": [
+              {
+                "id": "d465eca2-a154-448b-aef8-c00e6a5e677a",
+                "skill": "JavaScript",
+                "infoHtml": "",
+                "createdAt": "2025-03-11T11:15:08.541Z",
+                "updatedAt": "2025-03-11T11:15:08.541Z",
+                "isNewEntry": false,
+                "showPlaceholder": false
+              },
+              {
+                "id": "81d837b9-0152-4ba6-8315-851a549ec925",
+                "skill": "Aiken",
+                "createdAt": "2025-03-11T11:15:28.712Z",
+                "updatedAt": "2025-03-11T11:15:28.712Z",
+                "isNewEntry": false,
+                "showPlaceholder": false
+              },
+              {
+                "id": "ab020d32-0ca9-4444-a6f3-72cef2b293fb",
+                "skill": "TypeScript",
+                "createdAt": "2025-03-11T11:15:36.361Z",
+                "updatedAt": "2025-03-11T11:15:36.361Z",
+                "isNewEntry": false,
+                "showPlaceholder": false
+              },
+              {
+                "id": "251885be-e961-4d1e-b265-63349765ad93",
+                "skill": "Solidity",
+                "createdAt": "2025-03-11T11:15:44.149Z",
+                "updatedAt": "2025-03-11T11:15:44.149Z",
+                "isNewEntry": false,
+                "showPlaceholder": false
+              },
+              {
+                "id": "c4cfb40b-3a38-4bc2-8c49-3617ac30911c",
+                "skill": "Cardano CLI",
+                "createdAt": "2025-03-11T11:15:51.740Z",
+                "updatedAt": "2025-03-11T11:15:51.740Z",
+                "isNewEntry": false,
+                "showPlaceholder": false
+              },
+              {
+                "id": "15829825-a97d-4b9f-9356-e2092c49e5c1",
+                "skill": "Lucid.js",
+                "createdAt": "2025-03-11T11:16:00.189Z",
+                "updatedAt": "2025-03-11T11:16:00.189Z",
+                "isNewEntry": false,
+                "showPlaceholder": false
+              },
+              {
+                "id": "e7c06ced-5f60-436b-afef-5b83a314a4d0",
+                "skill": "Mesh.js",
+                "createdAt": "2025-03-11T11:16:08.442Z",
+                "updatedAt": "2025-03-11T11:16:08.443Z",
+                "isNewEntry": false,
+                "showPlaceholder": false
+              },
+              {
+                "id": "7ac50802-38c5-4bcf-91d7-879cebbe3c2c",
+                "skill": "Firestore",
+                "createdAt": "2025-03-11T11:16:18.350Z",
+                "updatedAt": "2025-03-11T11:16:18.350Z",
+                "isNewEntry": false,
+                "showPlaceholder": false
+              },
+              {
+                "id": "91f1fb1b-9309-41f5-b217-0fb454dbc6fe",
+                "skill": "MongoDB",
+                "createdAt": "2025-03-11T11:16:24.945Z",
+                "updatedAt": "2025-03-11T11:16:24.945Z",
+                "isNewEntry": false,
+                "showPlaceholder": false
+              },
+              {
+                "id": "8ffceae5-eca9-4d08-ac80-e10acce8e9b9",
+                "skill": "Node.js",
+                "createdAt": "2025-03-11T11:16:32.173Z",
+                "updatedAt": "2025-03-11T11:16:32.173Z",
+                "isNewEntry": false,
+                "showPlaceholder": false
+              },
+              {
+                "id": "ab6aceea-7ce1-4dff-b1a7-7b34919d1eae",
+                "skill": "Express.js",
+                "createdAt": "2025-03-11T11:16:40.656Z",
+                "updatedAt": "2025-03-11T11:16:40.656Z",
+                "isNewEntry": false,
+                "showPlaceholder": false
+              },
+              {
+                "id": "7ac92306-097c-46dd-90d2-38557ce50fa8",
+                "skill": "RESTful APIs",
+                "createdAt": "2025-03-11T11:16:49.335Z",
+                "updatedAt": "2025-03-11T11:16:49.335Z",
+                "isNewEntry": false,
+                "showPlaceholder": false
+              },
+              {
+                "id": "d1023840-10c4-42d7-931d-57696b948568",
+                "skill": "React.js",
+                "createdAt": "2025-03-11T11:16:57.630Z",
+                "updatedAt": "2025-03-11T11:16:57.630Z",
+                "isNewEntry": false,
+                "showPlaceholder": false
+              },
+              {
+                "id": "650a8bfb-5cb2-4972-96e1-e5315bb9530a",
+                "skill": "Next.js",
+                "createdAt": "2025-03-11T11:17:05.530Z",
+                "updatedAt": "2025-03-11T11:17:05.530Z",
+                "isNewEntry": false,
+                "showPlaceholder": false
+              },
+              {
+                "id": "4688f081-12fd-42d1-ba6f-1d27ecce5acb",
+                "skill": "Blockchain Security",
+                "createdAt": "2025-03-11T11:17:12.165Z",
+                "updatedAt": "2025-03-11T11:17:12.165Z",
+                "isNewEntry": false,
+                "showPlaceholder": false
+              },
+              {
+                "id": "241896d7-12a1-4257-a0f4-20b762b6dbb6",
+                "skill": "TailwindCSS",
+                "createdAt": "2025-03-11T11:17:16.452Z",
+                "updatedAt": "2025-03-11T11:17:16.452Z",
+                "isNewEntry": false,
+                "showPlaceholder": false
+              }
+            ],
+            "iconKey": "head-side-brain",
+            "displayName": "Skills",
+            "sectionType": "skill",
+            "disableAutoSort": true
+          },
+          "profile": {
+            "entries": [
+              {
+                "id": "e602d962-b056-4c99-a84c-497f482372ed",
+                "text": "<p>Full-stack & Blockchain Developer with 2+ years of experience specializing in Web 3.0, DApps, and smart contracts. Built blockchain based platforms handling 200+ secure transactions, with zero disputes through a staking and escrow system. Optimized smart contracts to cut transaction fees by 35%, ensuring 99.9% uptime. Led a 10-day bootcamp, training 50+ developers in Aiken-based smart contract development. Contributed to 10+ open-source projects monthly, driving innovation in the Cardano ecosystem.</p>",
+                "createdAt": "2025-03-11T11:10:31.015Z",
+                "updatedAt": "2025-03-11T11:10:31.015Z",
+                "isNewEntry": false,
+                "showPlaceholder": false
+              }
+            ],
+            "iconKey": "address-card",
+            "displayName": "PROFESSIONAL SUMMARY ",
+            "sectionType": "profile"
+          },
+          "education": {
+            "entries": [
+              {
+                "id": "fR3bzgUsiZHQZF_UGUy74",
+                "city": "Pune",
+                "degree": "Bachelors’ of Engineering: Computer Engineering",
+                "school": "Keystone School of Engineering",
+                "country": "India",
+                "endDate": {
+                  "hide": false,
+                  "year": "2023",
+                  "month": "06",
+                  "ongoing": false,
+                  "onlyYear": true,
+                  "customOngoingWord": "present"
+                },
+                "location": "Pune, India",
+                "startDate": {
+                  "hide": true,
+                  "year": "2019",
+                  "month": "08",
+                  "ongoing": false,
+                  "onlyYear": false
+                },
+                "updatedAt": "2025-03-11T11:22:18.161Z",
+                "endDateNew": "2023",
+                "isNewEntry": false,
+                "schoolLink": "",
+                "description": "",
+                "startDateNew": "",
+                "showPlaceholder": false
+              }
+            ],
+            "iconKey": "graduation-cap",
+            "displayName": "Education",
+            "sectionType": "education"
+          },
+          "vdjr48IppXYqstotdRz34": {
+            "entries": [
+              {
+                "id": "snLiPWXr5lduLLmi3W81T",
+                "endDate": {
+                  "hide": true,
+                  "year": "2025",
+                  "month": "01",
+                  "ongoing": false,
+                  "onlyYear": true,
+                  "customOngoingWord": "present"
+                },
+                "location": "",
+                "startDate": {
+                  "hide": false,
+                  "year": "2024",
+                  "month": "09",
+                  "ongoing": false,
+                  "onlyYear": true
+                },
+                "titleLink": "",
+                "updatedAt": "2025-03-11T11:18:29.623Z",
+                "endDateNew": "",
+                "isNewEntry": false,
+                "description": "<p>Aiken Development Program: Completed Certified Aiken Course by Emurgo Academy</p>",
+                "startDateNew": "2024",
+                "showPlaceholder": false
+              },
+              {
+                "id": "terSLzcJG5C_0Es01jrY7",
+                "endDate": {
+                  "hide": true,
+                  "year": "2023",
+                  "month": "07",
+                  "ongoing": false,
+                  "onlyYear": true,
+                  "customOngoingWord": "present"
+                },
+                "location": "",
+                "startDate": {
+                  "hide": false,
+                  "year": "2023",
+                  "month": "02",
+                  "ongoing": false,
+                  "onlyYear": true
+                },
+                "titleLink": "",
+                "updatedAt": "2025-03-11T11:19:05.663Z",
+                "endDateNew": "",
+                "isNewEntry": false,
+                "description": "<p>Cardano Blockchain Certified Associate (CBCA) Alpha Program 2 by Cardano Foundation</p>",
+                "startDateNew": "2023",
+                "showPlaceholder": false
+              },
+              {
+                "id": "OUdrw1fDmCyCEZtd0BM0q",
+                "endDate": {
+                  "hide": true,
+                  "year": "2022",
+                  "month": "07",
+                  "ongoing": false,
+                  "onlyYear": false,
+                  "customOngoingWord": "present"
+                },
+                "location": "",
+                "startDate": {
+                  "hide": false,
+                  "year": "2022",
+                  "month": "01",
+                  "ongoing": false,
+                  "onlyYear": true
+                },
+                "titleLink": "",
+                "updatedAt": "2025-03-11T11:19:35.635Z",
+                "endDateNew": "",
+                "isNewEntry": false,
+                "description": "<p>Ethereum and Solidity: Completed an intensive 300+ hour course with a holistic approach at Codedamn.</p>",
+                "startDateNew": "2022",
+                "showPlaceholder": false
+              },
+              {
+                "id": "SCx2oIcJ3DS486gBLfhLD",
+                "endDate": {
+                  "hide": false,
+                  "year": "2022",
+                  "month": "04",
+                  "ongoing": false,
+                  "onlyYear": true,
+                  "customOngoingWord": "present"
+                },
+                "location": "",
+                "startDate": {
+                  "hide": true,
+                  "year": "2021",
+                  "month": "11",
+                  "ongoing": false,
+                  "onlyYear": true
+                },
+                "titleLink": "",
+                "updatedAt": "2025-03-11T11:19:51.876Z",
+                "endDateNew": "2022",
+                "isNewEntry": false,
+                "description": "<p>Web Development Certification:  Completed a comprehensive program at NIIT, in modern web development technologies.</p>",
+                "startDateNew": "",
+                "showPlaceholder": false
+              },
+              {
+                "id": "a52f15c2-911b-4616-bbd9-b9427c74d786",
+                "endDate": {
+                  "hide": true,
+                  "year": null,
+                  "month": null,
+                  "ongoing": false,
+                  "onlyYear": false,
+                  "customOngoingWord": "present"
+                },
+                "location": "",
+                "createdAt": "2025-03-11T11:19:20.244Z",
+                "startDate": {
+                  "hide": false,
+                  "year": "2023",
+                  "month": null,
+                  "ongoing": false,
+                  "onlyYear": true
+                },
+                "titleLink": "",
+                "updatedAt": "2025-03-11T11:19:20.244Z",
+                "endDateNew": "",
+                "isNewEntry": false,
+                "description": "<p>Haskell & Plutus: Completed 80+ hours intensive training in Haskell and Plutus by Konma.</p>",
+                "startDateNew": "2023",
+                "showPlaceholder": false
+              }
+            ],
+            "iconKey": "address-card",
+            "displayName": "Certification",
+            "sectionType": "custom",
+            "disableAutoSort": true
+          }
+        },
+        "customization": {
+          "font": { "selected": "serif", "fontFamily": "Roboto" },
+          "colors": {
+            "mode": "advanced",
+            "basic": {
+              "multi": {
+                "textColor": "#000000",
+                "accentColor": "#000000",
+                "backgroundColor": "#ffffff"
+              },
+              "single": "#000000",
+              "selected": "single",
+              "multiCustom": {
+                "textColor": "#000000",
+                "accentColor": "#000000",
+                "backgroundColor": "#ffffff"
+              },
+              "singleCustom": "#000000"
+            },
+            "border": {
+              "top": true,
+              "left": true,
+              "right": true,
+              "width": "m",
+              "bottom": true,
+              "single": "#000000",
+              "selected": "single",
+              "singleCustom": "#000000"
+            },
+            "advanced": {
+              "multi": {
+                "light": {
+                  "textColor": "#000000",
+                  "accentColor": "#5a5a5a",
+                  "backgroundColor": "#ffffff"
+                },
+                "strong": {
+                  "textColor": "#4a4a4a",
+                  "accentColor": "#375d65",
+                  "backgroundColor": "#fafafa"
+                }
+              },
+              "single": "#000000",
+              "selected": "multi",
+              "multiCustom": {
+                "light": {
+                  "textColor": "#000000",
+                  "accentColor": "#5a5a5a",
+                  "backgroundColor": "#ffffff"
+                },
+                "strong": {
+                  "textColor": "#4a4a4a",
+                  "accentColor": "#375d65",
+                  "backgroundColor": "#fafafa"
+                }
+              },
+              "singleCustom": "#000000"
+            }
+          },
+          "expert": {
+            "footer": { "name": false, "email": false, "pages": false },
+            "subTitlePlacement": "nextLine",
+            "showProfileHeading": true
+          },
+          "header": {
+            "photo": { "show": true, "size": "m", "grayscale": false },
+            "nameSize": "l",
+            "iconFrame": "none",
+            "detailsGrid": false,
+            "jobTitleSize": "s",
+            "jobTitleStyle": "italic",
+            "accentuateName": true,
+            "iconFrameStyle": "filled",
+            "jobTitlePosition": "sameLine",
+            "detailsArrangement": "wrap",
+            "detailsDisplayCenter": "icon",
+            "detailsDisplayLeftRight": "icon",
+            "photoPositionFromHeaderPosition": {
+              "top": "right",
+              "left": "left",
+              "right": "left"
+            }
+          },
+          "layout": {
+            "colsFromDetails": { "top": "mix", "left": "mix", "right": "mix" },
+            "detailsPosition": "top",
+            "colWidthsFromDetails": {
+              "top": { "leftWidth": 24, "rightWidth": 76 },
+              "left": { "leftWidth": 40, "rightWidth": 60 },
+              "right": { "leftWidth": 60, "rightWidth": 40 }
+            }
+          },
+          "heading": {
+            "icons": "none",
+            "style": "line",
+            "headingSize": "l",
+            "capitalization": "uppercase"
+          },
+          "spacing": {
+            "fontSize": "3",
+            "lineHeight": "0",
+            "spacingFactor": "0",
+            "marginVertical": "0",
+            "marginHorizontal": "0"
+          },
+          "advanced": {
+            "linkIcon": "diagonalChain",
+            "listStyle": "bullet",
+            "groupPromotions": false
+          },
+          "regional": {
+            "format": "A4",
+            "anonymous": false,
+            "dateDisplay": "DD/MM/YYYY",
+            "monthFormat": "MMM",
+            "dateDelimiter": "/"
+          },
+          "pageFormat": "A4",
+          "entryLayout": {
+            "colMode": "auto",
+            "colWidths": {
+              "dateLocationLeft": { "left": 0, "right": 0 },
+              "dateLocationRight": { "left": 0, "right": 0 },
+              "dateContentLocation": { "left": 0, "right": 0, "middle": 0 }
+            },
+            "displayMode": "fullWidth",
+            "subtitleStyle": "italic",
+            "bodyIndentation": "1",
+            "dateLocationOpacity": true,
+            "titleAndSubtitleSize": "s"
+          },
+          "workDisplay": { "jobTitleBeforeEmployer": true },
+          "sectionOrder": {
+            "mix": [
+              "profile",
+              "work",
+              "education",
+              "skill",
+              "vdjr48IppXYqstotdRz34"
+            ],
+            "one": {
+              "sectionsSorted": [
+                "education",
+                "work",
+                "skill",
+                "vdjr48IppXYqstotdRz34",
+                "profile"
+              ]
+            },
+            "two": {
+              "leftSectionsSorted": ["education", "skill", "profile"],
+              "rightSectionsSorted": ["work", "vdjr48IppXYqstotdRz34"]
+            }
+          },
+          "skillDisplay": {
+            "grid": { "columns": "three" },
+            "text": "pipe",
+            "level": { "selected": "text" },
+            "selected": "text",
+            "subinfoSeparator": "colon"
+          },
+          "fullDateFormat": "DD MMM YYYY",
+          "interestDisplay": {
+            "grid": { "columns": "three" },
+            "text": "bullet",
+            "selected": "grid",
+            "subinfoSeparator": "dash"
+          },
+          "languageDisplay": {
+            "grid": { "columns": "three" },
+            "text": "bullet",
+            "level": { "selected": "text" },
+            "selected": "bubble",
+            "subinfoSeparator": "dash"
+          },
+          "monthYearFormat": "MMM YYYY",
+          "applyAccentColor": {
+            "name": true,
+            "dates": false,
+            "icons": false,
+            "headings": false,
+            "jobTitle": true,
+            "linkIcons": false,
+            "headingLine": true,
+            "dotsBarsBubbles": false
+          },
+          "creativeNameFont": "bodyFont",
+          "educationDisplay": { "degreeBeforeSchool": true },
+          "certificateDisplay": {
+            "grid": { "columns": "three" },
+            "text": "bullet",
+            "selected": "grid",
+            "subinfoSeparator": "dash"
+          },
+          "declarationDisplay": {
+            "line": "solid",
+            "position": "right",
+            "showHeading": true
+          },
+          "customSkillSections": {},
+          "unsplashImageHistory": [
+            {
+              "width": 2565,
+              "height": 4560,
+              "photoId": "xljtGZ2-P3Y",
+              "urlFull": "https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?ixlib=rb-1.2.1&q=85&fm=jpg&crop=entropy&cs=srgb&ixid=eyJhcHBfaWQiOjEwMTg4M30",
+              "urlThumb": "https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=200&fit=max&ixid=eyJhcHBfaWQiOjEwMTg4M30",
+              "brightness": 53,
+              "urlRegular": "https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max&ixid=eyJhcHBfaWQiOjEwMTg4M30",
+              "userHtmlLink": "https://unsplash.com/@nahilnaseer",
+              "dominantColors": [
+                "#1f2c2c",
+                "#5d9479",
+                "#3f6e5a",
+                "#86aa96",
+                "#587c6c",
+                "#2d5145",
+                "#3d574f",
+                "#304344",
+                "#485b5c",
+                "#748484"
+              ],
+              "photographerId": "dD4xvxNBI2Y",
+              "photographerFullName": "Nahil Naseer",
+              "photographerLastName": "Naseer",
+              "photographerFirstName": "Nahil"
+            }
+          ]
+        },
+        "feedback": { "comments": [] },
+        "businessDetails": {
+          "email": "",
+          "phone": "",
+          "address": "",
+          "company": "",
+          "logoImageId": ""
+        },
+        "downloads": [
+          "2025-01-05T03:04:20.932Z",
+          "2025-01-05T04:05:58.750Z",
+          "2025-03-11T11:22:28.381Z",
+          "2025-03-11T11:26:06.579Z",
+          "2025-03-11T11:30:14.445Z",
+          "2025-03-11T11:33:18.687Z",
+          "2025-03-12T09:22:53.301Z",
+          "2025-03-22T04:45:33.939Z",
+          "2025-04-05T07:10:23.855Z",
+          "2025-04-10T12:35:43.106Z",
+          "2025-04-23T14:24:44.891Z",
+          "2025-05-01T10:46:02.813Z",
+          "2025-05-02T07:52:37.751Z"
+        ],
+        "usingBusinessTemplateId": "",
+        "schemaVersion": "16",
+        "lastChangeAt": "2026-01-12T10:40:16.686Z",
+        "createdAt": "2025-01-05T02:42:12.291Z",
+        "updatedAt": "2026-01-12T10:40:16.686Z",
+        "lng": "en"
+      }
+    ]
+  },
+  "error": "",
+  "code": 200
+}
