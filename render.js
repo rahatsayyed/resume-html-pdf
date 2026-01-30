@@ -20,11 +20,7 @@ const doc = new Docxtemplater(zip, {
 });
 
 // ---- Derived fields for templates ----
-data.skillsLanguagesText = data.skills.languages.join(", ");
-data.skillsBlockchainText = data.skills.blockchain.join(", ");
-data.skillsFrontendText = data.skills.frontend.join(", ");
-data.skillsBackendText = data.skills.backend.join(", ");
-data.skillsDatabasesText = data.skills.databases.join(", ");
+// data.skillsLanguagesText = data.skills.languages.join(", ");
 
 // Render
 doc.render(data);
