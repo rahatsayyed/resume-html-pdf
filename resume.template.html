@@ -208,6 +208,7 @@
         margin: 0;
         padding: 0;
         list-style: none;
+        line-height: 1.6;
       }
 
       .skills-list li {
@@ -221,8 +222,9 @@
         content: none;
       }
 
+      /* Pipe with ample space on both sides so skills don't look clustered */
       .skills-list li:not(:last-child)::after {
-        content: " | ";
+        content: "  |  ";
         font-weight: 400;
       }
 
@@ -242,12 +244,31 @@
       }
 
       .cert-item {
-        margin-bottom: 2.5pt;
+        position: relative;
+        margin-bottom: 4pt;
+        padding-left: 1.2em;
         break-inside: avoid;
+      }
+
+      .cert-item:last-child {
+        margin-bottom: 0;
+      }
+
+      .cert-item::before {
+        content: "•";
+        position: absolute;
+        left: 0;
+        color: #000000;
+      }
+
+      .cert-item p {
+        margin: 0 0 0.15em 0;
+        display: inline;
       }
 
       .cert-item .cert-year {
         font-weight: 400;
+        white-space: nowrap;
       }
 
       /* ===== PROJECTS (same as Experience, max 2–3 bullets) ===== */
@@ -382,7 +403,7 @@
     <div class="certifications-section">
       {{#each content.certification.entries}}
       <div class="cert-item">
-        {{{description}}}{{#if startDateNew}} ({{startDateNew}}){{else}}{{#if endDateNew}} ({{endDateNew}}){{/if}}{{/if}}
+        {{{description}}}<span class="cert-year">{{#if startDateNew}} ({{startDateNew}}){{else}}{{#if endDateNew}} ({{endDateNew}}){{/if}}{{/if}}</span>
       </div>
       {{/each}}
     </div>
@@ -393,7 +414,7 @@
     <div class="certifications-section">
       {{#each content.vdjr48IppXYqstotdRz34.entries}}
       <div class="cert-item">
-        {{{description}}}{{#if startDateNew}} ({{startDateNew}}){{else}}{{#if endDateNew}} ({{endDateNew}}){{/if}}{{/if}}
+        {{{description}}}<span class="cert-year">{{#if startDateNew}} ({{startDateNew}}){{else}}{{#if endDateNew}} ({{endDateNew}}){{/if}}{{/if}}</span>
       </div>
       {{/each}}
     </div>
