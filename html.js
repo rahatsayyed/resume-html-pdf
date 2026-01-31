@@ -2,7 +2,22 @@ import fs from "fs";
 import Handlebars from "handlebars";
 import { chromium } from "playwright";
 const raw = JSON.parse(fs.readFileSync("resume.json", "utf8"));
-const resume = raw.data.resumes[0];
+const resumeData = raw.data.resumes[0];
+
+/** Remove any entry with isHidden: true from content.*.entries (work, education, skill, etc.) */
+function filterHiddenEntries(resume) {
+  const out = JSON.parse(JSON.stringify(resume));
+  if (!out.content || typeof out.content !== "object") return out;
+  for (const key of Object.keys(out.content)) {
+    const section = out.content[key];
+    if (section?.entries && Array.isArray(section.entries)) {
+      section.entries = section.entries.filter((entry) => !entry.isHidden);
+    }
+  }
+  return out;
+}
+
+const resume = filterHiddenEntries(resumeData);
 
 // Register partials (header and content components)
 Handlebars.registerPartial(

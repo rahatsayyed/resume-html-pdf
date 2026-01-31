@@ -15,7 +15,7 @@
         "webResumeLive": true,
         "webResumeDownloadBtn": false,
         "webResumeSearchIndex": true,
-        "webResumeCached": true,
+        "webResumeCached": false,
         "personalDetails": {
           "age": "",
           "phone": "+91 9075459597",
@@ -59,6 +59,20 @@
           "work": {
             "entries": [
               {
+                "id": "d9c4df34-c41b-40be-96cd-dfd85e6c7fd0",
+                "employer": "Copods",
+                "isHidden": false,
+                "jobTitle": "Software Engineer",
+                "location": "",
+                "createdAt": "2026-01-31T05:47:58.758Z",
+                "updatedAt": "2026-01-31T06:21:18.988Z",
+                "endDateNew": "Present",
+                "description": "<ul><li><p>Built and maintained a <strong>policy-driven admin interface</strong> for an AI security platform, allowing administrators to control <strong>MCP/tool access, data visibility, and AI input/output logging</strong> across enterprise environments.</p></li><li><p>Implemented frontend support for <strong>PII detection and redaction workflows</strong>, ensuring sensitive data could be blocked, logged, or masked based on configurable admin policies.</p></li><li><p>Designed and shipped a <strong>complete frontend design system</strong> (tokens, components, layout patterns, and documentation), enabling faster feature development and allowing backend teams to safely modify UI behavior using AI-assisted workflows.</p></li><li><p>Refactored application initialization by consolidating multiple context providers, eliminating <strong>9+ redundant API calls</strong> and reducing <strong>initial page load time by ~11 seconds</strong>.</p></li><li><p>Improved navigation performance and UX consistency by replacing legacy window.location usage with <strong>Next.js routing primitives</strong>, resulting in smoother client-side transitions and better perceived performance.</p></li><li><p>Built a <strong>data exploration dashboard</strong> that converted natural language queries into SQL (via backend services) and rendered results as charts and tables, improving demo effectiveness for non-technical stakeholders.</p></li><li><p>Collaborated closely with <strong>product designers, backend engineers, and stakeholders</strong> to align frontend architecture with evolving API contracts and deliver rapid releases under tight timelines.</p></li></ul>",
+                "employerLink": "https://copods.co/",
+                "startDateNew": "2025",
+                "showPlaceholder": false
+              },
+              {
                 "id": "wS_T5GSBg9rj23sI6dm9w",
                 "endDate": {
                   "hide": false,
@@ -71,6 +85,7 @@
                 "employer": "Konma Dao",
                 "jobTitle": "Web 3.0 Developer",
                 "location": "",
+                "createdAt": "2026-01-31T05:47:01.136Z",
                 "startDate": {
                   "hide": false,
                   "year": "2023",
@@ -78,8 +93,8 @@
                   "ongoing": false,
                   "onlyYear": true
                 },
-                "updatedAt": "2025-03-11T11:28:03.248Z",
-                "endDateNew": "present",
+                "updatedAt": "2026-01-31T05:47:01.136Z",
+                "endDateNew": "2025",
                 "isNewEntry": false,
                 "description": "<ul><li data-indent=\"1\"><p data-indent=\"1\">Volunteered for Unikron, a Multichain Meta DEX &amp; Yield Aggregator, by incorporating Next.js and Lucid.js for frontend and blockchain interactions, boosting swap success ratio to 95% through DEX aggregation</p></li><li data-indent=\"1\"><p data-indent=\"1\">Constructed secure Aiken based smart contracts for a carbon credit marketplace, achieving a 99.9% uptime for trading and eliminating double spending vulnerabilities, improving environmental project investment</p></li><li data-indent=\"1\"><p data-indent=\"1\">Refine Karbon Ledger’s smart contracts, cutting transaction fees by 35% and designing an architecture that eliminates 100% of security vulnerabilities</p></li><li data-indent=\"1\"><p data-indent=\"1\">Build a secure carbon credit marketplace and registry for 300+ verified offset projects, using Lucid.js and Mesh.js for seamless Cardano blockchain integration</p></li><li data-indent=\"1\"><p data-indent=\"1\">Engineered robust frontend solutions utilizing Next.js, integrating with a Haskell backend and RESTful APIs, enabling trust less bridge functionality and increasing overall platform security by 15%</p></li><li data-indent=\"1\"><p data-indent=\"1\">Drive the execution of the Cardano Meta DEX V1 roadmap, ensuring alignment with Q1/2025 milestones to accelerate adoption</p></li><li data-indent=\"1\"><p data-indent=\"1\">Developed 5+ reusable React.js components for the Cardano Meta DEX front-end, leading to a 40% reduction in development time for new feature implementation and improved code maintainability</p></li><li data-indent=\"1\"><p data-indent=\"1\">Engage with 5+ developer communities, fostering 10+ open-source contributions monthly, maintaining 100% up-to-date documentation, and guiding teams on Cardano-based solutions</p></li><li data-indent=\"1\"><p data-indent=\"1\">Designed and audited 7+ proof-of-concept smart contracts for decentralized applications (dApps) using Aiken, improving code maintainability and reducing development time by 20%</p></li><li data-indent=\"1\"><p data-indent=\"1\">Led a 10-day bootcamp, equipping developers with Aiken expertise through hands on training and real world smart contract development</p></li></ul>",
                 "employerLink": "https://www.konma.io/",
@@ -89,12 +104,14 @@
               {
                 "id": "e13ac72f-6108-4966-b209-783995fc4eba",
                 "employer": "",
+                "isHidden": true,
                 "jobTitle": "Independent and Academic Projects",
                 "location": "",
-                "updatedAt": "2025-04-05T07:10:37.195Z",
+                "createdAt": "2026-01-31T05:46:37.020Z",
+                "updatedAt": "2026-01-31T05:46:37.020Z",
                 "endDateNew": "",
                 "isNewEntry": false,
-                "description": "<p><em>Talendro –&#160;</em></p><ul><li data-indent=\"1\">Initiated and managed relationships with customers; wrote and executed business plan that resulted in 80% increase in customer engagement&#160;</li><li data-indent=\"1\"><p data-indent=\"1\">Constructed 8+ Aiken-based smart contracts, implementing secure escrow payments and slashing mechanisms, facilitating over 200 successful transactions with zero reported disputes on the decentralized platform</p></li><li data-indent=\"1\"><p data-indent=\"1\">Implemented transparent user profiles using Lucid.js and Mesh.js on the blockchain, achieving full data provenance and reducing disputes related to reputation by 35% within 6 months</p></li><li data-indent=\"1\"><p data-indent=\"1\">Engineered a reputation-based staking mechanism for Talendro, a decentralized freelance platform on Cardano, increasing trust between 70+ freelancers and clients by ensuring secure and transparent dispute resolution processes</p></li></ul><p data-indent=\"1\"></p><p></p><p><em>HirEx –&#160;</em></p><ul><li data-indent=\"1\"><p data-indent=\"1\">Collaborated to construct an automated hiring platform, reducing time-to-hire by 60% through AI-driven assessments</p></li><li data-indent=\"1\"><p data-indent=\"1\">Built a speech-to-text transcription system, leveraging RESTful APIs, cutting administrative overhead by 40%</p></li><li data-indent=\"1\"><p data-indent=\"1\">Applied tone analysis for verbal communication, improving evaluation accuracy by 25%</p></li></ul>",
+                "description": "<p><em>Talendro –&nbsp;</em></p><ul><li data-indent=\"1\"><p>Initiated and managed relationships with customers; wrote and executed business plan that resulted in 80% increase in customer engagement&nbsp;</p></li><li data-indent=\"1\"><p data-indent=\"1\">Constructed 8+ Aiken-based smart contracts, implementing secure escrow payments and slashing mechanisms, facilitating over 200 successful transactions with zero reported disputes on the decentralized platform</p></li><li data-indent=\"1\"><p data-indent=\"1\">Implemented transparent user profiles using Lucid.js and Mesh.js on the blockchain, achieving full data provenance and reducing disputes related to reputation by 35% within 6 months</p></li><li data-indent=\"1\"><p data-indent=\"1\">Engineered a reputation-based staking mechanism for Talendro, a decentralized freelance platform on Cardano, increasing trust between 70+ freelancers and clients by ensuring secure and transparent dispute resolution processes</p></li></ul><p data-indent=\"1\"></p><p></p><p><em>HirEx –&nbsp;</em></p><ul><li data-indent=\"1\"><p data-indent=\"1\">Collaborated to construct an automated hiring platform, reducing time-to-hire by 60% through AI-driven assessments</p></li><li data-indent=\"1\"><p data-indent=\"1\">Built a speech-to-text transcription system, leveraging RESTful APIs, cutting administrative overhead by 40%</p></li><li data-indent=\"1\"><p data-indent=\"1\">Applied tone analysis for verbal communication, improving evaluation accuracy by 25%</p></li></ul><p></p><p></p><p><em>ConnectingDots –</em></p><ul><li data-indent=\"1\"><p data-indent=\"1\">Led the development of a matching algorithm, boosting successful mentor mentee pairings by 40%</p></li><li data-indent=\"1\"><p data-indent=\"1\">Designed a profile system utilizing MongoDB for structured data storage, reducing mismatches by 30%</p></li><li data-indent=\"1\"><p data-indent=\"1\">Engineered a calendar and scheduling tool, improving meeting coordination by 50% using React.js and Node.js</p></li></ul>",
                 "employerLink": "",
                 "startDateNew": "",
                 "showPlaceholder": false
@@ -102,7 +119,8 @@
             ],
             "iconKey": "briefcase",
             "displayName": "Professional Experience",
-            "sectionType": "work"
+            "sectionType": "work",
+            "disableAutoSort": true
           },
           "skill": {
             "entries": [
@@ -245,9 +263,9 @@
             "entries": [
               {
                 "id": "e602d962-b056-4c99-a84c-497f482372ed",
-                "text": "<p>Full-stack & Blockchain Developer with 2+ years of experience specializing in Web 3.0, DApps, and smart contracts. Built blockchain based platforms handling 200+ secure transactions, with zero disputes through a staking and escrow system. Optimized smart contracts to cut transaction fees by 35%, ensuring 99.9% uptime. Led a 10-day bootcamp, training 50+ developers in Aiken-based smart contract development. Contributed to 10+ open-source projects monthly, driving innovation in the Cardano ecosystem.</p>",
+                "text": "<p>Full-stack &amp; Blockchain Developer with 3+ years of experience specializing in Web 3.0, DApps, and smart contracts. Built blockchain based platforms handling 200+ secure transactions, with zero disputes through a staking and escrow system. Optimized smart contracts to cut transaction fees by 35%, ensuring 99.9% uptime. Led a 10-day bootcamp, training 50+ developers in Aiken-based smart contract development. Contributed to 10+ open-source projects monthly, driving innovation in the Cardano ecosystem.</p>",
                 "createdAt": "2025-03-11T11:10:31.015Z",
-                "updatedAt": "2025-03-11T11:10:31.015Z",
+                "updatedAt": "2026-01-26T12:34:42.302Z",
                 "isNewEntry": false,
                 "showPlaceholder": false
               }
@@ -683,13 +701,14 @@
           "2025-04-10T12:35:43.106Z",
           "2025-04-23T14:24:44.891Z",
           "2025-05-01T10:46:02.813Z",
-          "2025-05-02T07:52:37.751Z"
+          "2025-05-02T07:52:37.751Z",
+          { "date": "2026-01-29T01:41:54.039Z", "type": "direct" }
         ],
         "usingBusinessTemplateId": "",
         "schemaVersion": "16",
-        "lastChangeAt": "2026-01-12T10:40:16.686Z",
+        "lastChangeAt": "2026-01-31T06:21:18.986Z",
         "createdAt": "2025-01-05T02:42:12.291Z",
-        "updatedAt": "2026-01-12T10:40:16.686Z",
+        "updatedAt": "2026-01-31T06:21:18.986Z",
         "lng": "en"
       }
     ]
