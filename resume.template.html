@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>{{personalDetails.fullName}}</title>
+
+    <style>
+      /* ===== PAGE ===== */
+      @page {
+        size: A4;
+        margin: 0.6in;
+      }
+
+      body {
+        font-family: Inter, Arial, Helvetica, sans-serif;
+        font-size: 11pt;
+        line-height: 1.1;
+        color: #000;
+        margin: 0;
+        width: 400px;
+        background-color: "#ff000045";
+      }
+
+      /* ===== HEADER ===== */
+      .header {
+        margin-bottom: 12px;
+      }
+
+      .name {
+        font-size: 22pt;
+        font-weight: 700;
+        margin-bottom: 4px;
+      }
+
+      .links {
+        font-size: 10.5pt;
+      }
+
+      .links a {
+        color: #000;
+        text-decoration: none;
+      }
+
+      .links span {
+        margin: 0 6px;
+      }
+
+      /* ===== SECTIONS ===== */
+      h2 {
+        font-size: 13pt;
+        font-weight: 700;
+        margin: 16px 0 4px;
+        text-transform: uppercase;
+      }
+
+      hr {
+        border: none;
+        border-top: 1px solid #000;
+        margin-bottom: 6px;
+      }
+
+      /* ===== EXPERIENCE ===== */
+      .job {
+        margin-bottom: 8px;
+      }
+
+      .job-header {
+        display: flex;
+        justify-content: space-between;
+        font-weight: 700;
+      }
+
+      .job-sub {
+        font-style: italic;
+        margin-bottom: 2px;
+      }
+
+      ul {
+        margin: 4px 0 0 18px;
+        padding: 0;
+      }
+
+      li {
+        margin-bottom: 2px;
+      }
+
+      /* ===== EDUCATION ===== */
+      .edu {
+        display: flex;
+        justify-content: space-between;
+        font-weight: 700;
+      }
+
+      .edu-sub {
+        font-style: italic;
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- ===== HEADER ===== -->
+    <div class="header">
+      <div class="name">{{personalDetails.fullName}}</div>
+
+      <div class="links">
+        <a href="{{personalDetails.websiteLink}}">
+          {{personalDetails.website}}
+        </a>
+        <span>•</span>
+
+        <a href="{{personalDetails.social.linkedIn.link}}">
+          {{personalDetails.social.linkedIn.display}}
+        </a>
+        <span>•</span>
+
+        <a href="{{personalDetails.social.github.link}}">
+          {{personalDetails.social.github.display}}
+        </a>
+        <span>•</span>
+
+        <a href="mailto:{{personalDetails.displayEmail}}">
+          {{personalDetails.displayEmail}}
+        </a>
+        <span>•</span>
+
+        {{personalDetails.phone}}
+      </div>
+    </div>
+
+    <!-- ===== SUMMARY ===== -->
+    <h2>Professional Summary</h2>
+    <hr />
+    {{{content.profile.entries.[0].text}}}
+
+    <!-- ===== EXPERIENCE ===== -->
+    <h2>Professional Experience</h2>
+    <hr />
+
+    {{#each content.work.entries}}
+    <div class="job">
+      <div class="job-header">
+        <div>{{jobTitle}}</div>
+        <div>{{startDateNew}}{{#if endDateNew}} – {{endDateNew}}{{/if}}</div>
+      </div>
+
+      {{#if employer}}
+      <div class="job-sub">
+        {{#if employerLink}}
+        <a href="{{employerLink}}">{{employer}}</a>
+        {{else}} {{employer}} {{/if}}
+      </div>
+      {{/if}} {{{description}}}
+    </div>
+    {{/each}}
+
+    <!-- ===== EDUCATION ===== -->
+    <h2>Education</h2>
+    <hr />
+
+    {{#each content.education.entries}}
+    <div class="edu">
+      <div>{{degree}}</div>
+      <div>{{endDateNew}} | {{location}}</div>
+    </div>
+    <div class="edu-sub">{{school}}</div>
+    {{/each}}
+  </body>
+</html>

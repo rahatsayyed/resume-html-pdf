@@ -10,10 +10,6 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
-    "angular-expressions": "^1.5.1",
-    "docxtemplater": "^3.67.6",
-    "fs-extra": "^11.3.3",
-    "handlebars": "^4.7.8",
     "pizzip": "^3.2.0",
     "playwright": "^1.58.0"
   }
