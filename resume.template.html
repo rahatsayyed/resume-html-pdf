@@ -9,6 +9,15 @@
 
     <style>
 
+      /* Page margins: left/right 0; first page top 0, rest 10mm; bottom 10mm. */
+      @page {
+        size: A4;
+        margin: 10mm 0 5mm 0;  /* top right bottom left */
+      }
+      @page :first {
+        margin-top: 0mm;  /* first page: no top margin */
+      }
+
       /* ==========================================================================
          DESIGN TOKENS – change these to adjust spacing, line height, fonts, colors
          ========================================================================== */
