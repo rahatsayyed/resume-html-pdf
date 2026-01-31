@@ -9,27 +9,68 @@
 
     <style>
 
+      /* ==========================================================================
+         DESIGN TOKENS – change these to adjust spacing, line height, fonts, colors
+         ========================================================================== */
+      :root {
+        /* Line height */
+        --line-height: 15px;              /* body, bullets, job/edu/project text */
+        --line-height-heading: 20px;       /* section headings */
+        --line-height-name: 35px;         /* name in header */
+
+        /* Spacing (small → large) */
+        --space-tight: 2pt;                /* paragraphs, below section heading */
+        --space-bullet: 2.5pt;             /* between bullet points */
+        --space-role: 1.5pt;               /* below role/title line (job, edu, project) */
+        --space-company: 3pt;              /* below company + dates line */
+        --space-row: 4pt;                  /* contact rows, cert list items */
+        --space-name: 5pt;                /* below name in header */
+        --space-md: 6pt;                  /* header blocks, job title, section divider */
+        --space-block: 10pt;               /* after job, education, project blocks */
+        --space-section-before: 14pt;     /* above section heading */
+        --space-contact-gap: 0.6em 1.2em; /* between contact items */
+
+        /* Bullet list indent */
+        --ul-margin-left: 4.5mm;
+        --ul-padding-left: 1.2em;
+
+        /* Font sizes */
+        --font-size: 10.5pt;
+        --font-size-heading: 13.5pt;
+        --font-size-name: 25pt;
+        --font-size-jobtitle-optional: 12pt;
+
+        /* Colors */
+        --color-text: #000000;
+        --color-name: rgb(55, 93, 101);
+        --color-contact: rgb(74, 74, 74);
+        --color-divider: rgb(90, 90, 90);
+        --color-bg: #ffffff;
+        --color-header-bg: #f5f5f5;
+        --color-jobtitle-optional: #444444;
+      }
+
       * {
         box-sizing: border-box;
       }
 
       body {
         font-family: Inter, Roboto, Arial, sans-serif;
-        font-size: 10.5pt;
+        font-size: var(--font-size);
         font-weight: 400;
-        line-height: 15px;
-        color: #000000;
+        line-height: var(--line-height);
+        color: var(--color-text);
         margin: 0;
         padding: 0;
         max-width: 100%;
         orphans: 2;
         widows: 2;
-        background: #ffffff;
+        background: var(--color-bg);
       }
 
       /* Header component */
       .header {
-        background: #f5f5f5;
+        background: var(--color-header-bg);
         padding: 9.47083mm 10mm 5.31479mm;
       }
 
@@ -39,47 +80,47 @@
       }
 
       p {
-        margin: 0 0 2pt;
+        margin: 0 0 var(--space-tight);
       }
 
       /* ===== NAME / TITLE (Top Header) ===== */
       .header > .name {
-        margin-bottom: 6pt;
+        margin-bottom: var(--space-md);
       }
 
       .name {
-        font-size: 25pt;
+        font-size: var(--font-size-name);
         font-weight: 700;
-        line-height: 35px;
+        line-height: var(--line-height-name);
         letter-spacing: inherit;
-        color: rgb(55, 93, 101);
+        color: var(--color-name);
         text-align: left;
-        margin: 0 0 5pt;
+        margin: 0 0 var(--space-name);
       }
 
       .job-title-optional {
-        font-size: 12pt;
+        font-size: var(--font-size-jobtitle-optional);
         font-weight: 400;
         font-style: italic;
         line-height: 1.15;
-        color: #444444;
-        margin: 0 0 6pt;
+        color: var(--color-jobtitle-optional);
+        margin: 0 0 var(--space-md);
       }
 
       /* ===== HEADER CONTACT ITEMS (with icons) ===== */
       .links {
-        font-size: 10.5pt;
+        font-size: var(--font-size);
         font-weight: 400;
-        line-height: 15px;
-        color: rgb(74, 74, 74);
+        line-height: var(--line-height);
+        color: var(--color-contact);
       }
 
       .contact-row {
         display: flex;
         flex-wrap: wrap;
         align-items: center;
-        gap: 0.6em 1.2em;
-        margin-bottom: 4pt;
+        gap: var(--space-contact-gap);
+        margin-bottom: var(--space-row);
       }
 
       .contact-row:last-child {
@@ -90,11 +131,11 @@
         display: inline-flex;
         align-items: center;
         gap: 0.35em;
-        color: rgb(74, 74, 74);
+        color: var(--color-contact);
       }
 
       .links .contact-item a {
-        color: rgb(74, 74, 74);
+        color: var(--color-contact);
         text-decoration: none;
       }
 
@@ -102,7 +143,7 @@
         flex-shrink: 0;
         width: 1em;
         height: 1em;
-        color: rgb(74, 74, 74);
+        color: var(--color-contact);
       }
 
       .contact-icon svg {
@@ -113,45 +154,45 @@
 
       /* ===== SECTION HEADERS ===== */
       h2 {
-        font-size: 13.5pt;
+        font-size: var(--font-size-heading);
         font-weight: 700;
-        line-height: 20px;
-        color: rgb(0, 0, 0);
+        line-height: var(--line-height-heading);
+        color: var(--color-text);
         letter-spacing: 0.5px;
         text-transform: uppercase;
-        margin: 14pt 0 2pt 0;
+        margin: var(--space-section-before) 0 var(--space-tight);
       }
 
       .section-divider {
         border: none;
-        border-top: 2px solid rgb(90, 90, 90);
-        margin: 0 0 6pt;
+        border-top: 2px solid var(--color-divider);
+        margin: 0 0 var(--space-md);
       }
 
       /* ===== JOB / ROLE ENTRY ===== */
       .job {
-        margin-bottom: 10pt;
+        margin-bottom: var(--space-block);
         break-inside: avoid;
       }
 
       .job-role-title {
-        font-size: 10.5pt;
+        font-size: var(--font-size);
         font-weight: 700;
-        line-height: 15px;
-        color: rgb(0, 0, 0);
-        margin: 0 0 1.5pt;
+        line-height: var(--line-height);
+        color: var(--color-text);
+        margin: 0 0 var(--space-role);
       }
 
       .job-company-dates {
         display: flex;
         justify-content: space-between;
         align-items: baseline;
-        font-size: 10.5pt;
+        font-size: var(--font-size);
         font-weight: 400;
         font-style: italic;
-        line-height: 15px;
-        color: rgb(0, 0, 0);
-        margin: 0 0 3pt;
+        line-height: var(--line-height);
+        color: var(--color-text);
+        margin: 0 0 var(--space-company);
       }
 
       .job-company-dates .company { flex-shrink: 0; }
@@ -161,12 +202,12 @@
         display: inline-flex;
         align-items: center;
         gap: 0.35em;
-        color: rgb(0, 0, 0);
+        color: var(--color-text);
         text-decoration: none;
       }
 
       .company-with-link:hover {
-        color: rgb(0, 0, 0);
+        color: var(--color-text);
         text-decoration: none;
       }
 
@@ -183,48 +224,48 @@
       /* ===== BULLET POINTS ===== */
       ul {
         list-style-type: disc;
-        margin: 0 0 0 4.5mm;
-        padding: 0 0 0 1.2em;
+        margin: 0 0 0 var(--ul-margin-left);
+        padding: 0 0 0 var(--ul-padding-left);
       }
 
       li {
-        font-size: 10.5pt;
+        font-size: var(--font-size);
         font-weight: 400;
-        line-height: 15px;
-        color: rgb(0, 0, 0);
-        margin-bottom: 2.5pt;
+        line-height: var(--line-height);
+        color: var(--color-text);
+        margin-bottom: var(--space-bullet);
       }
 
       /* ===== EDUCATION ===== */
       .edu-block {
-        margin-bottom: 6pt;
+        margin-bottom: var(--space-block);
         break-inside: avoid;
       }
 
       .edu-degree {
-        font-size: 10.5pt;
+        font-size: var(--font-size);
         font-weight: 700;
-        line-height: 15px;
-        color: rgb(0, 0, 0);
-        margin: 0 0 1.5pt;
+        line-height: var(--line-height);
+        color: var(--color-text);
+        margin: 0 0 var(--space-role);
       }
 
       .edu-school-year {
         display: flex;
         justify-content: space-between;
-        font-size: 10.5pt;
+        font-size: var(--font-size);
         font-weight: 400;
         font-style: italic;
-        line-height: 15px;
-        color: rgb(0, 0, 0);
+        line-height: var(--line-height);
+        color: var(--color-text);
         margin: 0 0;
       }
 
       /* ===== SKILLS ===== */
       .skills-section {
-        font-size: 10.5pt;
+        font-size: var(--font-size);
         font-weight: 400;
-        line-height: 15px;
+        line-height: var(--line-height);
       }
 
       .skills-list {
@@ -238,7 +279,7 @@
         display: inline;
         margin: 0;
         padding: 0;
-        font-size: 10.5pt;
+        font-size: var(--font-size);
       }
 
       /* Pipe with ample space on both sides so skills don't look clustered */
@@ -253,23 +294,23 @@
 
       .skills-group-label {
         font-weight: 600;
-        font-size: 10.5pt;
+        font-size: var(--font-size);
       }
 
       /* ===== CERTIFICATIONS ===== */
       .certifications-section {
-        font-size: 10.5pt;
-        line-height: 15px;
+        font-size: var(--font-size);
+        line-height: var(--line-height);
       }
 
       .certifications-list {
         list-style-type: disc;
         margin: 0;
-        padding: 0 0 0 1.2em;
+        padding: 0 0 0 var(--ul-padding-left);
       }
 
       .cert-item {
-        margin-bottom: 4pt;
+        margin-bottom: var(--space-row);
         break-inside: avoid;
       }
 
@@ -289,27 +330,27 @@
 
       /* ===== PROJECTS (same as Experience, max 2–3 bullets) ===== */
       .project-block {
-        margin-bottom: 10pt;
+        margin-bottom: var(--space-block);
         break-inside: avoid;
       }
 
       .project-title {
-        font-size: 10.5pt;
+        font-size: var(--font-size);
         font-weight: 700;
-        line-height: 15px;
-        color: rgb(0, 0, 0);
-        margin: 0 0 1.5pt;
+        line-height: var(--line-height);
+        color: var(--color-text);
+        margin: 0 0 var(--space-role);
       }
 
       .project-meta {
         display: flex;
         justify-content: space-between;
-        font-size: 10.5pt;
+        font-size: var(--font-size);
         font-weight: 400;
         font-style: italic;
-        line-height: 15px;
-        color: rgb(0, 0, 0);
-        margin: 0 0 3pt;
+        line-height: var(--line-height);
+        color: var(--color-text);
+        margin: 0 0 var(--space-company);
       }
 
       /* ===== PAGE CONTROL (orphans/widows) ===== */
@@ -322,10 +363,10 @@
       }
 
       .summary-content p {
-        margin: 0 0 2pt;
-        font-size: 10.5pt;
-        line-height: 15px;
-        color: rgb(0, 0, 0);
+        margin: 0 0 var(--space-tight);
+        font-size: var(--font-size);
+        line-height: var(--line-height);
+        color: var(--color-text);
       }
     </style>
   </head>
