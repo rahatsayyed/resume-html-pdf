@@ -4,6 +4,16 @@ import { chromium } from "playwright";
 const raw = JSON.parse(fs.readFileSync("resume.json", "utf8"));
 const resume = raw.data.resumes[0];
 
+// Register partials (header and content components)
+Handlebars.registerPartial(
+  "header",
+  fs.readFileSync("components/header.html", "utf8")
+);
+Handlebars.registerPartial(
+  "content",
+  fs.readFileSync("components/content.html", "utf8")
+);
+
 // Load template
 const templateHtml = fs.readFileSync("resume.template.html", "utf8");
 const template = Handlebars.compile(templateHtml);

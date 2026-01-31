@@ -27,15 +27,15 @@
         background: #ffffff;
       }
 
-      /* Content area: header has subtle gray that respects this padding */
-      .page {
-        padding: 0mm 10mm 7.88333mm;
-      }
-
+      /* Header component */
       .header {
         background: #f5f5f5;
-        margin: 0 -12mm 0 -12mm;
         padding: 9.47083mm 10mm 5.31479mm;
+      }
+
+      /* Content component (rest of body) */
+      .content {
+        padding: 0mm 10mm 7.88333mm;
       }
 
       p {
@@ -328,11 +328,10 @@
   </head>
 
   <body>
-    <div class="page">
-    <!-- ===== HEADER ===== -->
+    <!-- ===== HEADER COMPONENT ===== -->
     <div class="header">
       <div class="name">Rahat Sayyed</div>
-
+    
       <div class="links">
         <!-- Row 1: website, LinkedIn, GitHub -->
         <div class="contact-row">
@@ -362,97 +361,98 @@
         </div>
       </div>
     </div>
-
-    <!-- ===== SUMMARY ===== -->
-    <h2>Professional Summary</h2>
-    <hr class="section-divider" />
-    <div class="summary-content"><p>Full-stack & Blockchain Developer with 2+ years of experience specializing in Web 3.0, DApps, and smart contracts. Built blockchain based platforms handling 200+ secure transactions, with zero disputes through a staking and escrow system. Optimized smart contracts to cut transaction fees by 35%, ensuring 99.9% uptime. Led a 10-day bootcamp, training 50+ developers in Aiken-based smart contract development. Contributed to 10+ open-source projects monthly, driving innovation in the Cardano ecosystem.</p></div>
-
-    <!-- ===== EXPERIENCE ===== -->
-    <h2>Professional Experience</h2>
-    <hr class="section-divider" />
-
-    <div class="job">
-      <div class="job-role-title">Web 3.0 Developer</div>
-      <div class="job-company-dates">
-        <span class="company">
-          <a href="https://www.konma.io/" class="company-with-link" aria-label="Company link">Konma Dao <span class="company-link-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 36" fill="currentColor"><path d="M17.6 24.32l-2.46 2.44a4 4 0 01-5.62 0 3.92 3.92 0 010-5.55l4.69-4.65a4 4 0 015.62 0 3.86 3.86 0 011 1.71 2 2 0 00.27-.27l1.29-1.28a5.89 5.89 0 00-1.15-1.62 6 6 0 00-8.44 0l-4.7 4.69a5.91 5.91 0 000 8.39 6 6 0 008.44 0l3.65-3.62h-.5a8 8 0 01-2.09-.24z"/><path d="M28.61 7.82a6 6 0 00-8.44 0l-3.65 3.62h.49a8 8 0 012.1.28l2.46-2.44a4 4 0 015.62 0 3.92 3.92 0 010 5.55l-4.69 4.65a4 4 0 01-5.62 0 3.86 3.86 0 01-1-1.71 2 2 0 00-.28.23l-1.29 1.28a5.89 5.89 0 001.15 1.62 6 6 0 008.44 0l4.69-4.65a5.92 5.92 0 000-8.39z"/></svg></span></a>
-        </span>
-        <span class="dates">2023 – present</span>
+    <!-- ===== CONTENT COMPONENT ===== -->
+    <div class="content">
+      <!-- ===== SUMMARY ===== -->
+      <h2>Professional Summary</h2>
+      <hr class="section-divider" />
+      <div class="summary-content"><p>Full-stack & Blockchain Developer with 2+ years of experience specializing in Web 3.0, DApps, and smart contracts. Built blockchain based platforms handling 200+ secure transactions, with zero disputes through a staking and escrow system. Optimized smart contracts to cut transaction fees by 35%, ensuring 99.9% uptime. Led a 10-day bootcamp, training 50+ developers in Aiken-based smart contract development. Contributed to 10+ open-source projects monthly, driving innovation in the Cardano ecosystem.</p></div>
+    
+      <!-- ===== EXPERIENCE ===== -->
+      <h2>Professional Experience</h2>
+      <hr class="section-divider" />
+    
+      <div class="job">
+        <div class="job-role-title">Web 3.0 Developer</div>
+        <div class="job-company-dates">
+          <span class="company">
+            <a href="https://www.konma.io/" class="company-with-link" aria-label="Company link">Konma Dao <span class="company-link-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 36" fill="currentColor"><path d="M17.6 24.32l-2.46 2.44a4 4 0 01-5.62 0 3.92 3.92 0 010-5.55l4.69-4.65a4 4 0 015.62 0 3.86 3.86 0 011 1.71 2 2 0 00.27-.27l1.29-1.28a5.89 5.89 0 00-1.15-1.62 6 6 0 00-8.44 0l-4.7 4.69a5.91 5.91 0 000 8.39 6 6 0 008.44 0l3.65-3.62h-.5a8 8 0 01-2.09-.24z"/><path d="M28.61 7.82a6 6 0 00-8.44 0l-3.65 3.62h.49a8 8 0 012.1.28l2.46-2.44a4 4 0 015.62 0 3.92 3.92 0 010 5.55l-4.69 4.65a4 4 0 01-5.62 0 3.86 3.86 0 01-1-1.71 2 2 0 00-.28.23l-1.29 1.28a5.89 5.89 0 001.15 1.62 6 6 0 008.44 0l4.69-4.65a5.92 5.92 0 000-8.39z"/></svg></span></a>
+          </span>
+          <span class="dates">2023 – present</span>
+        </div>
+        <ul><li data-indent="1"><p data-indent="1">Volunteered for Unikron, a Multichain Meta DEX &amp; Yield Aggregator, by incorporating Next.js and Lucid.js for frontend and blockchain interactions, boosting swap success ratio to 95% through DEX aggregation</p></li><li data-indent="1"><p data-indent="1">Constructed secure Aiken based smart contracts for a carbon credit marketplace, achieving a 99.9% uptime for trading and eliminating double spending vulnerabilities, improving environmental project investment</p></li><li data-indent="1"><p data-indent="1">Refine Karbon Ledger’s smart contracts, cutting transaction fees by 35% and designing an architecture that eliminates 100% of security vulnerabilities</p></li><li data-indent="1"><p data-indent="1">Build a secure carbon credit marketplace and registry for 300+ verified offset projects, using Lucid.js and Mesh.js for seamless Cardano blockchain integration</p></li><li data-indent="1"><p data-indent="1">Engineered robust frontend solutions utilizing Next.js, integrating with a Haskell backend and RESTful APIs, enabling trust less bridge functionality and increasing overall platform security by 15%</p></li><li data-indent="1"><p data-indent="1">Drive the execution of the Cardano Meta DEX V1 roadmap, ensuring alignment with Q1/2025 milestones to accelerate adoption</p></li><li data-indent="1"><p data-indent="1">Developed 5+ reusable React.js components for the Cardano Meta DEX front-end, leading to a 40% reduction in development time for new feature implementation and improved code maintainability</p></li><li data-indent="1"><p data-indent="1">Engage with 5+ developer communities, fostering 10+ open-source contributions monthly, maintaining 100% up-to-date documentation, and guiding teams on Cardano-based solutions</p></li><li data-indent="1"><p data-indent="1">Designed and audited 7+ proof-of-concept smart contracts for decentralized applications (dApps) using Aiken, improving code maintainability and reducing development time by 20%</p></li><li data-indent="1"><p data-indent="1">Led a 10-day bootcamp, equipping developers with Aiken expertise through hands on training and real world smart contract development</p></li></ul>
       </div>
-      <ul><li data-indent="1"><p data-indent="1">Volunteered for Unikron, a Multichain Meta DEX &amp; Yield Aggregator, by incorporating Next.js and Lucid.js for frontend and blockchain interactions, boosting swap success ratio to 95% through DEX aggregation</p></li><li data-indent="1"><p data-indent="1">Constructed secure Aiken based smart contracts for a carbon credit marketplace, achieving a 99.9% uptime for trading and eliminating double spending vulnerabilities, improving environmental project investment</p></li><li data-indent="1"><p data-indent="1">Refine Karbon Ledger’s smart contracts, cutting transaction fees by 35% and designing an architecture that eliminates 100% of security vulnerabilities</p></li><li data-indent="1"><p data-indent="1">Build a secure carbon credit marketplace and registry for 300+ verified offset projects, using Lucid.js and Mesh.js for seamless Cardano blockchain integration</p></li><li data-indent="1"><p data-indent="1">Engineered robust frontend solutions utilizing Next.js, integrating with a Haskell backend and RESTful APIs, enabling trust less bridge functionality and increasing overall platform security by 15%</p></li><li data-indent="1"><p data-indent="1">Drive the execution of the Cardano Meta DEX V1 roadmap, ensuring alignment with Q1/2025 milestones to accelerate adoption</p></li><li data-indent="1"><p data-indent="1">Developed 5+ reusable React.js components for the Cardano Meta DEX front-end, leading to a 40% reduction in development time for new feature implementation and improved code maintainability</p></li><li data-indent="1"><p data-indent="1">Engage with 5+ developer communities, fostering 10+ open-source contributions monthly, maintaining 100% up-to-date documentation, and guiding teams on Cardano-based solutions</p></li><li data-indent="1"><p data-indent="1">Designed and audited 7+ proof-of-concept smart contracts for decentralized applications (dApps) using Aiken, improving code maintainability and reducing development time by 20%</p></li><li data-indent="1"><p data-indent="1">Led a 10-day bootcamp, equipping developers with Aiken expertise through hands on training and real world smart contract development</p></li></ul>
-    </div>
-    <div class="job">
-      <div class="job-role-title">Independent and Academic Projects</div>
-      <div class="job-company-dates">
-        <span class="company">
-          
-        </span>
-        <span class="dates"></span>
+      <div class="job">
+        <div class="job-role-title">Independent and Academic Projects</div>
+        <div class="job-company-dates">
+          <span class="company">
+            
+          </span>
+          <span class="dates"></span>
+        </div>
+        <p><em>Talendro –&#160;</em></p><ul><li data-indent="1">Initiated and managed relationships with customers; wrote and executed business plan that resulted in 80% increase in customer engagement&#160;</li><li data-indent="1"><p data-indent="1">Constructed 8+ Aiken-based smart contracts, implementing secure escrow payments and slashing mechanisms, facilitating over 200 successful transactions with zero reported disputes on the decentralized platform</p></li><li data-indent="1"><p data-indent="1">Implemented transparent user profiles using Lucid.js and Mesh.js on the blockchain, achieving full data provenance and reducing disputes related to reputation by 35% within 6 months</p></li><li data-indent="1"><p data-indent="1">Engineered a reputation-based staking mechanism for Talendro, a decentralized freelance platform on Cardano, increasing trust between 70+ freelancers and clients by ensuring secure and transparent dispute resolution processes</p></li></ul><p data-indent="1"></p><p></p><p><em>HirEx –&#160;</em></p><ul><li data-indent="1"><p data-indent="1">Collaborated to construct an automated hiring platform, reducing time-to-hire by 60% through AI-driven assessments</p></li><li data-indent="1"><p data-indent="1">Built a speech-to-text transcription system, leveraging RESTful APIs, cutting administrative overhead by 40%</p></li><li data-indent="1"><p data-indent="1">Applied tone analysis for verbal communication, improving evaluation accuracy by 25%</p></li></ul>
       </div>
-      <p><em>Talendro –&#160;</em></p><ul><li data-indent="1">Initiated and managed relationships with customers; wrote and executed business plan that resulted in 80% increase in customer engagement&#160;</li><li data-indent="1"><p data-indent="1">Constructed 8+ Aiken-based smart contracts, implementing secure escrow payments and slashing mechanisms, facilitating over 200 successful transactions with zero reported disputes on the decentralized platform</p></li><li data-indent="1"><p data-indent="1">Implemented transparent user profiles using Lucid.js and Mesh.js on the blockchain, achieving full data provenance and reducing disputes related to reputation by 35% within 6 months</p></li><li data-indent="1"><p data-indent="1">Engineered a reputation-based staking mechanism for Talendro, a decentralized freelance platform on Cardano, increasing trust between 70+ freelancers and clients by ensuring secure and transparent dispute resolution processes</p></li></ul><p data-indent="1"></p><p></p><p><em>HirEx –&#160;</em></p><ul><li data-indent="1"><p data-indent="1">Collaborated to construct an automated hiring platform, reducing time-to-hire by 60% through AI-driven assessments</p></li><li data-indent="1"><p data-indent="1">Built a speech-to-text transcription system, leveraging RESTful APIs, cutting administrative overhead by 40%</p></li><li data-indent="1"><p data-indent="1">Applied tone analysis for verbal communication, improving evaluation accuracy by 25%</p></li></ul>
-    </div>
-
-    <!-- ===== EDUCATION ===== -->
-    <h2>Education</h2>
-    <hr class="section-divider" />
-
-    <div class="edu-block">
-      <div class="edu-degree">Bachelors’ of Engineering: Computer Engineering</div>
-      <div class="edu-school-year">
-        <span class="school">Keystone School of Engineering | Pune, India</span>
-        <span class="year">2023</span>
+    
+      <!-- ===== EDUCATION ===== -->
+      <h2>Education</h2>
+      <hr class="section-divider" />
+    
+      <div class="edu-block">
+        <div class="edu-degree">Bachelors’ of Engineering: Computer Engineering</div>
+        <div class="edu-school-year">
+          <span class="school">Keystone School of Engineering | Pune, India</span>
+          <span class="year">2023</span>
+        </div>
       </div>
-    </div>
-
-    <!-- ===== SKILLS (after Education; data-separator="comma" for comma, default is pipe) ===== -->
-    <h2>Skills</h2>
-    <hr class="section-divider" />
-    <div class="skills-section" >
-      <ul class="skills-list">
-        <li>JavaScript</li>
-        <li>Aiken</li>
-        <li>TypeScript</li>
-        <li>Solidity</li>
-        <li>Cardano CLI</li>
-        <li>Lucid.js</li>
-        <li>Mesh.js</li>
-        <li>Firestore</li>
-        <li>MongoDB</li>
-        <li>Node.js</li>
-        <li>Express.js</li>
-        <li>RESTful APIs</li>
-        <li>React.js</li>
-        <li>Next.js</li>
-        <li>Blockchain Security</li>
-        <li>TailwindCSS</li>
-      </ul>
-    </div>
-
-    <!-- ===== CERTIFICATIONS ===== -->
-    <h2>Certifications</h2>
-    <hr class="section-divider" />
-    <div class="certifications-section">
-      <ul class="certifications-list">
-        <li class="cert-item">
-          <p>Aiken Development Program: Completed Certified Aiken Course by Emurgo Academy</p><span class="cert-year"> (2024)</span>
-        </li>
-        <li class="cert-item">
-          <p>Cardano Blockchain Certified Associate (CBCA) Alpha Program 2 by Cardano Foundation</p><span class="cert-year"> (2023)</span>
-        </li>
-        <li class="cert-item">
-          <p>Ethereum and Solidity: Completed an intensive 300+ hour course with a holistic approach at Codedamn.</p><span class="cert-year"> (2022)</span>
-        </li>
-        <li class="cert-item">
-          <p>Web Development Certification:  Completed a comprehensive program at NIIT, in modern web development technologies.</p><span class="cert-year"> (2022)</span>
-        </li>
-        <li class="cert-item">
-          <p>Haskell & Plutus: Completed 80+ hours intensive training in Haskell and Plutus by Konma.</p><span class="cert-year"> (2023)</span>
-        </li>
-      </ul>
-    </div>
-
-    <!-- ===== PROJECTS (if separate from Experience) ===== -->
+    
+      <!-- ===== SKILLS ===== -->
+      <h2>Skills</h2>
+      <hr class="section-divider" />
+      <div class="skills-section" >
+        <ul class="skills-list">
+          <li>JavaScript</li>
+          <li>Aiken</li>
+          <li>TypeScript</li>
+          <li>Solidity</li>
+          <li>Cardano CLI</li>
+          <li>Lucid.js</li>
+          <li>Mesh.js</li>
+          <li>Firestore</li>
+          <li>MongoDB</li>
+          <li>Node.js</li>
+          <li>Express.js</li>
+          <li>RESTful APIs</li>
+          <li>React.js</li>
+          <li>Next.js</li>
+          <li>Blockchain Security</li>
+          <li>TailwindCSS</li>
+        </ul>
+      </div>
+    
+      <!-- ===== CERTIFICATIONS ===== -->
+      <h2>Certifications</h2>
+      <hr class="section-divider" />
+      <div class="certifications-section">
+        <ul class="certifications-list">
+          <li class="cert-item">
+            <p>Aiken Development Program: Completed Certified Aiken Course by Emurgo Academy</p><span class="cert-year"> (2024)</span>
+          </li>
+          <li class="cert-item">
+            <p>Cardano Blockchain Certified Associate (CBCA) Alpha Program 2 by Cardano Foundation</p><span class="cert-year"> (2023)</span>
+          </li>
+          <li class="cert-item">
+            <p>Ethereum and Solidity: Completed an intensive 300+ hour course with a holistic approach at Codedamn.</p><span class="cert-year"> (2022)</span>
+          </li>
+          <li class="cert-item">
+            <p>Web Development Certification:  Completed a comprehensive program at NIIT, in modern web development technologies.</p><span class="cert-year"> (2022)</span>
+          </li>
+          <li class="cert-item">
+            <p>Haskell & Plutus: Completed 80+ hours intensive training in Haskell and Plutus by Konma.</p><span class="cert-year"> (2023)</span>
+          </li>
+        </ul>
+      </div>
+    
+      <!-- ===== PROJECTS ===== -->
     </div>
   </body>
 </html>
