@@ -57,7 +57,18 @@
       ]
     }
   ],
-  "projects": [],
+  "projects": [
+    {
+      "title": "Example project title",
+      "link": "https://link if any",
+      "start": "06/2022",
+      "end": "2026",
+      "description": [
+        "bullet point 1",
+        "bullet point 2"
+      ]
+    }
+  ],
   "education": [
     {
       "degree": "Bachelors’ of Engineering: Computer Engineering",

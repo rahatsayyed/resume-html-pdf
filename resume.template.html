@@ -5,17 +5,19 @@
     <title>{{personalDetails.fullName}}</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Roboto:wght@400;600;700&display=swap" rel="stylesheet" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Roboto:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
 
     <style>
-
       /* Page margins: left/right 0; first page top 0, rest 10mm; bottom 10mm. */
       @page {
         size: A4;
-        margin: 10mm 0 5mm 0;  /* top right bottom left */
+        margin: 10mm 0 5mm 0; /* top right bottom left */
       }
       @page :first {
-        margin-top: 0mm;  /* first page: no top margin */
+        margin-top: 0mm; /* first page: no top margin */
       }
 
       /* ==========================================================================
@@ -23,20 +25,20 @@
          ========================================================================== */
       :root {
         /* Line height */
-        --line-height: 15px;              /* body, bullets, job/edu/project text */
-        --line-height-heading: 20px;       /* section headings */
-        --line-height-name: 35px;         /* name in header */
+        --line-height: 15px; /* body, bullets, job/edu/project text */
+        --line-height-heading: 20px; /* section headings */
+        --line-height-name: 35px; /* name in header */
 
         /* Spacing (small → large) */
-        --space-tight: 2pt;                /* paragraphs, below section heading */
-        --space-bullet: 2pt;             /* between bullet points */
-        --space-role: 1.5pt;               /* below role/title line (job, edu, project) */
-        --space-company: 3pt;              /* below company + dates line */
-        --space-row: 4pt;                  /* contact rows, cert list items */
-        --space-name: 5pt;                /* below name in header */
-        --space-md: 6pt;                  /* header blocks, job title, section divider */
-        --space-block: 10pt;               /* after job, education, project blocks */
-        --space-section-before: 14pt;     /* above section heading */
+        --space-tight: 2pt; /* paragraphs, below section heading */
+        --space-bullet: 2pt; /* between bullet points */
+        --space-role: 1.5pt; /* below role/title line (job, edu, project) */
+        --space-company: 3pt; /* below company + dates line */
+        --space-row: 4pt; /* contact rows, cert list items */
+        --space-name: 5pt; /* below name in header */
+        --space-md: 6pt; /* header blocks, job title, section divider */
+        --space-block: 10pt; /* after job, education, project blocks */
+        --space-section-before: 14pt; /* above section heading */
         --space-contact-gap: 0.6em 1.2em; /* between contact items */
 
         /* Bullet list indent */
@@ -204,8 +206,12 @@
         margin: 0 0 var(--space-company);
       }
 
-      .job-company-dates .company { flex-shrink: 0; }
-      .job-company-dates .dates { flex-shrink: 0; }
+      .job-company-dates .company {
+        flex-shrink: 0;
+      }
+      .job-company-dates .dates {
+        flex-shrink: 0;
+      }
 
       .company-with-link {
         display: inline-flex;
@@ -297,7 +303,9 @@
         font-weight: 400;
       }
 
-      .skills-section[data-separator="comma"] .skills-list li:not(:last-child)::after {
+      .skills-section[data-separator="comma"]
+        .skills-list
+        li:not(:last-child)::after {
         content: ", ";
       }
 
@@ -343,23 +351,44 @@
         break-inside: avoid;
       }
 
+      .project-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        margin-bottom: var(--space-role);
+      }
+
       .project-title {
         font-size: var(--font-size);
         font-weight: 700;
         line-height: var(--line-height);
         color: var(--color-text);
-        margin: 0 0 var(--space-role);
       }
 
-      .project-meta {
-        display: flex;
-        justify-content: space-between;
+      .project-title a {
+        color: var(--color-text);
+        text-decoration: none;
+      }
+
+      .project-link-icon {
+        display: inline-flex;
+        margin-left: 0.25em;
+        font-weight: 400; /* Ensure icon isn't bold */
+      }
+
+      .project-link-icon svg {
+        width: 0.9em;
+        height: 0.9em;
+        fill: currentColor;
+      }
+
+      .project-dates {
         font-size: var(--font-size);
         font-weight: 400;
         font-style: italic;
         line-height: var(--line-height);
         color: var(--color-text);
-        margin: 0 0 var(--space-company);
+        flex-shrink: 0;
       }
 
       /* ===== PAGE CONTROL (orphans/widows) ===== */
@@ -381,7 +410,6 @@
   </head>
 
   <body>
-    {{> header}}
-    {{> content}}
+    {{> header}} {{> content}}
   </body>
 </html>
