@@ -1,0 +1,58 @@
+{
+  "name": "FIRST LAST",
+  "jobTitle": "null or value",
+  "email": "user@example.com",
+  "phone": "1234567890",
+  "website": {
+    "url": "https://example.com",
+    "label": "displayName.com"
+  },
+  "social": {
+    "linkedin": {
+      "url": "https://linkedin.com/in/userName",
+      "label": "linkedin.com/in/userName"
+    },
+    "github": {
+      "url": "https://github.com/userName",
+      "label": "github.com/userName"
+    }
+  },
+  "summary": "Full-stack &amp; ...",
+  "experience": [
+    {
+      "title": "JOB TITLE",
+      "company": "Company",
+      "companyUrl": "https://companyURL.com/",
+      "location": "location",
+      "start": "Oct 2025",
+      "end": "Present",
+      "description": ["Built and maintained a ...", "..."]
+    }
+  ],
+  "projects": [
+    {
+      "title": "Project Name",
+      "link": null,
+      "start": null,
+      "end": null,
+      "description": ["Initiated and managed ...", "..."]
+    }
+  ],
+  "education": [
+    {
+      "degree": "Bachelors of Engineering: Computer Engineering",
+      "school": "College Name",
+      "location": "Location",
+      "year": "May 2023"
+    }
+  ],
+  "skills": ["JavaScript", "Aiken", "TypeScript", "..."],
+  "certificates": [
+    {
+      "name": "Certification Name",
+      "issuer": "Issuer",
+      "year": null,
+      "credentialUrl": null
+    }
+  ]
+}
