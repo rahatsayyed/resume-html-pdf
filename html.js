@@ -28,7 +28,7 @@ const browser = await chromium.launch();
 const page = await browser.newPage();
 
 await page.goto(`file://${process.cwd()}/resume.html`, {
-  waitUntil: "networkidle",
+  waitUntil: "load",
 });
 
 await page.pdf({

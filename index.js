@@ -52,7 +52,7 @@ const browser = await chromium.launch();
 const page = await browser.newPage();
 
 await page.goto(`file://${htmlPath}`, {
-  waitUntil: "networkidle",
+  waitUntil: "load",
 });
 
 await page.pdf({
