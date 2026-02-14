@@ -38,3 +38,4 @@ await page.pdf({
 });
 
 await browser.close();
+console.log("✅ resume.pdf generated");

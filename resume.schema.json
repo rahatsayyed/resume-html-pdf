@@ -1,0 +1,141 @@
+{
+  "type": "object",
+  "required": ["name", "social"],
+  "additionalProperties": false,
+  "properties": {
+    "name": {
+      "type": "string",
+      "minLength": 1
+    },
+
+    "jobTitle": {
+      "type": ["string", "null"]
+    },
+
+    "email": {
+      "type": ["string", "null"]
+    },
+
+    "phone": {
+      "type": ["string", "null"]
+    },
+
+    "website": {
+      "type": ["object", "null"],
+      "required": ["url", "label"],
+      "additionalProperties": false,
+      "properties": {
+        "url": { "type": "string" },
+        "label": { "type": "string" }
+      }
+    },
+
+    "social": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "linkedin": {
+          "type": ["object", "null"],
+          "required": ["url", "label"],
+          "additionalProperties": false,
+          "properties": {
+            "url": { "type": "string" },
+            "label": { "type": "string" }
+          }
+        },
+        "github": {
+          "type": ["object", "null"],
+          "required": ["url", "label"],
+          "additionalProperties": false,
+          "properties": {
+            "url": { "type": "string" },
+            "label": { "type": "string" }
+          }
+        }
+      }
+    },
+
+    "summary": {
+      "type": ["string", "null"]
+    },
+
+    "experience": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["title", "company", "start", "end", "description"],
+        "additionalProperties": false,
+        "properties": {
+          "title": { "type": "string" },
+          "company": { "type": "string" },
+          "companyUrl": { "type": ["string", "null"] },
+          "location": { "type": ["string", "null"] },
+          "start": { "type": "string" },
+          "end": { "type": "string" },
+          "description": {
+            "type": "array",
+            "minItems": 3,
+            "maxItems": 5,
+            "items": { "type": "string" }
+          }
+        }
+      }
+    },
+
+    "projects": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["title", "description"],
+        "additionalProperties": false,
+        "properties": {
+          "title": { "type": "string" },
+          "link": { "type": ["string", "null"] },
+          "start": { "type": ["string", "null"] },
+          "end": { "type": ["string", "null"] },
+          "description": {
+            "type": "array",
+            "minItems": 3,
+            "maxItems": 5,
+            "items": { "type": "string" }
+          }
+        }
+      }
+    },
+
+    "education": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["degree", "school", "year"],
+        "additionalProperties": false,
+        "properties": {
+          "degree": { "type": "string" },
+          "school": { "type": "string" },
+          "location": { "type": ["string", "null"] },
+          "year": { "type": "string" }
+        }
+      }
+    },
+
+    "skills": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+
+    "certificates": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name"],
+        "additionalProperties": false,
+        "properties": {
+          "name": { "type": "string" },
+          "issuer": { "type": ["string", "null"] },
+          "year": { "type": ["string", "null"] },
+          "credentialUrl": { "type": ["string", "null"] }
+        }
+      }
+    }
+  }
+}

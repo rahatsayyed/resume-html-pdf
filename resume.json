@@ -57,42 +57,7 @@
       ]
     }
   ],
-  "projects": [
-    {
-      "title": "Talendro",
-      "link": null,
-      "start": null,
-      "end": null,
-      "description": [
-        "Initiated and managed relationships with customers; wrote and executed business plan that resulted in 80% increase in customer engagement ",
-        "Constructed 8+ Aiken-based smart contracts, implementing secure escrow payments and slashing mechanisms, facilitating over 200 successful transactions with zero reported disputes on the decentralized platform",
-        "Implemented transparent user profiles using Lucid.js and Mesh.js on the blockchain, achieving full data provenance and reducing disputes related to reputation by 35% within 6 months",
-        "Engineered a reputation-based staking mechanism for Talendro, a decentralized freelance platform on Cardano, increasing trust between 70+ freelancers and clients by ensuring secure and transparent dispute resolution processes"
-      ]
-    },
-    {
-      "title": "HirEx",
-      "link": null,
-      "start": null,
-      "end": null,
-      "description": [
-        "Collaborated to construct an automated hiring platform, reducing time-to-hire by 60% through AI-driven assessments",
-        "Built a speech-to-text transcription system, leveraging RESTful APIs, cutting administrative overhead by 40%",
-        "Applied tone analysis for verbal communication, improving evaluation accuracy by 25%"
-      ]
-    },
-    {
-      "title": "ConnectingDots",
-      "link": null,
-      "start": null,
-      "end": null,
-      "description": [
-        "Led the development of a matching algorithm, boosting successful mentor mentee pairings by 40%",
-        "Designed a profile system utilizing MongoDB for structured data storage, reducing mismatches by 30%",
-        "Engineered a calendar and scheduling tool, improving meeting coordination by 50% using React.js and Node.js"
-      ]
-    }
-  ],
+  "projects": [],
   "education": [
     {
       "degree": "Bachelors’ of Engineering: Computer Engineering",

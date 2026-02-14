@@ -73,53 +73,6 @@ function escapeRegExp(string) {
   return string.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 }
 
-// Helper for separate projects (Parsing the specific HTML block for "Independent and Academic Projects")
-function parseProjects(html) {
-  // The structure is like: <p><em>Title – </em></p><ul><li>...</li></ul>
-  // We need to split by <p><em> or similar markers
-  // This is specific to the user's data structure
-
-  const projects = [];
-
-  // Regex to find titles in <p><em>...</em></p> or variations
-  // and then the following <ul>...</ul> content
-
-  // Split by the title indicators
-  const sections = html.split(/<p>\s*<em>/);
-
-  sections.forEach((section) => {
-    if (!section.trim()) return;
-
-    // Extract title (up to </em> or –)
-    let titleEnd = section.indexOf("</em>");
-    if (titleEnd === -1) titleEnd = section.indexOf("<"); // fallback
-
-    let title = section
-      .substring(0, titleEnd)
-      .replace(/–|&nbsp;/g, "")
-      .trim();
-
-    // Extract the list part
-    const listStart = section.indexOf("<ul>");
-    if (listStart !== -1) {
-      const listContent = section.substring(listStart);
-      const description = parseDescription(listContent);
-
-      if (title && description.length > 0) {
-        projects.push({
-          title: title,
-          link: null,
-          start: null,
-          end: null,
-          description: description,
-        });
-      }
-    }
-  });
-
-  return projects;
-}
-
 // Main Map
 const newResume = {
   name: data.personalDetails.fullName,
@@ -156,29 +109,41 @@ const newResume = {
       description: parseDescription(e.description),
     })),
 
-  projects: [], // Will fill from the hidden entry
+  projects: (data.content.project?.entries || [])
+    .filter((e) => !e.isHidden)
+    .map((e) => ({
+      title: e.projectTitle,
+      link: e.projectTitleLink || null,
+      start: e.startDateNew || null,
+      end: e.endDateNew || null,
+      description: parseDescription(e.description),
+    })),
 
-  education: (data.content.education?.entries || []).map((e) => ({
-    degree: e.degree,
-    school: e.school,
-    location: e.location || null,
-    year: e.endDateNew || null,
-  })),
+  education: (data.content.education?.entries || [])
+    .filter((e) => !e.isHidden)
+    .map((e) => ({
+      degree: e.degree,
+      school: e.school,
+      location: e.location || null,
+      year: e.endDateNew || null,
+    })),
 
-  skills: (data.content.skill?.entries || []).map((e) => e.skill),
+  skills: (data.content.skill?.entries || [])
+    .filter((e) => !e.isHidden)
+    .map((e) => e.skill),
 
-  certificates: (data.content.certificate?.entries || []).map(
-    parseCertification,
-  ),
+  certificates: (data.content.certificate?.entries || [])
+    .filter((e) => !e.isHidden)
+    .map(parseCertification),
 };
 
-// Process hidden "Independent and Academic Projects"
-const hiddenProjectsEntry = (data.content.work?.entries || []).find(
-  (e) => e.isHidden === true && e.jobTitle.includes("Project"),
-);
-if (hiddenProjectsEntry) {
-  newResume.projects = parseProjects(hiddenProjectsEntry.description);
-}
+// Process hidden "Independent and Academic Projects" - REMOVED as per user request to ignore isHidden: true
+// const hiddenProjectsEntry = (data.content.work?.entries || []).find(
+//   (e) => e.isHidden === true && e.jobTitle.includes("Project"),
+// );
+// if (hiddenProjectsEntry) {
+//   newResume.projects = parseProjects(hiddenProjectsEntry.description);
+// }
 // Write to resume.json in the parent directory
 fs.writeFileSync(
   path.join(__dirname, "../resume.json"),
