@@ -1,38 +1,48 @@
 import fs from "fs";
+import path from "path";
 import Handlebars from "handlebars";
 import { chromium } from "playwright";
-const resume = JSON.parse(fs.readFileSync("resume.json", "utf8"));
+
+const inputDir = path.resolve(process.cwd(), "input");
+const outputDir = process.cwd();
+
+const resumePath = path.join(inputDir, "resume.json");
+const templatePath = path.join(inputDir, "resume.template.html");
+const htmlPath = path.join(outputDir, "resume.html");
+const pdfPath = path.join(outputDir, "resume.pdf");
+
+const resume = JSON.parse(fs.readFileSync(resumePath, "utf8"));
 
 // Register partials (header and content components)
 Handlebars.registerPartial(
   "header",
-  fs.readFileSync("components/header.html", "utf8"),
+  fs.readFileSync(path.join(process.cwd(), "components/header.html"), "utf8"),
 );
 Handlebars.registerPartial(
   "content",
-  fs.readFileSync("components/content.html", "utf8"),
+  fs.readFileSync(path.join(process.cwd(), "components/content.html"), "utf8"),
 );
 
 // Load template
-const templateHtml = fs.readFileSync("resume.template.html", "utf8");
+const templateHtml = fs.readFileSync(templatePath, "utf8");
 const template = Handlebars.compile(templateHtml);
 
 // Render
 const html = template(resume);
 
 // Save
-fs.writeFileSync("resume.html", html);
+fs.writeFileSync(htmlPath, html);
 console.log("✅ resume.html generated");
 
 const browser = await chromium.launch();
 const page = await browser.newPage();
 
-await page.goto(`file://${process.cwd()}/resume.html`, {
+await page.goto(`file://${htmlPath}`, {
   waitUntil: "load",
 });
 
 await page.pdf({
-  path: "resume.pdf",
+  path: pdfPath,
   format: "A4",
   printBackground: true,
 });

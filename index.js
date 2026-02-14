@@ -4,18 +4,17 @@ import Handlebars from "handlebars";
 import { chromium } from "playwright";
 
 const folderArg = process.argv[2];
-const baseDir = folderArg
+const inputDir = path.resolve(process.cwd(), "input");
+const outputDir = folderArg
   ? path.resolve(process.cwd(), folderArg)
   : process.cwd();
 
-if (folderArg && !fs.existsSync(baseDir)) {
-  console.error(`Error: Directory '${baseDir}' does not exist.`);
-  process.exit(1);
-}
-
-const resumePath = path.join(baseDir, "resume.json");
-const htmlPath = path.join(baseDir, "resume.html");
-const pdfPath = path.join(baseDir, "resume.pdf");
+const resumePath = folderArg
+  ? path.join(outputDir, "resume.json")
+  : path.join(inputDir, "resume.json");
+const templatePath = path.join(inputDir, "resume.template.html");
+const htmlPath = path.join(outputDir, "resume.html");
+const pdfPath = path.join(outputDir, "resume.pdf");
 
 if (!fs.existsSync(resumePath)) {
   console.error(`Error: '${resumePath}' not found.`);
@@ -35,10 +34,7 @@ Handlebars.registerPartial(
 );
 
 // Load template
-const templateHtml = fs.readFileSync(
-  path.join(process.cwd(), "resume.template.html"),
-  "utf8",
-);
+const templateHtml = fs.readFileSync(templatePath, "utf8");
 const template = Handlebars.compile(templateHtml);
 
 // Render
