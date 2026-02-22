@@ -3,11 +3,12 @@ import path from "path";
 import Handlebars from "handlebars";
 import { chromium } from "playwright";
 
+const projectRoot = import.meta.dirname;
 const folderArg = process.argv[2];
-const inputDir = path.resolve(process.cwd(), "input");
+const inputDir = path.resolve(projectRoot, "input");
 const outputDir = folderArg
-  ? path.resolve(process.cwd(), folderArg)
-  : process.cwd();
+  ? path.resolve(projectRoot, folderArg)
+  : projectRoot;
 
 const resumePath = folderArg
   ? path.join(outputDir, "resume.json")
@@ -26,11 +27,11 @@ const resume = JSON.parse(fs.readFileSync(resumePath, "utf8"));
 // Register partials (header and content components)
 Handlebars.registerPartial(
   "header",
-  fs.readFileSync(path.join(process.cwd(), "components/header.html"), "utf8"),
+  fs.readFileSync(path.join(projectRoot, "components/header.html"), "utf8"),
 );
 Handlebars.registerPartial(
   "content",
-  fs.readFileSync(path.join(process.cwd(), "components/content.html"), "utf8"),
+  fs.readFileSync(path.join(projectRoot, "components/content.html"), "utf8"),
 );
 
 // Load template
