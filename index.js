@@ -7,7 +7,7 @@ const projectRoot = import.meta.dirname;
 const folderArg = process.argv[2];
 const inputDir = path.resolve(projectRoot, "input");
 const outputDir = folderArg
-  ? path.resolve(projectRoot, folderArg)
+  ? path.resolve(projectRoot, "automation", folderArg)
   : projectRoot;
 
 const resumePath = folderArg
