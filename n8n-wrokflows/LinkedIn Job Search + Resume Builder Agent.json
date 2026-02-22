@@ -1,0 +1,1980 @@
+{
+  "name": "LinkedIn Job Search + Resume Builder Agent",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "14859974-b1a7-4dc8-82ec-6cca195390b1",
+      "name": "Error Trigger",
+      "type": "n8n-nodes-base.errorTrigger",
+      "position": [
+        -1216,
+        -2224
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "## 🚨 Error and Loop Control Flow\n---",
+        "height": 480,
+        "width": 688,
+        "color": 3
+      },
+      "id": "f0a372d0-b87b-491a-8089-6a4861d2fe50",
+      "name": "Sticky Note2",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -1328,
+        -2416
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "## 🛠️ Setup Steps\n\n### 1. [Clone the Repository](https://github.com/rahatsayyed/resume-html-pdf)\nSince all the files are hosted on GitHub, the first step is to download or clone the repository to your local machine:\n```bash\ngit clone https://github.com/rahatsayyed/resume-html-pdf\n```\nNavigate to your project directory. This is where your base resume configuration files live.\n\n### 2. Setup Supabase & Apify\n- **Supabase (Database):** Create a new Supabase project. You need to create `jobs` and `contacts` tables matching the schema provided in the cloned repository (`sql/jobs-contacts-schema.sql`). Once set up, add your Supabase credentials to n8n.\n- **Apify (Data Scraper):** Add your Apify token to the corresponding Apify nodes in n8n. The workflow relies on two specific Apify LinkedIn search Actors to find job postings and extract contact emails.\n\n### 3. Setup Google Project & Gmail API & AI api key\n- Create a project in the Google Cloud Console.\n- Enable the **Gmail API** for this project.\n- Create OAuth 2.0 Client credentials and configure them in n8n's **Send a message** (Gmail) node. The workflow sends out automated outreach emails using this integration.\n- get Gemini free api key from [aistudio.google](https://aistudio.google.com/app/api-keys) | note use Gemini 2.5 Pro model for higher limits\n\n### 4. Setup Telegram Chat Bot\n- Open Telegram and search for the **BotFather**. Build a new bot and copy the API Token to add to n8n.\n- Obtain your personal **Chat ID** (you can do this by messaging an ID bot on Telegram, e.g., `idbot`, `@userinfobot` or `@getmyid`).\n- Input this Chat ID into the Telegram nodes and Global Variables in n8n so the system can ping you with error logs and job application alerts.\n\n### 5. Update Base Paths, Variables, & Actor Inputs\n- **Base Path:** In the **Set Base Path** node, change the `basePath` property to the absolute path where you cloned the Github repo (e.g., `/Users/yourname/Documents/Projects/personal/resume-html-pdf`).\n- **Global Variables:** In the **Set Global Vars** node, replace the default links (LinkedIn, GitHub, Portfolio) with your own URLs, and add your Telegram Chat ID here.\n- **Apify Inputs:** Open both Apify Actor nodes to review and update the standard input parameters. Adjust the job search URLs (e.g., specific job links or search criteria like \"Engineer\") and customize the role keywords you wish to target.\n\n### 6. Update Base Resume Details (`resume.json`)\nOpen the `input/resume.json` file inside your cloned repository and replace the details with your actual resume information.\n> [!TIP]\n> Ensure your `resume.json` strictly follows the expected schema. You can refer to the repository's provided example file (`example/example.resume.json`) for reference on formatting arrays like experience, skills, and projects. The AI explicitly requires this formatting to effectively parse and optimize descriptions against a Job Description.\n\n### 7. Test and Enable the Workflow\n- For the initial run, manually trigger the workflow or select a small query of job inputs.\n- Adjust the poll triggers or wait times (e.g., **Wait - Polling Apify Data**) if needed.\n- Monitor the workflow execution to confirm the Supabase pipeline stores the job row, the resume PDF generates within the output directories, and your Telegram/Gmail accounts successfully fire messaging.\n- Once tested, adjust your **Schedule Trigger** time to your desired automation frequency and switch the workflow to **Active**.\n",
+        "height": 1488,
+        "width": 528
+      },
+      "id": "6171b9c5-6729-4765-b7f3-f438dfe7c2e6",
+      "name": "Sticky Note12",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -1904,
+        -1872
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "triggerAtHour": 10,
+              "triggerAtMinute": 30
+            }
+          ]
+        }
+      },
+      "id": "1f581451-9a1a-4766-a997-92b0efab3c00",
+      "name": "Schedule Trigger",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "position": [
+        -1248,
+        -1664
+      ],
+      "typeVersion": 1.2
+    },
+    {
+      "parameters": {
+        "amount": 1,
+        "unit": "minutes"
+      },
+      "id": "dc01222c-5d16-430c-a49b-cd4dd2b6098b",
+      "name": "Wait",
+      "type": "n8n-nodes-base.wait",
+      "position": [
+        -224,
+        -1632
+      ],
+      "webhookId": "4478fc34-e3b9-47e5-a76a-2cd3f6c1422e",
+      "typeVersion": 1.1
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "version": 2,
+            "leftValue": "",
+            "caseSensitive": true,
+            "typeValidation": "strict"
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "c5caa229-b0db-42d9-bc94-c97ee11cc9a7",
+              "operator": {
+                "name": "filter.operator.equals",
+                "type": "string",
+                "operation": "equals"
+              },
+              "leftValue": "={{ $json.status }}",
+              "rightValue": "SUCCEEDED"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "df3c341c-b016-4422-9e38-8ea2d38532f2",
+      "name": "If SUCCEEDED",
+      "type": "n8n-nodes-base.if",
+      "position": [
+        416,
+        -1616
+      ],
+      "typeVersion": 2.2
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "version": 2,
+            "leftValue": "",
+            "caseSensitive": true,
+            "typeValidation": "strict"
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "a6e65b5b-2e60-458d-91ad-ac90aea7943d",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              },
+              "leftValue": "={{ $json.status }}",
+              "rightValue": "RUNNING"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "0bb1ec0f-380a-4adb-9815-64b1cf4d0f83",
+      "name": "If RUNNING",
+      "type": "n8n-nodes-base.if",
+      "position": [
+        176,
+        -1632
+      ],
+      "typeVersion": 2.2
+    },
+    {
+      "parameters": {
+        "errorMessage": "Apify Status is not SUCCEEDED/RUNNING"
+      },
+      "id": "56b129e9-c35f-47a3-8480-468254ec7ae6",
+      "name": "Stop and Error",
+      "type": "n8n-nodes-base.stopAndError",
+      "position": [
+        720,
+        -1488
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "e4ce6e58-d537-42d3-9566-5555fbcd1ab3",
+              "name": "resume",
+              "type": "string",
+              "value": "={{ $json.data }}"
+            },
+            {
+              "id": "d7c207ae-5f67-4de7-a1bd-5d8d7706ae5b",
+              "name": "telegram_chat_id",
+              "type": "string",
+              "value": "1125208540"
+            },
+            {
+              "id": "6f9c722b-c14a-48f1-9aef-435fe279d182",
+              "name": "linkedinLink",
+              "value": "https://linkedin.com/in/rahatsayyed",
+              "type": "string"
+            },
+            {
+              "id": "8bbaa828-1cb6-4dce-a9aa-34089f75840e",
+              "name": "githubLink",
+              "value": "https://github.com/rahatsayyed",
+              "type": "string"
+            },
+            {
+              "id": "d98536ef-25a2-4223-b26b-34144d165ff9",
+              "name": "portfolioLink",
+              "value": "https://rahatsayyed.xyz",
+              "type": "string"
+            },
+            {
+              "id": "a6347f0c-c355-4197-9f25-1b8e9ed6d65b",
+              "name": "resumeLink",
+              "value": "https://flowcv.com/resume/w0f4aim4wh",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "269c38ab-9c83-49a2-a478-dbf7e2017b36",
+      "name": "Set Global Vars",
+      "type": "n8n-nodes-base.set",
+      "position": [
+        -976,
+        -1424
+      ],
+      "typeVersion": 3.4
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Here is the job description and my current resume. Evaluate alignment and generate output as defined in the System Prompt.\n\n### Job Description:\n{{ $('Set Job Details').item.json.job_description }}\n\n### My Resume:\n{{ $('Set Global Vars').first().json.resume }}",
+        "hasOutputParser": true,
+        "options": {
+          "systemMessage": "You are an expert ATS evaluator and résumé matching assistant.\n\nYour job is to analyze a Job Description (JD) and compare it with the user’s résumé.\n\nYour output must be a JSON object with the following structure:\n{\n  \"relevancy\": boolean,\n  \"score\": \"XX%\",\n  \"justification\": [\n    \"Short bullet reasoning 1\",\n    \"Short bullet reasoning 2\",\n    \"Short bullet reasoning 3\"\n  ]\n}\n\nScoring rules:\n- Identify key JD requirements (skills, technologies, responsibilities, seniority)\n- Compare them against the résumé\n- Score must be an integer % between \"0%\" and \"100%\"\n- relevancy = true if score ≥ 50%, else false\n\nRules:\n- Justification must be 3–7 short bullets\n- JSON only — no text outside JSON\n- No hallucinations: base everything strictly on the provided résumé and JD"
+        }
+      },
+      "id": "02a2f3bb-df09-4c90-9014-e4dc2f09b899",
+      "name": "Job Match AI",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "position": [
+        -848,
+        -752
+      ],
+      "typeVersion": 2.2
+    },
+    {
+      "parameters": {
+        "schemaType": "manual",
+        "inputSchema": "{\n  \"$schema\": \"https://json-schema.org/draft/2020-12/schema\",\n  \"title\": \"Job Match & Tailored Resume Output\",\n  \"type\": \"object\",\n  \"required\": [\"relevancy\", \"score\", \"justification\"],\n  \"properties\": {\n    \"relevancy\": {\n      \"type\": \"boolean\",\n      \"description\": \"True if candidate suitability score >= 50%, else False\"\n    },\n    \"score\": {\n      \"type\": \"string\",\n      \"pattern\": \"^(100|[1-9][0-9]?|0)%$\",\n      \"description\": \"Percentage string from 0% to 100% without leading zeros\"\n    },\n    \"justification\": {\n      \"type\": \"array\",\n      \"minItems\": 1,\n      \"maxItems\": 10,\n      \"items\": {\n        \"type\": \"string\",\n        \"minLength\": 5,\n        \"description\": \"Short bullet point reasoning for relevancy\"\n      }\n    }\n  },\n  \"additionalProperties\": false\n}\n"
+      },
+      "id": "99d96efb-a412-4333-a351-4e202eb82077",
+      "name": "Structured Output Parser",
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "position": [
+        -704,
+        -544
+      ],
+      "typeVersion": 1.3
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "version": 2,
+            "leftValue": "",
+            "caseSensitive": true,
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "978abce9-0189-45fe-9e28-ba74633b4561",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              },
+              "leftValue": "={{ $json.output.relevancy }}",
+              "rightValue": ""
+            }
+          ],
+          "combinator": "or"
+        },
+        "options": {}
+      },
+      "id": "6b0e1b01-cc14-4824-a2d5-08a558dd8e40",
+      "name": "If Relevant",
+      "type": "n8n-nodes-base.if",
+      "position": [
+        -544,
+        -752
+      ],
+      "typeVersion": 2.2
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Here is the job description and my current resume. Evaluate alignment and generate output as defined in the System Prompt.\n\n### Job Description:\n{{ $('Set Job Details').first().json.job_description }}\n\n### My Resume:\n{{ $('Set Global Vars').first().json.resume }}",
+        "hasOutputParser": true,
+        "options": {
+          "systemMessage": "You are an expert ATS résumé optimizer.\nYour goal: rewrite the provided resume into a structured JSON resume tailored to the given Job Description (JD).\n\nRules:\n- Output MUST be a valid JSON object matching the exact resume schema provided.\n- return all the information, even if no updates to those field\n- Do NOT output HTML or Markdown.\n- Strict JSON only.\n- Follow the schema structure: exactly as the resume.\n- Use the provided resume data and JD to tailor the content (summary, experience descriptions).\n- If a field is missing in source, use null as per schema.\n- Preserve truth while optimizing alignment with JD."
+        }
+      },
+      "id": "f5252446-4cd0-4d62-a21e-a4c2fc1962eb",
+      "name": "Resume Tailoring Ai",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "position": [
+        -32,
+        -768
+      ],
+      "typeVersion": 2.2
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Set Global Vars').first().json.telegram_chat_id }}",
+        "text": "=FINISHED SCHEDULE",
+        "additionalFields": {}
+      },
+      "id": "e88063b3-3b3f-4742-a1c4-65fae1746499",
+      "name": "Send a text message",
+      "type": "n8n-nodes-base.telegram",
+      "position": [
+        -640,
+        -1120
+      ],
+      "webhookId": "b7f09f7d-66e2-454a-8da8-ee314fe64c1c",
+      "typeVersion": 1.2,
+      "credentials": {
+        "telegramApi": {
+          "id": "zR5TTxftQEm2MYTo",
+          "name": "Job Automation Bot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## 📄 Stage 1: Initial Setup & Configuration\n---\n\n- Get Resume: Retrieves the base resume document content (likely a text string) from a document storage service.\n- Set Global Vars: Establishes essential variables for the automation (resumeLink, telegram_chat_id, githubLink, portfolioLink, etc.).",
+        "height": 656,
+        "width": 752,
+        "color": 5
+      },
+      "id": "6cc768ad-e1a3-4946-805b-69fc3a2f4426",
+      "name": "Sticky Note3",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -1312,
+        -1856
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "## 🔍 Stage 2: Job Data Retrieval & Save Jobs\n---\n\n- Runs the process for job query defined in the actors input.\n- Search & Wait: Executes an external service (Actor) to scrape LinkedIn for jobs, then pauses the workflow until the scraping is finished.\n- Validation: Checks the Actor's status; if it failed or errored, the automation stops.\n- Extraction: If successful, the full list of found jobs is retrieved from the Actor's dataset.\n- the retrieved dataset is formatted and then stored in supabase.",
+        "height": 656,
+        "width": 1712,
+        "color": 4
+      },
+      "id": "48cc66a7-8433-4793-9d98-a108fc21e831",
+      "name": "Sticky Note",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -544,
+        -1856
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "## 🧠 Stage 3: Job Screening & Resume Tailoring\n---\n\n- AI Job Match: Evaluate each job for relevance using the base resume.\n- Conditional Check: Only continue if the job is a good match.\n- AI Resume Tailoring: Create a role-optimized resume using the job description.\n- Resume Formatting & Upload: Convert tailored resume to a file and store it.\n- Notifications: Send an update (Telegram) of Schedule Completion.\n- Logging & Tracking: Save job application and relavancy details into a Supabase for record-keeping.",
+        "height": 784,
+        "width": 2480,
+        "color": 2
+      },
+      "id": "0ffdb85f-a29e-43fa-837d-ff48ea315d6f",
+      "name": "Sticky Note1",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -1312,
+        -1168
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "## 📧 Stage 5: Send Updates\n---\n\n- **Send notifications:** Sends notifications via Telegram and fires off customized outreach emails directly to the identified contacts at the hiring company.\n",
+        "height": 784,
+        "width": 1008,
+        "color": 4
+      },
+      "id": "cc69e7a0-a8ab-430f-8aca-f630fea8bf10",
+      "name": "Sticky Note4",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1200,
+        -1168
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "e08d4538-3c37-4bb4-944f-e6dbfaf4cf54",
+      "name": "Loop Over Unique Jobs",
+      "type": "n8n-nodes-base.splitInBatches",
+      "position": [
+        -1264,
+        -912
+      ],
+      "typeVersion": 3
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "69b33c3c-f9c5-4937-8fcd-68d19ccb6b30",
+              "name": "job_id",
+              "type": "string",
+              "value": "={{ $json.id }}"
+            },
+            {
+              "id": "0d898d14-aa96-416c-bc85-5112ebc2f493",
+              "name": "job_title",
+              "type": "string",
+              "value": "={{ $json.job_title }}"
+            },
+            {
+              "id": "eaee3ae6-4329-420d-a584-415db1952e44",
+              "name": "job_description",
+              "type": "string",
+              "value": "={{ $json.job_description }}"
+            },
+            {
+              "id": "ed2fc237-bb2a-4439-9dc7-1997b3b1545b",
+              "name": "job_url",
+              "type": "string",
+              "value": "={{ $json.job_url }}"
+            },
+            {
+              "id": "28c76a1e-037e-43b8-b8a8-29b302b08d79",
+              "name": "seniority_level",
+              "type": "string",
+              "value": "={{ $json.seniority_level }}"
+            },
+            {
+              "id": "69d585d6-de59-48f9-891c-f46ac63f53aa",
+              "name": "company_name",
+              "type": "string",
+              "value": "={{ $json.company_name }}"
+            },
+            {
+              "id": "ec4705c3-a146-476f-aa64-75b3128f4762",
+              "name": "company_url",
+              "type": "string",
+              "value": "={{ $json.company_url }}"
+            },
+            {
+              "id": "19a18e1f-89ba-4427-9ace-902b86058e26",
+              "name": "employment_type",
+              "type": "string",
+              "value": "={{ $json.employment_type }}"
+            },
+            {
+              "id": "67013fc0-1135-4ac6-a685-c1e296e36477",
+              "name": "apply_url",
+              "type": "string",
+              "value": "={{ $json.apply_url }}"
+            },
+            {
+              "id": "b6809ef9-3ee8-4d73-b7df-556061f69800",
+              "name": "time_posted",
+              "type": "string",
+              "value": "={{ $json.time_posted }}"
+            },
+            {
+              "id": "7113449c-eedb-484e-bcec-719e5e43b1d8",
+              "name": "easy apply",
+              "value": "={{ $if($json.applyUrl, false, true) }}",
+              "type": "boolean"
+            },
+            {
+              "id": "495442a7-461b-419d-96b8-3c8a17ea530e",
+              "name": "salary_min",
+              "value": "={{ $json.salary_min }}",
+              "type": "string"
+            },
+            {
+              "id": "49a79ac9-9d75-4d7d-8d07-acc28397abbe",
+              "name": "salary_max",
+              "value": "={{ $json.salary_max }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "1664f358-795f-4cb8-8ce5-bb84a83a2878",
+      "name": "Set Job Details",
+      "type": "n8n-nodes-base.set",
+      "position": [
+        -1072,
+        -752
+      ],
+      "typeVersion": 3.4
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "bp-001",
+              "name": "basePath",
+              "type": "string",
+              "value": "/Users/copods/Documents/Projects/personal/resume"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "bp-node-001",
+      "name": "Set Base Path",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -1040,
+        -1664
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "Datasets",
+        "datasetId": "={{ $json.storageIds.datasets.default }}",
+        "offset": {},
+        "limit": {},
+        "options": {}
+      },
+      "id": "eb5f077c-e20c-47d3-9e6a-6c4aaeffe816",
+      "name": "Get dataset items",
+      "type": "@apify/n8n-nodes-apify.apify",
+      "position": [
+        720,
+        -1712
+      ],
+      "typeVersion": 1,
+      "credentials": {
+        "apifyApi": {
+          "id": "ch9pSz2QbUB1t9yd",
+          "name": "Apify Default Token"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "Actor runs",
+        "operation": "Get run",
+        "runId": {
+          "__rl": true,
+          "value": "={{ $json.id }}",
+          "mode": "id"
+        }
+      },
+      "id": "533b667d-ed7e-4c27-b654-b2c856081183",
+      "name": "Get run",
+      "type": "@apify/n8n-nodes-apify.apify",
+      "position": [
+        -16,
+        -1632
+      ],
+      "typeVersion": 1,
+      "credentials": {
+        "apifyApi": {
+          "id": "ch9pSz2QbUB1t9yd",
+          "name": "Apify Default Token"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "fromJson",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1.1,
+      "position": [
+        -1200,
+        -1424
+      ],
+      "id": "ee968ca7-c919-41d8-8870-0506ef6ee2fa",
+      "name": "Extract from File"
+    },
+    {
+      "parameters": {
+        "fileSelector": "={{ $json.basePath }}/input/resume.json",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.readWriteFile",
+      "typeVersion": 1.1,
+      "position": [
+        -848,
+        -1664
+      ],
+      "id": "b65d5d25-7232-4ed5-a25d-c6faf56c95da",
+      "name": "Read/Write Files from Disk2"
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-2.5-pro",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        -848,
+        -336
+      ],
+      "id": "4255ad44-a564-4060-bd4b-3cb73b08a918",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "NmwkmHCMLUcvTJvZ",
+          "name": "n8n job automation"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "schemaType": "manual",
+        "inputSchema": "{\n  \"type\": \"object\",\n  \"required\": [\n    \"name\",\n    \"summary\",\n    \"experience\",\n    \"projects\",\n    \"education\",\n    \"skills\"\n  ],\n  \"properties\": {\n    \"name\": { \"type\": \"string\" },\n    \"jobTitle\": { \"type\": \"string\" },\n    \"summary\": { \"type\": \"string\" },\n\n    \"experience\": {\n      \"type\": \"array\",\n      \"items\": { \"type\": \"object\" }\n    },\n\n    \"projects\": {\n      \"type\": \"array\",\n      \"items\": { \"type\": \"object\" }\n    },\n\n    \"education\": {\n      \"type\": \"array\",\n      \"items\": { \"type\": \"object\" }\n    },\n\n    \"skills\": {\n      \"type\": \"array\",\n      \"items\": { \"type\": \"string\" }\n    },\n\n    \"certificates\": {\n      \"type\": \"array\",\n      \"items\": { \"type\": \"object\" }\n    }\n  }\n}\n"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        112,
+        -592
+      ],
+      "id": "af0ef722-72c4-4617-918b-244fb0d0029a",
+      "name": "Structured Resume Output Parser"
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-2.5-pro",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        -32,
+        -304
+      ],
+      "id": "d13f996d-e8f4-4aa2-a3f3-e2303ea7b5eb",
+      "name": "Google Gemini Chat Model-1",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "v2QNkw3UnCGAv8Qx",
+          "name": "gemini daxa"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "toJson",
+        "mode": "each",
+        "binaryPropertyName": "resume",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.convertToFile",
+      "typeVersion": 1.1,
+      "position": [
+        496,
+        -768
+      ],
+      "id": "3dbde2b2-1042-4088-b2df-9b097d17c872",
+      "name": "Convert to File"
+    },
+    {
+      "parameters": {
+        "jsCode": "const tailoredResume = $input.first().json.output;\nconst originalResume = typeof $(\"Set Global Vars\").first().json.resume === 'string' \n  ? JSON.parse($(\"Set Global Vars\").first().json.resume) \n  : $(\"Set Global Vars\").first().json.resume;\n\n/**\n * Simple recursive merge to combine tailored resume with original.\n * Prioritizes tailored values but preserves fields not present in tailored.\n */\nfunction deepMerge(target, source) {\n  for (const key in source) {\n    if (source[key] && typeof source[key] === 'object' && !Array.isArray(source[key])) {\n      if (!target[key] || typeof target[key] !== 'object') {\n        target[key] = source[key];\n      } else {\n        deepMerge(target[key], source[key]);\n      }\n    } else if (target[key] === undefined || target[key] === null || target[key] === '') {\n      // Only fill if tailored version is missing or empty\n      target[key] = source[key];\n    }\n  }\n  return target;\n}\n\n// Tailored resume is the base (prioritize it), original fills the gaps\nconst mergedResume = deepMerge(tailoredResume, originalResume);\n\nreturn mergedResume;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        304,
+        -768
+      ],
+      "id": "617cce2b-da82-4968-9d90-b15c1dbdf3df",
+      "name": "remove wrapper"
+    },
+    {
+      "parameters": {
+        "operation": "write",
+        "fileName": "={{ $('Set Base Path').first().json.basePath }}/automation/{{ $('Set Job Details').item.json.job_id }}/resume.json",
+        "dataPropertyName": "resume",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.readWriteFile",
+      "typeVersion": 1.1,
+      "position": [
+        704,
+        -768
+      ],
+      "id": "c1f0ca31-cc27-4396-a187-0a498a5e6991",
+      "name": "Save resume.json"
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $('Get TO and CC emails').item.json.toEmail }}",
+        "subject": "=Quick Question About {{ $('Set Job Details').item.json.job_title }} Role",
+        "message": "=<p>Hi {{ $('Get Emails Dataset').item.json.firstName }},</p>\n\n<p>I recently found the <strong>{{ $('Set Job Details').item.json.job_title }}</strong> opening at {{ $('Set Job Details').item.json.company_name }} and it aligns closely with my experience in Full Stack Development.</p>\n\n<p>Since you're part of the team, I wanted to ask if you'd be open to referring me if you believe my background is a fit. I've attached my resume for context.</p>\n\n<p>Even brief guidance would be appreciated.</p>\n\nCheckout my Work: <a href=\"{{ $('Set Global Vars').first().json.githubLink }}\">github</a> | <a href=\"{{ $('Set Global Vars').first().json.linkedinLink }}\">linkedin</a> | <a href=\"{{ $('Set Global Vars').first().json.portfolioLink }}\">portfolio</a> | <a href=\"{{ $('Set Global Vars').first().json.resumeLink }}\">resume</a></p>\n\n<p>Thanks,<br>\nRahat Sayyed<br>\n",
+        "options": {
+          "appendAttribution": false,
+          "attachmentsUi": {
+            "attachmentsBinary": [
+              {}
+            ]
+          },
+          "ccList": "={{ $('Get TO and CC emails').item.json.ccEmails.join(',') }}",
+          "senderName": "Rahat Sayyed"
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        1664,
+        -624
+      ],
+      "id": "a0fd9df5-7a3c-47b7-9cc7-4cbabb8ffbba",
+      "name": "Send a message",
+      "webhookId": "9416475d-b942-4d12-a999-11ac7bf409d9",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "t4yo8xcujGnb6dJC",
+          "name": "n8n job gmail"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "fileSelector": "={{ $('Set Base Path').first().json.basePath }}/automation/{{ $('Set Job Details').item.json.job_id }}/resume.pdf",
+        "options": {
+          "fileName": "Rahat Sayyed - Resume.pdf"
+        }
+      },
+      "type": "n8n-nodes-base.readWriteFile",
+      "typeVersion": 1.1,
+      "position": [
+        2032,
+        -864
+      ],
+      "id": "b7f281f5-9c34-4062-8801-d2e692fca6ca",
+      "name": "read resume1"
+    },
+    {
+      "parameters": {
+        "command": "=mkdir -p {{ $('Set Base Path').first().json.basePath }}/automation/{{ $('Set Job Details').item.json.job_id }}"
+      },
+      "id": "ef49bf4c-9f99-45c6-bf63-95b6e0805045",
+      "name": "Create Folder",
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [
+        -240,
+        -768
+      ]
+    },
+    {
+      "parameters": {
+        "amount": 1,
+        "unit": "minutes"
+      },
+      "id": "c9ef6aee-7793-4cfa-b3b5-ffaeefdda9ae",
+      "name": "Wait1",
+      "type": "n8n-nodes-base.wait",
+      "position": [
+        1520,
+        -1696
+      ],
+      "webhookId": "4478fc34-e3b9-47e5-a76a-2cd3f6c1422e",
+      "typeVersion": 1.1
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "version": 2,
+            "leftValue": "",
+            "caseSensitive": true,
+            "typeValidation": "strict"
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "c5caa229-b0db-42d9-bc94-c97ee11cc9a7",
+              "operator": {
+                "name": "filter.operator.equals",
+                "type": "string",
+                "operation": "equals"
+              },
+              "leftValue": "={{ $json.status }}",
+              "rightValue": "SUCCEEDED"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "b2ff9318-27d2-4603-8e6e-3e37e365f81c",
+      "name": "If SUCCEEDED1",
+      "type": "n8n-nodes-base.if",
+      "position": [
+        1520,
+        -1456
+      ],
+      "typeVersion": 2.2
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "version": 2,
+            "leftValue": "",
+            "caseSensitive": true,
+            "typeValidation": "strict"
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "a6e65b5b-2e60-458d-91ad-ac90aea7943d",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              },
+              "leftValue": "={{ $json.status }}",
+              "rightValue": "RUNNING"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "166e45a3-4391-47e6-a4b7-6dd8b4ef00df",
+      "name": "If RUNNING1",
+      "type": "n8n-nodes-base.if",
+      "position": [
+        1920,
+        -1696
+      ],
+      "typeVersion": 2.2
+    },
+    {
+      "parameters": {
+        "errorMessage": "Apify Status is not SUCCEEDED/RUNNING"
+      },
+      "id": "36a4c427-05a2-4798-aa9d-7c3854c4465c",
+      "name": "Stop and Error1",
+      "type": "n8n-nodes-base.stopAndError",
+      "position": [
+        1744,
+        -1360
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "resource": "Actor runs",
+        "operation": "Get run",
+        "runId": {
+          "__rl": true,
+          "value": "={{ $('Run Emails Actor').first().json.id }}",
+          "mode": "id"
+        }
+      },
+      "id": "7888dbc5-d412-4abe-9b7e-e19561c89bc1",
+      "name": "Get run1",
+      "type": "@apify/n8n-nodes-apify.apify",
+      "position": [
+        1728,
+        -1696
+      ],
+      "typeVersion": 1,
+      "credentials": {
+        "apifyApi": {
+          "id": "ch9pSz2QbUB1t9yd",
+          "name": "Apify Default Token"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## 🧠 Stage 4: Email Finding\n---\n- Leverages another Apify Actor to find contact emails for the company and the job poster.\n- Pauses the workflow until the email finding completes.\n- Formats these emails in preparation for Supabase storage and automated outreach messages.",
+        "height": 656,
+        "width": 1008,
+        "color": 5
+      },
+      "id": "d90b9cd2-e8a6-4a86-9bfe-587d08aa7f91",
+      "name": "Sticky Note5",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1200,
+        -1856
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        1264,
+        -960
+      ],
+      "id": "7eee8946-720c-4d4d-b582-8256f7078b9d",
+      "name": "Loop Over Items"
+    },
+    {
+      "parameters": {
+        "fileSelector": "={{ $('Set Base Path').first().json.basePath }}/automation/{{ $('Set Job Details').item.json.job_id }}/resume.pdf",
+        "options": {
+          "fileName": "Rahat Sayyed - Resume.pdf"
+        }
+      },
+      "type": "n8n-nodes-base.readWriteFile",
+      "typeVersion": 1.1,
+      "position": [
+        1552,
+        -1056
+      ],
+      "id": "c72da8a7-0720-41f3-abc1-eae1fba45fc2",
+      "name": "read resume2"
+    },
+    {
+      "parameters": {
+        "operation": "sendDocument",
+        "chatId": "={{ $('Set Global Vars').first().json.telegram_chat_id }}",
+        "binaryData": true,
+        "additionalFields": {}
+      },
+      "id": "e0955273-930c-4008-8eb0-6b8235188f84",
+      "name": "Send a document1",
+      "type": "n8n-nodes-base.telegram",
+      "position": [
+        1792,
+        -1056
+      ],
+      "webhookId": "b7f09f7d-66e2-454a-8da8-ee314fe64c1c",
+      "typeVersion": 1.2,
+      "credentials": {
+        "telegramApi": {
+          "id": "zR5TTxftQEm2MYTo",
+          "name": "Job Automation Bot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Set Global Vars').first().json.telegram_chat_id }}",
+        "text": "={{ \n\"*Sent Emails for:*\\n\\n\" +\n\"*Company Name:* \" + $node[\"Set Job Details\"].json.company_name.replace(/[_*[\\]()~`>#+\\-=|{}.!]/g, '\\\\$&') + \"\\n\" +\n\"*Company Linkedin:* \" + $node[\"Set Job Details\"].json.company_url.replace(/[_*[\\]()~`>#+\\-=|{}.!]/g, '\\\\$&') + \"\\n\"\n}}",
+        "additionalFields": {
+          "appendAttribution": false,
+          "parse_mode": "MarkdownV2"
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        2032,
+        -1056
+      ],
+      "id": "7bb6125b-917d-4eb8-b5a3-b80754c99b4a",
+      "name": "Message Company Details2",
+      "webhookId": "2311b4ba-f4ac-4f8c-bda4-de888cdb9128",
+      "credentials": {
+        "telegramApi": {
+          "id": "zR5TTxftQEm2MYTo",
+          "name": "Job Automation Bot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "1125208540",
+        "text": "=Error: {{ $json.execution.error.message }}\nPlease check workflow {{ $json.execution.url }}\nLast Node Exe.: {{ $json.execution.lastNodeExecuted }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        -912,
+        -2224
+      ],
+      "id": "133b0f61-3821-45d7-a5b9-b751983f1c63",
+      "name": "Send Error Message",
+      "webhookId": "87c718e5-8c2c-4638-876e-424c4af8dbf4",
+      "credentials": {
+        "telegramApi": {
+          "id": "zR5TTxftQEm2MYTo",
+          "name": "Job Automation Bot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "Generate Email",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        800,
+        -304
+      ],
+      "id": "5202e27a-0a1c-454f-ac3d-517a3570cea6",
+      "name": "Email Generate",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        784,
+        -112
+      ],
+      "id": "26e3fabd-8a10-4603-8ee0-b2d06294c840",
+      "name": "Google Gemini Chat Model1",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "NmwkmHCMLUcvTJvZ",
+          "name": "n8n job automation"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "command": "=node /Users/copods/Documents/Projects/personal/resume/index.js {{ $('Set Job Details').item.json.job_id }}"
+      },
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [
+        896,
+        -768
+      ],
+      "id": "5d38dccd-6c37-4e20-86ae-91d6e9074144",
+      "name": "Generate Resume PDF"
+    },
+    {
+      "parameters": {
+        "amount": 1,
+        "unit": "minutes"
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        -240,
+        -560
+      ],
+      "id": "1c1d636d-07b5-4d8c-9612-839e2b0c5ee0",
+      "name": "Wait2",
+      "webhookId": "e89713ab-6d13-4f6a-8148-196461b2287b"
+    },
+    {
+      "parameters": {
+        "model": "grok-4-1-fast-reasoning",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatXAiGrok",
+      "typeVersion": 1,
+      "position": [
+        -32,
+        -592
+      ],
+      "id": "7935fd56-55ac-4619-9042-478b42063c81",
+      "name": "xAI Grok Chat Model",
+      "credentials": {
+        "xAiApi": {
+          "id": "QMuuAPX2Mhdd9cuv",
+          "name": "xAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Get all input items and take the last one\nconst items = $input.all();\nconst lastItem = items[items.length - 1];\nconst emails = lastItem.json?.email ?? lastItem.json?.emails ?? [];\n\n\n// TO: first email; CC: rest\nconst toEmail = Array.isArray(emails) ? (emails[0] ?? '') : emails;\nconst ccEmails = Array.isArray(emails) ? emails.slice(1) : [];\n\nreturn [\n  {\n    json: {\n      toEmail,\n      ccEmails,\n    },\n  },\n];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1792,
+        -864
+      ],
+      "id": "7bd8369d-24c3-443e-92a4-740fb1fbe4fc",
+      "name": "Get TO and CC emails"
+    },
+    {
+      "parameters": {
+        "jsCode": "/**\n * Format items from Get Emails Dataset.\n * email: array. emailThread: empty until email is sent. Merge on id.\n */\n\nfunction toEmailArray(j) {\n  const raw = j.emails ?? j.email ?? j.emailAddresses ?? j.contactEmail ?? j.to ?? j.toEmail;\n  if (raw != null) {\n    if (Array.isArray(raw)) {\n      const arr = raw.map((e) => (typeof e === \"string\" ? e : e?.email ?? e?.address ?? e?.value ?? \"\")).filter((s) => typeof s === \"string\" && s.length > 0);\n      if (arr.length) return arr;\n    } else {\n      const s = String(raw);\n      if (s) return [s];\n    }\n  }\n  const collected = [];\n  for (const key of Object.keys(j)) {\n    if (!/email/i.test(key)) continue;\n    const v = j[key];\n    if (Array.isArray(v)) v.forEach((e) => { const s = typeof e === \"string\" ? e : e?.email ?? e?.address ?? e?.value; if (s) collected.push(String(s)); });\n    else if (v != null && v !== \"\") collected.push(String(v));\n  }\n  return collected;\n}\n\nfunction ensureEmailArray(v) {\n  if (Array.isArray(v)) return v;\n  if (typeof v === \"string\") return v ? [v] : [];\n  return [];\n}\n\nlet existingRecords = [];\nconst firstItem = $input.first();\nif (firstItem.json?.cellValue) {\n  try {\n    const parsed = JSON.parse(firstItem.json.cellValue);\n    existingRecords = Array.isArray(parsed) ? parsed : [];\n  } catch (_) {}\n} else if (firstItem.json?.data || firstItem.json?.records) {\n  const maybeArray = firstItem.json.data || firstItem.json.records;\n  if (Array.isArray(maybeArray)) existingRecords = maybeArray;\n}\n\nconst items = $input.all().filter((i) => !i.json?.cellValue && (i.json?.id != null || i.json?.name != null || i.json?.firstName != null));\nif (items.length === 0 && existingRecords.length === 0) {\n  return [{ json: { id: \"\", name: \"\", linkedin: \"\", email: [], emailSent: \"\", emailThread: \"\", followup1: \"\", followup2: \"\" } }];\n}\n\nfunction toRecord(item) {\n  const j = item.json;\n  const date = j.date || j.internalDate || j.sentDate || j.createdAt || new Date().toISOString();\n  const linkedin = j.linkedinUrl;\n  const name = j.firstName || j.lastName || \"\";\n  const email = toEmailArray(j);\n  return {\n    job_id: $('Set Job Details').first().json.job_id,\n    name: String(name || \"\"),\n    linkedin: String(linkedin || \"\"),\n    email,\n    emailSent: \"\",\n    emailThread: \"\",\n    followup1: \"\",\n    followup2: \"\",\n  };\n}\n\nconst newRecords = items.map(toRecord);\nconst byId = (r) => String(r.id || \"\");\nconst existingById = new Map(existingRecords.map((r) => [byId(r), r]));\nfor (const rec of newRecords) {\n  const id = byId(rec);\n  const existing = existingById.get(id);\n  const merged = existing\n    ? {\n        ...existing,\n        ...rec,\n        email: rec.email?.length ? rec.email : ensureEmailArray(existing.email),\n        emailThread: (rec.emailThread && rec.emailThread.length) ? rec.emailThread : (existing.emailThread || \"\"),\n        lastUpdated: new Date().toISOString(),\n      }\n    : { ...rec, lastUpdated: new Date().toISOString() };\n  existingById.set(id || `new-${existingById.size}`, merged);\n}\nconst merged = Array.from(existingById.values());\nreturn merged.map((r) => ({ json: { ...r, email: ensureEmailArray(r.email) } }));\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1968,
+        -1504
+      ],
+      "id": "df60bc44-3b0b-4e59-a676-1fb51104596a",
+      "name": "Formating emails for storage"
+    },
+    {
+      "parameters": {
+        "resource": "Datasets",
+        "datasetId": "={{ $json.storageIds.datasets.default }}",
+        "offset": {},
+        "limit": {},
+        "options": {}
+      },
+      "id": "5d028fc7-97be-4ad2-912f-ece8ff42cd79",
+      "name": "Get Emails Dataset",
+      "type": "@apify/n8n-nodes-apify.apify",
+      "position": [
+        1744,
+        -1504
+      ],
+      "typeVersion": 1,
+      "credentials": {
+        "apifyApi": {
+          "id": "ch9pSz2QbUB1t9yd",
+          "name": "Apify Default Token"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const results = [];\nfor (const item of $input.all()) {\n  const json = item.json;\n  const jobPosterName = json.jobPosterName ?? json.jobPoster?.name ?? json.job_poster_name ?? null;\n  const jobPosterUrl = json.jobPosterProfileUrl ?? json.jobPoster?.profileUrl ?? json.jobPoster?.profile ?? json.job_poster_profile_url ?? null;\n  const timePosted = json.postedAt || json.publishedAt || null;\n  results.push({\n    json: {\n      id: json.id ?? '',\n      job_title: json.title ?? json.job_title ?? '',\n      job_description: (json.descriptionText ?? json.description ?? '') || null,\n      job_url: (json.link ?? json.url ?? '') || null,\n      company_name: (json.companyName ?? json.company ?? '') || null,\n      company_url: (json.companyLinkedinUrl ?? json.companyUrl ?? '') || null,\n      seniority_level: (json.seniorityLevel ?? json.seniority ?? '') || null,\n      employment_type: (json.employmentType ?? json.employment ?? '') || null,\n      time_posted: timePosted,\n      apply_url: (json.applyUrl ?? json.applyLink ?? '') || null,\n      job_poster_name: jobPosterName,\n      job_poster_profile_url: jobPosterUrl\n    }\n  });\n}\nreturn results;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        928,
+        -1712
+      ],
+      "id": "e2a9e0dc-59e6-4af3-84b4-655bfd2d604b",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "tableId": "jobs",
+        "matchType": "allFilters",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "id",
+              "condition": "eq",
+              "keyValue": "={{ $('Set Job Details').first().json.job_id }}"
+            }
+          ]
+        },
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "relavancy_score",
+              "fieldValue": "={{ $json.output.score.replace(\"%\",\"\").toNumber() }}"
+            }
+          ]
+        }
+      },
+      "id": "b1161b95-4b4b-4770-9bc0-c8bf1e070cf3",
+      "name": "Update job relevancy in Supabase",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        -224,
+        -976
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "UgJZt2YIwF9raxzT",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "tableId": "contacts",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "job_id",
+              "fieldValue": "={{ $json.job_id }}"
+            },
+            {
+              "fieldId": "name",
+              "fieldValue": "={{ $json.name }}"
+            },
+            {
+              "fieldId": "linkedin",
+              "fieldValue": "={{ $json.linkedin }}"
+            },
+            {
+              "fieldId": "email",
+              "fieldValue": "={{ $json.email }}"
+            },
+            {
+              "fieldId": "email_sent_at",
+              "fieldValue": "={{ $json.emailSent || null }}"
+            },
+            {
+              "fieldId": "email_thread_id",
+              "fieldValue": "={{ $json.emailThread || null }}"
+            },
+            {
+              "fieldId": "followup1_sent_at",
+              "fieldValue": "={{ $json.followup1 || null }}"
+            },
+            {
+              "fieldId": "followup2_sent_at",
+              "fieldValue": "={{ $json.followup2 || null }}"
+            }
+          ]
+        }
+      },
+      "id": "ecfbbf5f-a8db-437f-afad-0fb19063013a",
+      "name": "Create contact in Supabase",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        1968,
+        -1376
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "UgJZt2YIwF9raxzT",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "tableId": "contacts",
+        "matchType": "allFilters",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "id",
+              "condition": "eq",
+              "keyValue": "={{ $('Edit Fields').item.json.contact_id }}"
+            }
+          ]
+        },
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "email_sent_at",
+              "fieldValue": "={{ $now.toISO() }}"
+            },
+            {
+              "fieldId": "email_thread_id",
+              "fieldValue": "={{ $json.threadId }}"
+            }
+          ]
+        }
+      },
+      "id": "4c011bdb-bb56-4a48-9764-29447c59e910",
+      "name": "Update contact after email sent",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        1920,
+        -624
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "UgJZt2YIwF9raxzT",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "154341aa-418b-477b-8d07-67a2e49dddd6",
+              "name": "contact_id",
+              "value": "={{ $json.id }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1552,
+        -864
+      ],
+      "id": "4b03ed5b-2fe9-4692-993f-76b5d3c4f994",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "tableId": "jobs",
+        "dataToSend": "autoMapInputData"
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        928,
+        -1376
+      ],
+      "id": "19a5c227-9567-44a8-b6b8-642fc338b146",
+      "name": "Save Jobs in Supabase",
+      "credentials": {
+        "supabaseApi": {
+          "id": "UgJZt2YIwF9raxzT",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "actorSource": "store",
+        "actorId": {
+          "__rl": true,
+          "value": "https://console.apify.com/actors/hKByXkMQaC5Qt9UMN/input",
+          "mode": "url"
+        },
+        "customBody": "={\n    \"scrapeCompany\": false,\n    \"splitByLocation\": false,\n    \"urls\": [\n        \"https://www.linkedin.com/jobs/search/?currentJobId=4373806029&f_E=3%2C4&f_F=it%2Ceng&f_JT=F&f_PP=103671728&f_TPR=r86400&f_WT=1%2C3%2C2&geoId=102713980&keywords=Engineer&origin=JOB_SEARCH_PAGE_JOB_FILTER&refresh=true&sortBy=DD&spellCorrectionEnabled=true\",\n        \"https://www.linkedin.com/jobs/search/?currentJobId=4311134079&f_E=3%2C4&f_F=it%2Ceng&f_JT=F&f_TPR=r86400&f_WT=2&geoId=102713980&keywords=Engineer&origin=JOB_SEARCH_PAGE_JOB_FILTER&refresh=true&sortBy=DD&spellCorrectionEnabled=true\"\n    ]\n}",
+        "waitForFinish": false,
+        "timeout": {}
+      },
+      "type": "@apify/n8n-nodes-apify.apify",
+      "typeVersion": 1,
+      "position": [
+        -480,
+        -1632
+      ],
+      "id": "b5f3485f-64ef-497e-9d8c-7d0c3419a875",
+      "name": "Run JobScrape Actor",
+      "credentials": {
+        "apifyApi": {
+          "id": "ch9pSz2QbUB1t9yd",
+          "name": "Apify Default Token"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "actorSource": "store",
+        "actorId": {
+          "__rl": true,
+          "value": "https://console.apify.com/actors/M2FMdjRVeF1HPGFcc",
+          "mode": "url"
+        },
+        "customBody": "={\n    \"autoQuerySegmentation\": false,\n    \"currentCompanies\": [\n        \"{{ $('Set Job Details').item.json.company_url }}\"\n    ],\n    \"functionIds\": [\n        \"8\"\n    ],\n    \"maxItems\": 25,\n    \"profileScraperMode\": \"Full + email search\",\n    \"recentlyChangedJobs\": false,\n    \"searchQuery\": \"Full Stack Developer OR Developer OR Backend Developer OR Frontend Developer OR Software Engineer OR HR OR Human Resource\",\n    \"seniorityLevelIds\": [\n        \"120\",\n        \"110\",\n        \"130\",\n        \"200\",\n        \"210\",\n        \"220\",\n        \"300\",\n        \"310\"\n    ],\n    \"startPage\": 1,\n    \"yearsAtCurrentCompanyIds\": [\n        \"2\",\n        \"3\",\n        \"4\",\n        \"5\"\n    ]\n}",
+        "timeout": {}
+      },
+      "type": "@apify/n8n-nodes-apify.apify",
+      "typeVersion": 1,
+      "position": [
+        1280,
+        -1696
+      ],
+      "id": "399b08f8-aa48-41b0-948c-3c0135eb33aa",
+      "name": "Run Emails Actor",
+      "credentials": {
+        "apifyApi": {
+          "id": "ES64iNH9JLOkhXJM",
+          "name": "rahxtsayyed dafault"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Wait": {
+      "main": [
+        [
+          {
+            "node": "Get run",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If RUNNING": {
+      "main": [
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "If SUCCEEDED",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If Relevant": {
+      "main": [
+        [
+          {
+            "node": "Create Folder",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Update job relevancy in Supabase",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Update job relevancy in Supabase",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Wait2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If SUCCEEDED": {
+      "main": [
+        [
+          {
+            "node": "Get dataset items",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Stop and Error",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Job Match AI": {
+      "main": [
+        [
+          {
+            "node": "If Relevant",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Trigger": {
+      "main": [
+        [
+          {
+            "node": "Send Error Message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set Global Vars": {
+      "main": [
+        [
+          {
+            "node": "Run JobScrape Actor",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set Job Details": {
+      "main": [
+        [
+          {
+            "node": "Job Match AI",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Resume Tailoring Ai": {
+      "main": [
+        [
+          {
+            "node": "remove wrapper",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Unique Jobs": {
+      "main": [
+        [
+          {
+            "node": "Send a text message",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Set Job Details",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "Job Match AI",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Set Base Path",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set Base Path": {
+      "main": [
+        [
+          {
+            "node": "Read/Write Files from Disk2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get dataset items": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get run": {
+      "main": [
+        [
+          {
+            "node": "If RUNNING",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract from File": {
+      "main": [
+        [
+          {
+            "node": "Set Global Vars",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Read/Write Files from Disk2": {
+      "main": [
+        [
+          {
+            "node": "Extract from File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        []
+      ]
+    },
+    "Structured Resume Output Parser": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "Resume Tailoring Ai",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model-1": {
+      "ai_languageModel": [
+        []
+      ]
+    },
+    "Convert to File": {
+      "main": [
+        [
+          {
+            "node": "Save resume.json",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "remove wrapper": {
+      "main": [
+        [
+          {
+            "node": "Convert to File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Save resume.json": {
+      "main": [
+        [
+          {
+            "node": "Generate Resume PDF",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send a message": {
+      "main": [
+        [
+          {
+            "node": "Update contact after email sent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "read resume1": {
+      "main": [
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create Folder": {
+      "main": [
+        [
+          {
+            "node": "Resume Tailoring Ai",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait1": {
+      "main": [
+        [
+          {
+            "node": "Get run1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If SUCCEEDED1": {
+      "main": [
+        [
+          {
+            "node": "Get Emails Dataset",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Stop and Error1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If RUNNING1": {
+      "main": [
+        [
+          {
+            "node": "Wait1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "If SUCCEEDED1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get run1": {
+      "main": [
+        [
+          {
+            "node": "If RUNNING1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items": {
+      "main": [
+        [
+          {
+            "node": "read resume2",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "read resume2": {
+      "main": [
+        [
+          {
+            "node": "Send a document1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send a document1": {
+      "main": [
+        [
+          {
+            "node": "Message Company Details2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Message Company Details2": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Unique Jobs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Email Generate": {
+      "main": [
+        []
+      ]
+    },
+    "Google Gemini Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Email Generate",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generate Resume PDF": {
+      "main": [
+        [
+          {
+            "node": "Email Generate",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Run Emails Actor",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait2": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Unique Jobs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "xAI Grok Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Resume Tailoring Ai",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "Job Match AI",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get TO and CC emails": {
+      "main": [
+        [
+          {
+            "node": "read resume1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Emails Dataset": {
+      "main": [
+        [
+          {
+            "node": "Formating emails for storage",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Formating emails for storage": {
+      "main": [
+        [
+          {
+            "node": "Create contact in Supabase",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "Save Jobs in Supabase",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create contact in Supabase": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update contact after email sent": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Get TO and CC emails",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Save Jobs in Supabase": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Unique Jobs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Run JobScrape Actor": {
+      "main": [
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Run Emails Actor": {
+      "main": [
+        [
+          {
+            "node": "Wait1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "saveDataErrorExecution": "all",
+    "saveDataSuccessExecution": "all",
+    "saveManualExecutions": true,
+    "saveExecutionProgress": true,
+    "callerPolicy": "workflowsFromSameOwner",
+    "availableInMCP": false
+  },
+  "versionId": "c669b6c3-7a5a-433e-ae4d-1553034e3b50",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "79a7aa25fa1a526575e9d16be2e37e3eb8dbd841332f42a9d7ebcef52a77cfbc"
+  },
+  "id": "ZmAiCgk1KrDDVPgs",
+  "tags": [
+    {
+      "updatedAt": "2026-02-14T06:24:47.759Z",
+      "createdAt": "2026-02-14T06:24:47.759Z",
+      "id": "XNK8bVyPQBygsQJ8",
+      "name": "WIP"
+    }
+  ]
+}
