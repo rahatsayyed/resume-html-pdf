@@ -53,6 +53,7 @@ CREATE TABLE IF NOT EXISTS contacts (
   email_thread_id    text,
   followup1_sent_at  timestamptz,
   followup2_sent_at  timestamptz,
+  reply_received     boolean DEFAULT false,
   last_updated       timestamptz DEFAULT now() NOT NULL,
   UNIQUE (job_id, linkedin)  -- one row per (job, person); many contacts per job
 );
