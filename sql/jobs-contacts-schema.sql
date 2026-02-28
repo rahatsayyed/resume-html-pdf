@@ -18,6 +18,7 @@ CREATE TABLE IF NOT EXISTS jobs (
   job_poster_name        text,
   job_poster_profile_url text,
   relavancy_score        smallint CHECK (relavancy_score >= 0 AND relavancy_score <= 100), 
+  contacts_extracted     boolean DEFAULT false,
   created_at             timestamptz DEFAULT now() NOT NULL,
   updated_at             timestamptz DEFAULT now() NOT NULL
 );

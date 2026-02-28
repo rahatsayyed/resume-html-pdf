@@ -1,0 +1,1245 @@
+{
+  "name": "Job outreach follow-up (48h)",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "triggerAtHour": 10
+            }
+          ]
+        }
+      },
+      "id": "trigger-1",
+      "name": "Daily 8am",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -688,
+        384
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "tableId": "contacts",
+        "returnAll": true,
+        "matchType": "allFilters",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "followup1_sent_at",
+              "condition": "is",
+              "keyValue": "null"
+            },
+            {
+              "keyName": "email_sent_at",
+              "condition": "lt",
+              "keyValue": "={{ $now.minus(48, 'hours').toISO() }}"
+            },
+            {
+              "keyName": "reply_received",
+              "condition": "is",
+              "keyValue": "false"
+            }
+          ]
+        }
+      },
+      "id": "supabase-followup1",
+      "name": "Contacts due for followup 1",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        224,
+        -32
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "UgJZt2YIwF9raxzT",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "loop1",
+      "name": "Loop followup 1",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        672,
+        -32
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "to",
+              "name": "to",
+              "type": "string",
+              "value": "={{ $json.toEmail }}"
+            },
+            {
+              "id": "a7008ec9-4bab-4e25-a78c-2327cb6ee735",
+              "name": "cc",
+              "value": "={{ $json.ccEmail.join(\",\") }}",
+              "type": "string"
+            },
+            {
+              "id": "subject",
+              "name": "subject",
+              "type": "string",
+              "value": "Re: Your application – quick follow-up"
+            },
+            {
+              "id": "body",
+              "name": "body",
+              "type": "string",
+              "value": "=<p>Hi {{ $json.name || \"there\" }},</p>\n\n<p>I just wanted to briefly follow up on my previous message.</p>\n\n<p>I’m genuinely interested in exploring opportunities at your company and would appreciate a referral if you feel my background could be a fit.</p>\n\n<p>If easier, even a quick suggestion on how best to approach the team would help.</p>\n\n<p>Thanks again for your time.</p>\n\n<p>\nRahat Sayyed<br>\n<a href=\"{{ $('Set Global Vars').first().json.githubLink }}\">github</a> |\n<a href=\"{{ $('Set Global Vars').first().json.linkedinLink }}\">linkedin</a> |\n<a href=\"{{ $('Set Global Vars').first().json.portfolioLink }}\">portfolio</a> |\n<a href=\"{{ $('Set Global Vars').first().json.resumeLink }}\">resume</a>\n</p>"
+            },
+            {
+              "id": "threadId",
+              "name": "threadId",
+              "type": "string",
+              "value": "={{ $json.threadId }}"
+            },
+            {
+              "id": "messageId",
+              "name": "messageId",
+              "type": "string",
+              "value": "={{ $json.lastMessageId }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "template1",
+      "name": "Followup 1 template",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1712,
+        -112
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "thread",
+        "operation": "reply",
+        "threadId": "={{ $json.threadId }}",
+        "messageId": "={{ $json.messageId }}",
+        "emailType": "html",
+        "message": "={{ $json.body }}",
+        "options": {
+          "ccList": "={{ $json.cc }}"
+        }
+      },
+      "id": "gmail1",
+      "name": "Send followup 1 email",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        1920,
+        -112
+      ],
+      "webhookId": "ff24171e-201f-4b62-b03e-62007cc9fb7d",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "t4yo8xcujGnb6dJC",
+          "name": "n8n job gmail"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "tableId": "contacts",
+        "matchType": "allFilters",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "id",
+              "condition": "eq",
+              "keyValue": "={{ $json.id }}"
+            }
+          ]
+        },
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "followup1_sent_at",
+              "fieldValue": "={{ $now.toISO() }}"
+            }
+          ]
+        }
+      },
+      "id": "update1",
+      "name": "Mark followup 1 sent",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        1904,
+        160
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "UgJZt2YIwF9raxzT",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "tableId": "contacts",
+        "returnAll": true,
+        "matchType": "allFilters",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "followup2_sent_at",
+              "condition": "is",
+              "keyValue": "null"
+            },
+            {
+              "keyName": "followup1_sent_at",
+              "condition": "lt",
+              "keyValue": "={{ $now.minus(48, 'hours').toISO() }}"
+            },
+            {
+              "keyName": "reply_received",
+              "condition": "is",
+              "keyValue": "false"
+            }
+          ]
+        }
+      },
+      "id": "supabase-followup2",
+      "name": "Contacts due for followup 2",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        224,
+        736
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "UgJZt2YIwF9raxzT",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "loop2",
+      "name": "Loop followup 2",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        672,
+        736
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "to2",
+              "name": "to",
+              "type": "string",
+              "value": "={{ Array.isArray($json.email) ? $json.email[0] : $json.email }}"
+            },
+            {
+              "id": "39137739-f412-444a-a9b0-6203f290fb41",
+              "name": "cc",
+              "value": "={{ $json.ccEmail.join(\",\") }}",
+              "type": "string"
+            },
+            {
+              "id": "subject2",
+              "name": "subject",
+              "type": "string",
+              "value": "Final follow-up – still interested"
+            },
+            {
+              "id": "body2",
+              "name": "body",
+              "type": "string",
+              "value": "=<p>Hi {{ $json.name || \"there\" }},</p>\n\n<p>This is a quick final follow-up in case my earlier message got buried.</p>\n\n<p>If now isn’t a good time, I completely understand.</p>\n\n<p>If possible, I’d still value any brief advice on positioning myself for opportunities at your company.</p>\n\n<p>Appreciate your time either way.</p>\n\n<p>\nRahat Sayyed<br>\n<a href=\"{{ $('Set Global Vars').first().json.githubLink }}\">github</a> |\n<a href=\"{{ $('Set Global Vars').first().json.linkedinLink }}\">linkedin</a> |\n<a href=\"{{ $('Set Global Vars').first().json.portfolioLink }}\">portfolio</a> |\n<a href=\"{{ $('Set Global Vars').first().json.resumeLink }}\">resume</a>\n</p>"
+            },
+            {
+              "id": "threadId2",
+              "name": "threadId",
+              "type": "string",
+              "value": "={{ $json.threadId }}"
+            },
+            {
+              "id": "messageId2",
+              "name": "messageId",
+              "type": "string",
+              "value": "={{ $json.lastMessageId }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "template2",
+      "name": "Followup 2 template",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1728,
+        752
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "thread",
+        "operation": "reply",
+        "threadId": "={{ $json.threadId }}",
+        "messageId": "={{ $json.messageId }}",
+        "emailType": "html",
+        "message": "={{ $json.body }}",
+        "options": {
+          "ccList": ""
+        }
+      },
+      "id": "gmail2",
+      "name": "Send followup 2 email",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        1952,
+        752
+      ],
+      "webhookId": "a0fea8d3-4356-4645-877c-7f92f7630efa",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "t4yo8xcujGnb6dJC",
+          "name": "n8n job gmail"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "tableId": "contacts",
+        "matchType": "allFilters",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "id",
+              "condition": "eq",
+              "keyValue": "={{ $json.id }}"
+            }
+          ]
+        },
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "followup2_sent_at",
+              "fieldValue": "={{ $now.toISO() }}"
+            }
+          ]
+        }
+      },
+      "id": "update2",
+      "name": "Mark followup 2 sent",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        1968,
+        944
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "UgJZt2YIwF9raxzT",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "tid",
+              "name": "threadId",
+              "type": "string",
+              "value": "={{ $json.email_thread_id }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "f574e8a7-f2d1-4471-9d96-596fd6f75e2c",
+      "name": "Set threadId (F1)",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        896,
+        16
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "thread",
+        "operation": "get",
+        "threadId": "={{ $json.threadId }}",
+        "options": {
+          "returnOnlyMessages": true
+        }
+      },
+      "id": "88ed20d4-1362-4d41-928c-f96b86219214",
+      "name": "Gmail Get Thread (F1)",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        1088,
+        16
+      ],
+      "webhookId": "16b7d819-fe56-4eaa-911d-35fa7647ea32",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "t4yo8xcujGnb6dJC",
+          "name": "n8n job gmail"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Get all incoming items\nconst messages = $input.all();\n\n// Your email\nconst myEmail = $('Set Global Vars').first().json.my_email.toLowerCase();\n\n// Helper: extract emails from header string\nfunction extractEmails(header) {\n  if (!header) return [];\n\n  // Match all emails inside <>\n  const matches = header.match(/<([^>]+)>/g);\n\n  if (matches) {\n    return matches.map(e => e.replace(/[<>]/g, '').toLowerCase());\n  }\n\n  // Fallback: if plain email without <>\n  return header.split(',')\n    .map(e => e.trim().toLowerCase())\n    .filter(e => e.includes('@'));\n}\n\n// Group messages by threadId\nconst threads = {};\n\nfor (const item of messages) {\n  const msg = item.json;\n  const threadId = msg.threadId;\n\n  if (!threads[threadId]) {\n    threads[threadId] = [];\n  }\n\n  threads[threadId].push(msg);\n}\n\nconst results = [];\n\nfor (const threadId in threads) {\n  const threadMessages = threads[threadId];\n\n  // Find your original sent email\n  const sentMessage = threadMessages.find(m =>\n    m.labels?.some(l => l.name === \"SENT\")\n  );\n\n  let toEmail = null;\n  let ccEmail = [];\n\n  if (sentMessage) {\n    const toList = extractEmails(sentMessage.To);\n    const ccList = extractEmails(sentMessage.Cc);\n\n    // Remove your email from both\n    const filteredTo = toList.filter(e => e !== myEmail);\n    const filteredCc = ccList.filter(e => e !== myEmail);\n\n    toEmail = filteredTo[0] || null;\n    ccEmail = filteredCc;\n  }\n\n  // Check for inbox reply\n  const inboxReply = threadMessages.find(m =>\n    m.labels?.some(l => l.name === \"INBOX\") &&\n    !m.From?.toLowerCase().includes(myEmail)\n  );\n\n// Sort by internalDate to get latest message\nconst sortedMessages = threadMessages.sort(\n  (a, b) => Number(b.internalDate) - Number(a.internalDate)\n);\n\nconst lastMessage = sortedMessages[0];\n  \n  results.push({\n    json: {\n      toEmail,\n      ccEmail,\n      threadId,\n      lastMessageId: lastMessage?.id || null,\n      replyReceived: !!inboxReply,\n      replyFrom: inboxReply ? inboxReply.From : null,\n      replySubject: inboxReply ? inboxReply.Subject : null\n    }\n  });\n}\n\nreturn results;"
+      },
+      "id": "7816adf3-43e3-469d-bc8c-d77d16741fd1",
+      "name": "Check reply in thread (F1)",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1280,
+        16
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 1
+          },
+          "conditions": [
+            {
+              "id": "reply",
+              "leftValue": "={{ $json.replyReceived }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "true"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "566cd51a-d0e4-48c3-97a1-9fcaceaaa3f0",
+      "name": "Reply received? (F1)",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        1472,
+        16
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "tableId": "contacts",
+        "matchType": "allFilters",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "id",
+              "condition": "eq",
+              "keyValue": "={{ $('Loop followup 1').first().json.id }}"
+            }
+          ]
+        },
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "reply_received",
+              "fieldValue": true
+            }
+          ]
+        }
+      },
+      "id": "27cbc708-fa7e-4a0e-9ac3-8fa9b43c1215",
+      "name": "Mark reply received (F1)",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        1696,
+        160
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "UgJZt2YIwF9raxzT",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "tid2",
+              "name": "threadId",
+              "type": "string",
+              "value": "={{ $json.email_thread_id }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "5911fd70-83fb-4b56-888b-0c771b504482",
+      "name": "Set threadId (F2)",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        896,
+        848
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "thread",
+        "operation": "get",
+        "threadId": "={{ $json.threadId }}",
+        "options": {
+          "returnOnlyMessages": true
+        }
+      },
+      "id": "f8d1cf92-d16c-4dd2-b1c4-f8e929138430",
+      "name": "Gmail Get Thread (F2)",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        1088,
+        848
+      ],
+      "webhookId": "e685ca19-c19e-443a-a29e-96f289ae4423",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "t4yo8xcujGnb6dJC",
+          "name": "n8n job gmail"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Get all incoming items\nconst messages = $input.all();\n\n// Your email\nconst myEmail = $('Set Global Vars').first().json.my_email.toLowerCase();\n\n// Helper: extract emails from header string\nfunction extractEmails(header) {\n  if (!header) return [];\n\n  // Match all emails inside <>\n  const matches = header.match(/<([^>]+)>/g);\n\n  if (matches) {\n    return matches.map(e => e.replace(/[<>]/g, '').toLowerCase());\n  }\n\n  // Fallback: if plain email without <>\n  return header.split(',')\n    .map(e => e.trim().toLowerCase())\n    .filter(e => e.includes('@'));\n}\n\n// Group messages by threadId\nconst threads = {};\n\nfor (const item of messages) {\n  const msg = item.json;\n  const threadId = msg.threadId;\n\n  if (!threads[threadId]) {\n    threads[threadId] = [];\n  }\n\n  threads[threadId].push(msg);\n}\n\nconst results = [];\n\nfor (const threadId in threads) {\n  const threadMessages = threads[threadId];\n\n  // Find your original sent email\n  const sentMessage = threadMessages.find(m =>\n    m.labels?.some(l => l.name === \"SENT\")\n  );\n\n  let toEmail = null;\n  let ccEmail = [];\n\n  if (sentMessage) {\n    const toList = extractEmails(sentMessage.To);\n    const ccList = extractEmails(sentMessage.Cc);\n\n    // Remove your email from both\n    const filteredTo = toList.filter(e => e !== myEmail);\n    const filteredCc = ccList.filter(e => e !== myEmail);\n\n    toEmail = filteredTo[0] || null;\n    ccEmail = filteredCc;\n  }\n\n  // Check for inbox reply\n  const inboxReply = threadMessages.find(m =>\n    m.labels?.some(l => l.name === \"INBOX\") &&\n    !m.From?.toLowerCase().includes(myEmail)\n  );\n\n// Sort by internalDate to get latest message\nconst sortedMessages = threadMessages.sort(\n  (a, b) => Number(b.internalDate) - Number(a.internalDate)\n);\n\nconst lastMessage = sortedMessages[0];\n  \n  results.push({\n    json: {\n      toEmail,\n      ccEmail,\n      threadId,\n      lastMessageId: lastMessage?.id || null,\n      replyReceived: !!inboxReply,\n      replyFrom: inboxReply ? inboxReply.From : null,\n      replySubject: inboxReply ? inboxReply.Subject : null\n    }\n  });\n}\n\nreturn results;"
+      },
+      "id": "c700dfc8-6775-4a0c-9f85-c896b618696e",
+      "name": "Check reply in thread (F2)",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1280,
+        848
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 1
+          },
+          "conditions": [
+            {
+              "id": "reply2",
+              "leftValue": "={{ $json.replyReceived }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "true"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "62cda235-5de2-44d8-83c1-247e1000bdae",
+      "name": "Reply received? (F2)",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        1504,
+        848
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "tableId": "contacts",
+        "matchType": "allFilters",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "id",
+              "condition": "eq",
+              "keyValue": "={{ $json.id }}"
+            }
+          ]
+        },
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "reply_received",
+              "fieldValue": true
+            }
+          ]
+        }
+      },
+      "id": "e55eb83a-1e0e-46a4-998a-ac434a1bd510",
+      "name": "Mark reply received (F2)",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        1728,
+        944
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "UgJZt2YIwF9raxzT",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "d7c207ae-5f67-4de7-a1bd-5d8d7706ae5b",
+              "name": "telegram_chat_id",
+              "type": "string",
+              "value": "1125208540"
+            },
+            {
+              "id": "6f9c722b-c14a-48f1-9aef-435fe279d182",
+              "name": "linkedinLink",
+              "value": "https://linkedin.com/in/rahatsayyed",
+              "type": "string"
+            },
+            {
+              "id": "8bbaa828-1cb6-4dce-a9aa-34089f75840e",
+              "name": "githubLink",
+              "value": "https://github.com/rahatsayyed",
+              "type": "string"
+            },
+            {
+              "id": "d98536ef-25a2-4223-b26b-34144d165ff9",
+              "name": "portfolioLink",
+              "value": "https://rahatsayyed.xyz",
+              "type": "string"
+            },
+            {
+              "id": "a6347f0c-c355-4197-9f25-1b8e9ed6d65b",
+              "name": "resumeLink",
+              "value": "https://flowcv.com/resume/w0f4aim4wh",
+              "type": "string"
+            },
+            {
+              "id": "c62c2b0c-5912-44ac-a215-a72621c02350",
+              "name": "my_email",
+              "value": "rahxtsayyed@gmail.com",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "5ea2b5b2-840a-42c7-9cc1-24fb36615a2d",
+      "name": "Set Global Vars",
+      "type": "n8n-nodes-base.set",
+      "position": [
+        -352,
+        384
+      ],
+      "typeVersion": 3.4
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "tableId": "contacts",
+        "returnAll": true,
+        "matchType": "allFilters",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "email_sent_at",
+              "condition": "is",
+              "keyValue": "null"
+            },
+            {
+              "keyName": "last_updated",
+              "condition": "lt",
+              "keyValue": "={{ $now.minus(1, 'hours').toISO() }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        208,
+        384
+      ],
+      "id": "e3e1b788-2fdb-4b36-a962-de3b334835e8",
+      "name": "Get many rows",
+      "credentials": {
+        "supabaseApi": {
+          "id": "UgJZt2YIwF9raxzT",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {
+          "reset": false
+        }
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        656,
+        384
+      ],
+      "id": "a9f3f138-bf88-4171-939c-5c4a1d14d6ec",
+      "name": "Loop Over Items"
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $('Loop Over Items').item.json.email[0] }}",
+        "subject": "=Quick Question About {{ $('Get a row').item.json.job_title }} Role",
+        "message": "=<p>Hi {{ $('Loop Over Items').item.json.name }},</p>\n\n<p>I recently found the <strong>{{ $('Get a row').item.json.job_title }}</strong> opening at {{ $('Get a row').item.json.company_name }} and it aligns closely with my experience in Full Stack Development.</p>\n\n<p>Since you're part of the team, I wanted to ask if you'd be open to referring me if you believe my background is a fit. I've attached my resume for context.</p>\n\n<p>Even brief guidance would be appreciated.</p>\n\nCheckout my Work: <a href=\"{{ $('Set Global Vars').first().json.githubLink }}\">github</a> | <a href=\"{{ $('Set Global Vars').first().json.linkedinLink }}\">linkedin</a> | <a href=\"{{ $('Set Global Vars').first().json.portfolioLink }}\">portfolio</a> | <a href=\"{{ $('Set Global Vars').first().json.resumeLink }}\">resume</a></p>\n\n<p>Thanks,<br>\nRahat Sayyed<br>\n",
+        "options": {
+          "appendAttribution": false,
+          "attachmentsUi": {
+            "attachmentsBinary": [
+              {}
+            ]
+          },
+          "ccList": "={{ $('Loop Over Items').item.json.email.slice(1).join(\",\") }}",
+          "senderName": "Rahat Sayyed"
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        1248,
+        496
+      ],
+      "id": "1851da8d-9483-486f-96b0-48e2cacb4acf",
+      "name": "Send a message",
+      "webhookId": "9416475d-b942-4d12-a999-11ac7bf409d9",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "t4yo8xcujGnb6dJC",
+          "name": "n8n job gmail"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "fileSelector": "={{ $('Set Base Path').first().json.basePath }}/automation/{{ $('Loop Over Items').item.json.job_id }}/resume.pdf",
+        "options": {
+          "fileName": "Rahat Sayyed - Resume.pdf"
+        }
+      },
+      "type": "n8n-nodes-base.readWriteFile",
+      "typeVersion": 1.1,
+      "position": [
+        1072,
+        496
+      ],
+      "id": "942d5e43-685f-44ca-b1e4-c57c88fbdfe4",
+      "name": "read resume1"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "tableId": "contacts",
+        "matchType": "allFilters",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "id",
+              "condition": "eq",
+              "keyValue": "={{ $('Loop Over Items').item.json.id }}"
+            }
+          ]
+        },
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "email_sent_at",
+              "fieldValue": "={{ $now.toISO() }}"
+            },
+            {
+              "fieldId": "email_thread_id",
+              "fieldValue": "={{ $json.threadId }}"
+            }
+          ]
+        }
+      },
+      "id": "f48c6ab1-efe0-4219-8828-aaaf6c822f38",
+      "name": "Update contact after email sent",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        1456,
+        496
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "UgJZt2YIwF9raxzT",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "tableId": "jobs",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "id",
+              "keyValue": "={{ $json.job_id }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        880,
+        496
+      ],
+      "id": "65e8715b-5b64-4b0c-ac28-c4a68bff31ab",
+      "name": "Get a row",
+      "credentials": {
+        "supabaseApi": {
+          "id": "UgJZt2YIwF9raxzT",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "bp-001",
+              "name": "basePath",
+              "type": "string",
+              "value": "/Users/copods/Documents/Projects/personal/resume"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "b68e9581-fcaa-4b0a-9f70-7616c4c9b059",
+      "name": "Set Base Path",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -48,
+        384
+      ]
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Daily 8am": {
+      "main": [
+        [
+          {
+            "node": "Set Global Vars",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Followup 1 template": {
+      "main": [
+        [
+          {
+            "node": "Send followup 1 email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send followup 1 email": {
+      "main": [
+        [
+          {
+            "node": "Mark followup 1 sent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Mark followup 1 sent": {
+      "main": [
+        [
+          {
+            "node": "Loop followup 1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Followup 2 template": {
+      "main": [
+        [
+          {
+            "node": "Send followup 2 email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send followup 2 email": {
+      "main": [
+        [
+          {
+            "node": "Mark followup 2 sent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Mark followup 2 sent": {
+      "main": [
+        [
+          {
+            "node": "Loop followup 2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Contacts due for followup 1": {
+      "main": [
+        [
+          {
+            "node": "Loop followup 1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop followup 1": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Set threadId (F1)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set threadId (F1)": {
+      "main": [
+        [
+          {
+            "node": "Gmail Get Thread (F1)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gmail Get Thread (F1)": {
+      "main": [
+        [
+          {
+            "node": "Check reply in thread (F1)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check reply in thread (F1)": {
+      "main": [
+        [
+          {
+            "node": "Reply received? (F1)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Reply received? (F1)": {
+      "main": [
+        [
+          {
+            "node": "Mark reply received (F1)",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Followup 1 template",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Mark reply received (F1)": {
+      "main": [
+        [
+          {
+            "node": "Loop followup 1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Contacts due for followup 2": {
+      "main": [
+        [
+          {
+            "node": "Loop followup 2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop followup 2": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Set threadId (F2)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set threadId (F2)": {
+      "main": [
+        [
+          {
+            "node": "Gmail Get Thread (F2)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gmail Get Thread (F2)": {
+      "main": [
+        [
+          {
+            "node": "Check reply in thread (F2)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check reply in thread (F2)": {
+      "main": [
+        [
+          {
+            "node": "Reply received? (F2)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Reply received? (F2)": {
+      "main": [
+        [
+          {
+            "node": "Mark reply received (F2)",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Followup 2 template",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Mark reply received (F2)": {
+      "main": [
+        [
+          {
+            "node": "Loop followup 2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set Global Vars": {
+      "main": [
+        [
+          {
+            "node": "Contacts due for followup 1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Contacts due for followup 2",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Set Base Path",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get many rows": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Get a row",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send a message": {
+      "main": [
+        [
+          {
+            "node": "Update contact after email sent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "read resume1": {
+      "main": [
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get a row": {
+      "main": [
+        [
+          {
+            "node": "read resume1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set Base Path": {
+      "main": [
+        [
+          {
+            "node": "Get many rows",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update contact after email sent": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "saveDataErrorExecution": "all",
+    "saveDataSuccessExecution": "all",
+    "saveManualExecutions": true,
+    "saveExecutionProgress": true,
+    "callerPolicy": "workflowsFromSameOwner",
+    "availableInMCP": false
+  },
+  "versionId": "688b3e14-83a4-4053-aff0-edc3e9ae3b48",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "79a7aa25fa1a526575e9d16be2e37e3eb8dbd841332f42a9d7ebcef52a77cfbc"
+  },
+  "id": "Xgq2wvbeNl95Ia62",
+  "tags": []
+}
