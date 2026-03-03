@@ -130,7 +130,20 @@ const newResume = {
 
   skills: (data.content.skill?.entries || [])
     .filter((e) => !e.isHidden)
-    .map((e) => e.skill),
+    .reduce((acc, e) => {
+      const text = e.infoHtml
+        ? e.infoHtml
+            .replace(/<[^>]+>/g, "")
+            .replace(/&amp;/g, "&")
+            .replace(/&nbsp;/g, " ")
+            .trim()
+        : "";
+      acc[e.skill] = text
+        .split(",")
+        .map((s) => s.trim())
+        .filter(Boolean);
+      return acc;
+    }, {}),
 
   certificates: (data.content.certificate?.entries || [])
     .filter((e) => !e.isHidden)
@@ -146,7 +159,7 @@ const newResume = {
 // }
 // Write to resume.json in the parent directory
 fs.writeFileSync(
-  path.join(__dirname, "../resume.json"),
+  path.join(__dirname, "../input/resume.json"),
   JSON.stringify(newResume, null, 2),
 );
 console.log("✅ resume.json generated with clean structure.");

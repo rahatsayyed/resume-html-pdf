@@ -106,11 +106,12 @@
   <h2>Skills</h2>
   <hr class="section-divider" />
   <div class="skills-section">
-    <ul class="skills-list">
-      {{#each skills}}
-      <li>{{this}}</li>
-      {{/each}}
-    </ul>
+    {{#each skills}}
+    <div class="skill-category-row">
+      <span class="skills-group-label">{{@key}}</span> — {{#each
+      this}}{{this}}{{#unless @last}}, {{/unless}}{{/each}}
+    </div>
+    {{/each}}
   </div>
   {{/if}}
 

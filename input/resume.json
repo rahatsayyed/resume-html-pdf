@@ -17,23 +17,24 @@
       "label": "github.com/rahatsayyed"
     }
   },
-  "summary": "Full-stack &amp; Blockchain Developer with 3+ years of experience specializing in Web 3.0, DApps, and smart contracts. Built blockchain based platforms handling 200+ secure transactions, with zero disputes through a staking and escrow system. Optimized smart contracts to cut transaction fees by 35%, ensuring 99.9% uptime. Led a 10-day bootcamp, training 50+ developers in Aiken-based smart contract development. Contributed to 10+ open-source projects monthly, driving innovation in the Cardano ecosystem.",
+  "summary": "Software Engineer with 3+ years of experience in frontend architecture, contract-driven API design, AI-integrated systems and blockchain; architected a system-wide state management refactor resulting in improved loading by 11 seconds, and optimized deployment workflows decreasing development build time by ~10 minutes per cycle.",
   "experience": [
     {
       "title": "Software Engineer",
       "company": "Copods",
       "companyUrl": "https://copods.co/",
       "location": null,
-      "start": "2025",
+      "start": "Jul 2025",
       "end": "Present",
       "description": [
-        "Built and maintained a policy-driven admin interface for an AI security platform, allowing administrators to control MCP/tool access, data visibility, and AI input/output logging across enterprise environments.",
-        "Implemented frontend support for PII detection and redaction workflows, ensuring sensitive data could be blocked, logged, or masked based on configurable admin policies.",
-        "Designed and shipped a complete frontend design system (tokens, components, layout patterns, and documentation), enabling faster feature development and allowing backend teams to safely modify UI behavior using AI-assisted workflows.",
-        "Refactored application initialization by consolidating multiple context providers, eliminating 9+ redundant API calls and reducing initial page load time by ~11 seconds.",
-        "Improved navigation performance and UX consistency by replacing legacy window.location usage with Next.js routing primitives, resulting in smoother client-side transitions and better perceived performance.",
-        "Built a data exploration dashboard that converted natural language queries into SQL (via backend services) and rendered results as charts and tables, improving demo effectiveness for non-technical stakeholders.",
-        "Collaborated closely with product designers, backend engineers, and stakeholders to align frontend architecture with evolving API contracts and deliver rapid releases under tight timelines."
+        "Led the architecture and implementation of a modular, policy-driven governance layer centralizing MCP access control and model I/O auditing, enabling consistent enforcement across agent workflows and reducing policy misconfiguration issues by ~50%.",
+        "Designed multi-policy schemas and contract-driven TypeScript APIs, reducing integration-related regressions by 70% as AI interfaces evolved.",
+        "Directed a system-wide refactor of React state management, eliminating 9+ redundant API calls and reducing initial load time by 11 seconds.",
+        "Built a unified violations ingestion pipeline across LLM, MCP and RAG flows, standardizing cross-source observability reducing incident investigation time by approximately 40% through centralized event tracing.",
+        "Developed D3-based interactive risk analytics dashboards to distinguish LLM vs. tool exposure patterns, accelerating policy debugging and strengthening audit traceability across 12+ policies.",
+        "Optimized Docker-based frontend build pipeline on AWS EC2 by restructuring dependency installation strategy and leveraging layer caching, reducing development build times by ~10 minutes and accelerating backend frontend integration cycles.",
+        "Developed role-based authentication and onboarding in Next.js with tenant-level access boundaries, eliminating post-login misrouting and reducing user-reported login errors by 30% within the first month post release.",
+        "Coordinated cross-functional efforts between frontend, backend, and AI teams, integrating 3+ evolving model capabilities with governance constraints, maintaining consistent policy enforcement as the platform introduced new tools and agents."
       ]
     },
     {
@@ -41,19 +42,13 @@
       "company": "Konma Dao",
       "companyUrl": "https://www.konma.io/",
       "location": null,
-      "start": "2023",
-      "end": "2025",
+      "start": "Feb 2023",
+      "end": "Jun 2025",
       "description": [
-        "Volunteered for Unikron, a Multichain Meta DEX & Yield Aggregator, by incorporating Next.js and Lucid.js for frontend and blockchain interactions, boosting swap success ratio to 95% through DEX aggregation",
-        "Constructed secure Aiken based smart contracts for a carbon credit marketplace, achieving a 99.9% uptime for trading and eliminating double spending vulnerabilities, improving environmental project investment",
-        "Refine Karbon Ledger’s smart contracts, cutting transaction fees by 35% and designing an architecture that eliminates 100% of security vulnerabilities",
-        "Build a secure carbon credit marketplace and registry for 300+ verified offset projects, using Lucid.js and Mesh.js for seamless Cardano blockchain integration",
-        "Engineered robust frontend solutions utilizing Next.js, integrating with a Haskell backend and RESTful APIs, enabling trust less bridge functionality and increasing overall platform security by 15%",
-        "Drive the execution of the Cardano Meta DEX V1 roadmap, ensuring alignment with Q1/2025 milestones to accelerate adoption",
-        "Developed 5+ reusable React.js components for the Cardano Meta DEX front-end, leading to a 40% reduction in development time for new feature implementation and improved code maintainability",
-        "Engage with 5+ developer communities, fostering 10+ open-source contributions monthly, maintaining 100% up-to-date documentation, and guiding teams on Cardano-based solutions",
-        "Designed and audited 7+ proof-of-concept smart contracts for decentralized applications (dApps) using Aiken, improving code maintainability and reducing development time by 20%",
-        "Led a 10-day bootcamp, equipping developers with Aiken expertise through hands on training and real world smart contract development"
+        "Designed and deployed Aiken-based smart contracts for a carbon credit marketplace, refactoring validation logic to reduce transaction failures by 80%.",
+        "Optimized smart contract architecture for Karbon Ledger, reducing transaction fees by ~35% through script refactoring and execution efficiency improvements.",
+        "Built secure Next.js frontend integrations using Lucid.js and Mesh.js, connecting 8+ Cardano smart contracts to a Haskell based backend and REST services.",
+        "Performed smart contract reviews and testing to identify edge cases and failure scenarios, improving reliability before mainnet deployment and identifying 8 vulnerabilities."
       ]
     }
   ],
@@ -63,39 +58,51 @@
       "degree": "Bachelors’ of Engineering: Computer Engineering",
       "school": "Keystone School of Engineering",
       "location": "Pune, India",
-      "year": "2023"
+      "year": "Jun 2023"
     }
   ],
-  "skills": [
-    "JavaScript",
-    "Aiken",
-    "TypeScript",
-    "Solidity",
-    "Cardano CLI",
-    "Lucid.js",
-    "Mesh.js",
-    "Firestore",
-    "MongoDB",
-    "Node.js",
-    "Express.js",
-    "RESTful APIs",
-    "React.js",
-    "Next.js",
-    "Blockchain Security",
-    "TailwindCSS"
-  ],
-  "certificates": [
-    {
-      "name": "Aiken Development Program",
-      "issuer": "Emurgo Academt",
-      "year": null,
-      "credentialUrl": null
-    },
-    {
-      "name": "Cardano Blockchain Certified Associate (CBCA)",
-      "issuer": "Cardano Foundation",
-      "year": null,
-      "credentialUrl": null
-    }
-  ]
+  "skills": {
+    "Frontend": [
+      "React",
+      "Next.js",
+      "TypeScript",
+      "JavaScript",
+      "TailwindCSS",
+      "Server-Side Rendering",
+      "Client–Server Rendering Patterns",
+      "State Management with React Context",
+      "Performance Optimization"
+    ],
+    "Backend": [
+      "Node.js",
+      "Express.js",
+      "REST APIs",
+      "Server-Sent Events (SSE)",
+      "API Contract Design"
+    ],
+    "Blockchain": [
+      "Aiken",
+      "Solidity",
+      "Cardano CLI",
+      "Lucid.js",
+      "Mesh.js",
+      "Smart Contract Design",
+      "UTXO Model"
+    ],
+    "Infrastructure & Data": [
+      "Docker",
+      "AWS EC2",
+      "Environment Configuration",
+      "Supabase",
+      "NoSQL (MongoDB",
+      "Firestore)"
+    ],
+    "AI Integration": [
+      "OpenAI APIs",
+      "AI Response Handling",
+      "Prompt-Based Feature Integration",
+      "AI tools"
+    ]
+  },
+  "certificates": []
 }
