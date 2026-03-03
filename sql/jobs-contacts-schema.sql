@@ -78,30 +78,3 @@ DROP TRIGGER IF EXISTS contacts_last_updated ON contacts;
 CREATE TRIGGER contacts_last_updated
   BEFORE UPDATE ON contacts
   FOR EACH ROW EXECUTE FUNCTION set_contacts_last_updated();
-
--- =============================================================================
--- Useful queries (for n8n or manual use)
--- =============================================================================
--- Followup1: contacts we emailed, 48h ago, no followup1 yet
--- SELECT * FROM contacts
--- WHERE email_sent_at IS NOT NULL
---   AND followup1_sent_at IS NULL
---   AND email_sent_at < now() - interval '48 hours';
-
--- Followup2: contacts we sent followup1 to, 48h ago, no followup2 yet
--- SELECT * FROM contacts
--- WHERE followup1_sent_at IS NOT NULL
---   AND followup2_sent_at IS NULL
---   AND followup1_sent_at < now() - interval '48 hours';
-
--- =============================================================================
--- Migration: if contacts already had id as text, convert to uuid
--- =============================================================================
--- ALTER TABLE contacts ADD COLUMN id_new uuid DEFAULT gen_random_uuid();
--- UPDATE contacts SET id_new = gen_random_uuid();
--- ALTER TABLE contacts DROP CONSTRAINT contacts_pkey;
--- ALTER TABLE contacts RENAME COLUMN id TO id_old;
--- ALTER TABLE contacts RENAME COLUMN id_new TO id;
--- ALTER TABLE contacts ADD PRIMARY KEY (id);
--- ALTER TABLE contacts DROP COLUMN id_old;
--- ALTER TABLE contacts ADD CONSTRAINT contacts_job_id_linkedin_key UNIQUE (job_id, linkedin);
