@@ -65,11 +65,11 @@
                 "jobTitle": "Software Engineer",
                 "location": "",
                 "createdAt": "2026-01-31T05:47:58.758Z",
-                "updatedAt": "2026-02-14T10:12:02.186Z",
+                "updatedAt": "2026-03-03T12:50:16.337Z",
                 "endDateNew": "Present",
-                "description": "<ul><li><p>Built and maintained a <strong>policy-driven admin interface</strong> for an AI security platform, allowing administrators to control <strong>MCP/tool access, data visibility, and AI input/output logging</strong> across enterprise environments.</p></li><li><p>Implemented frontend support for <strong>PII detection and redaction workflows</strong>, ensuring sensitive data could be blocked, logged, or masked based on configurable admin policies.</p></li><li><p>Designed and shipped a <strong>complete frontend design system</strong> (tokens, components, layout patterns, and documentation), enabling faster feature development and allowing backend teams to safely modify UI behavior using AI-assisted workflows.</p></li></ul><ul><li><p>Refactored application initialization by consolidating multiple context providers, eliminating <strong>9+ redundant API calls</strong> and reducing <strong>initial page load time by ~11 seconds</strong>.</p></li><li><p>Improved navigation performance and UX consistency by replacing legacy window.location usage with <strong>Next.js routing primitives</strong>, resulting in smoother client-side transitions and better perceived performance.</p></li><li><p>Built a <strong>data exploration dashboard</strong> that converted natural language queries into SQL (via backend services) and rendered results as charts and tables, improving demo effectiveness for non-technical stakeholders.</p></li><li><p>Collaborated closely with <strong>product designers, backend engineers, and stakeholders</strong> to align frontend architecture with evolving API contracts and deliver rapid releases under tight timelines.</p></li></ul>",
+                "description": "<ul><li data-indent=\"1\"><p data-indent=\"1\">Led the architecture and implementation of a modular, policy-driven governance layer centralizing MCP access control and model I/O auditing, enabling consistent enforcement across agent workflows and reducing policy misconfiguration issues by ~50%.</p></li><li data-indent=\"1\"><p data-indent=\"1\">Designed multi-policy schemas and contract-driven TypeScript APIs, reducing integration-related regressions by 70% as AI interfaces evolved.</p></li><li data-indent=\"1\"><p data-indent=\"1\">Directed a system-wide refactor of React state management, eliminating 9+ redundant API calls and reducing initial load time by 11 seconds.</p></li><li data-indent=\"1\"><p data-indent=\"1\">Built a unified violations ingestion pipeline across LLM, MCP and RAG flows, standardizing cross-source observability reducing incident investigation time by approximately 40% through centralized event tracing.</p></li><li data-indent=\"1\"><p data-indent=\"1\">Developed D3-based interactive risk analytics dashboards to distinguish LLM vs. tool exposure patterns, accelerating policy debugging and strengthening audit traceability across 12+ policies.</p></li></ul><ul><li data-indent=\"1\"><p data-indent=\"1\">Optimized Docker-based frontend build pipeline on AWS EC2 by restructuring dependency installation strategy and leveraging layer caching, reducing development build times by ~10 minutes and accelerating backend frontend integration cycles.</p></li><li data-indent=\"1\"><p data-indent=\"1\">Developed role-based authentication and onboarding in Next.js with tenant-level access boundaries, eliminating post-login misrouting and reducing user-reported login errors by 30% within the first month post release.</p></li><li data-indent=\"1\"><p data-indent=\"1\">Coordinated cross-functional efforts between frontend, backend, and AI teams, integrating 3+ evolving model capabilities with governance constraints, maintaining consistent policy enforcement as the platform </p><p>introduced new tools and agents.</p></li></ul>",
                 "employerLink": "https://copods.co/",
-                "startDateNew": "2025",
+                "startDateNew": "07/2025",
                 "showPlaceholder": false
               },
               {
@@ -93,12 +93,23 @@
                   "ongoing": false,
                   "onlyYear": true
                 },
-                "updatedAt": "2026-01-31T05:47:01.136Z",
-                "endDateNew": "2025",
+                "updatedAt": "2026-03-03T12:39:39.832Z",
+                "endDateNew": "06/2025",
                 "isNewEntry": false,
-                "description": "<ul><li data-indent=\"1\"><p data-indent=\"1\">Volunteered for Unikron, a Multichain Meta DEX &amp; Yield Aggregator, by incorporating Next.js and Lucid.js for frontend and blockchain interactions, boosting swap success ratio to 95% through DEX aggregation</p></li><li data-indent=\"1\"><p data-indent=\"1\">Constructed secure Aiken based smart contracts for a carbon credit marketplace, achieving a 99.9% uptime for trading and eliminating double spending vulnerabilities, improving environmental project investment</p></li><li data-indent=\"1\"><p data-indent=\"1\">Refine Karbon Ledger’s smart contracts, cutting transaction fees by 35% and designing an architecture that eliminates 100% of security vulnerabilities</p></li><li data-indent=\"1\"><p data-indent=\"1\">Build a secure carbon credit marketplace and registry for 300+ verified offset projects, using Lucid.js and Mesh.js for seamless Cardano blockchain integration</p></li><li data-indent=\"1\"><p data-indent=\"1\">Engineered robust frontend solutions utilizing Next.js, integrating with a Haskell backend and RESTful APIs, enabling trust less bridge functionality and increasing overall platform security by 15%</p></li><li data-indent=\"1\"><p data-indent=\"1\">Drive the execution of the Cardano Meta DEX V1 roadmap, ensuring alignment with Q1/2025 milestones to accelerate adoption</p></li><li data-indent=\"1\"><p data-indent=\"1\">Developed 5+ reusable React.js components for the Cardano Meta DEX front-end, leading to a 40% reduction in development time for new feature implementation and improved code maintainability</p></li><li data-indent=\"1\"><p data-indent=\"1\">Engage with 5+ developer communities, fostering 10+ open-source contributions monthly, maintaining 100% up-to-date documentation, and guiding teams on Cardano-based solutions</p></li><li data-indent=\"1\"><p data-indent=\"1\">Designed and audited 7+ proof-of-concept smart contracts for decentralized applications (dApps) using Aiken, improving code maintainability and reducing development time by 20%</p></li><li data-indent=\"1\"><p data-indent=\"1\">Led a 10-day bootcamp, equipping developers with Aiken expertise through hands on training and real world smart contract development</p></li></ul>",
+                "description": "<ul><li data-indent=\"1\"><p data-indent=\"2\">Designed and deployed Aiken-based smart contracts for a carbon credit marketplace, refactoring validation logic to reduce transaction failures by 80%.</p></li><li data-indent=\"1\"><p data-indent=\"1\">Optimized smart contract architecture for Karbon Ledger, reducing transaction fees by ~35% through script refactoring and execution efficiency improvements.</p></li><li data-indent=\"1\"><p data-indent=\"1\">Built secure Next.js frontend integrations using Lucid.js and Mesh.js, connecting 8+ Cardano smart contracts to a Haskell based backend and REST services.</p></li><li data-indent=\"1\"><p>Performed smart contract reviews and testing to identify edge cases and failure scenarios, improving</p><p> reliability before mainnet deployment and identifying 8 vulnerabilities.</p></li></ul>",
                 "employerLink": "https://www.konma.io/",
-                "startDateNew": "2023",
+                "startDateNew": "02/2023",
+                "showPlaceholder": false
+              },
+              {
+                "id": "4642863c-d8c8-4f47-9f8a-e291032f8b0e",
+                "employer": "keep this hidden",
+                "isHidden": true,
+                "jobTitle": "Extra Bullet Point",
+                "createdAt": "2026-03-03T08:33:50.933Z",
+                "updatedAt": "2026-03-03T08:33:50.933Z",
+                "description": "<p><strong>EXTRA POINTS KONMA exp.</strong></p><ul><li><p>Volunteered for Unikron, a Multichain Meta DEX &amp; Yield Aggregator, by incorporating Next.js and Lucid.js for frontend and blockchain interactions, boosting swap success ratio to 95% through DEX aggregation</p></li><li><p>Developed 5+ reusable React.js components for the Cardano Meta DEX front-end, leading to a 40% reduction in development time for new feature implementation and improved code maintainability</p></li><li><p>Engage with 5+ developer communities, fostering 10+ open-source contributions monthly, maintaining 100% up-to-date documentation, and guiding teams on Cardano-based solutions</p></li><li><p>Designed and audited 7+ proof-of-concept smart contracts for decentralized applications (dApps) using Aiken, improving code maintainability and reducing development time by 20%</p></li><li><p>Led a 10-day bootcamp, equipping developers with Aiken expertise through hands on training and real world smart contract development</p></li></ul>",
+                "employerLink": "",
                 "showPlaceholder": false
               }
             ],
@@ -110,147 +121,67 @@
           "skill": {
             "entries": [
               {
-                "id": "d465eca2-a154-448b-aef8-c00e6a5e677a",
-                "skill": "JavaScript",
-                "infoHtml": "",
-                "createdAt": "2025-03-11T11:15:08.541Z",
-                "updatedAt": "2025-03-11T11:15:08.541Z",
-                "isNewEntry": false,
+                "id": "2e52bf76-0e04-4aa7-b385-ca9846ba5299",
+                "level": "",
+                "skill": "Frontend",
+                "infoHtml": "<p>React, Next.js, TypeScript, JavaScript, TailwindCSS, Server-Side Rendering, Client–Server Rendering Patterns, State Management with React Context, Performance Optimization</p>",
+                "isHidden": false,
+                "createdAt": "2026-03-03T09:04:50.160Z",
+                "updatedAt": "2026-03-03T11:09:58.451Z",
                 "showPlaceholder": false
               },
               {
-                "id": "81d837b9-0152-4ba6-8315-851a549ec925",
-                "skill": "Aiken",
-                "createdAt": "2025-03-11T11:15:28.712Z",
-                "updatedAt": "2025-03-11T11:15:28.712Z",
-                "isNewEntry": false,
+                "id": "dba44fb4-1d9a-443d-ac38-313e5e848ba9",
+                "level": "",
+                "skill": "Backend",
+                "infoHtml": "<p>Node.js, Express.js, REST APIs, Server-Sent Events (SSE), API Contract Design</p>",
+                "isHidden": false,
+                "createdAt": "2026-03-03T09:05:17.110Z",
+                "updatedAt": "2026-03-03T12:04:22.641Z",
                 "showPlaceholder": false
               },
               {
-                "id": "ab020d32-0ca9-4444-a6f3-72cef2b293fb",
-                "skill": "TypeScript",
-                "createdAt": "2025-03-11T11:15:36.361Z",
-                "updatedAt": "2025-03-11T11:15:36.361Z",
-                "isNewEntry": false,
+                "id": "7078c04e-255d-463f-8f6f-a3c9ce085dbd",
+                "level": "",
+                "skill": "Blockchain",
+                "infoHtml": "<p>Aiken, Solidity, Cardano CLI, Lucid.js, Mesh.js, Smart Contract Design, UTXO Model</p>",
+                "isHidden": false,
+                "createdAt": "2026-03-03T09:05:19.661Z",
+                "updatedAt": "2026-03-03T11:11:08.493Z",
                 "showPlaceholder": false
               },
               {
-                "id": "251885be-e961-4d1e-b265-63349765ad93",
-                "skill": "Solidity",
-                "createdAt": "2025-03-11T11:15:44.149Z",
-                "updatedAt": "2025-03-11T11:15:44.149Z",
-                "isNewEntry": false,
+                "id": "aec9f4e8-2b43-4318-8af3-c06b0eeab942",
+                "level": "",
+                "skill": "Infrastructure & Data",
+                "infoHtml": "<p>Docker, AWS EC2, Environment Configuration, Supabase, NoSQL (MongoDB, Firestore)</p>",
+                "isHidden": false,
+                "createdAt": "2026-03-03T09:06:44.574Z",
+                "updatedAt": "2026-03-03T12:04:58.123Z",
                 "showPlaceholder": false
               },
               {
-                "id": "c4cfb40b-3a38-4bc2-8c49-3617ac30911c",
-                "skill": "Cardano CLI",
-                "createdAt": "2025-03-11T11:15:51.740Z",
-                "updatedAt": "2025-03-11T11:15:51.740Z",
-                "isNewEntry": false,
-                "showPlaceholder": false
-              },
-              {
-                "id": "15829825-a97d-4b9f-9356-e2092c49e5c1",
-                "skill": "Lucid.js",
-                "createdAt": "2025-03-11T11:16:00.189Z",
-                "updatedAt": "2025-03-11T11:16:00.189Z",
-                "isNewEntry": false,
-                "showPlaceholder": false
-              },
-              {
-                "id": "e7c06ced-5f60-436b-afef-5b83a314a4d0",
-                "skill": "Mesh.js",
-                "createdAt": "2025-03-11T11:16:08.442Z",
-                "updatedAt": "2025-03-11T11:16:08.443Z",
-                "isNewEntry": false,
-                "showPlaceholder": false
-              },
-              {
-                "id": "7ac50802-38c5-4bcf-91d7-879cebbe3c2c",
-                "skill": "Firestore",
-                "createdAt": "2025-03-11T11:16:18.350Z",
-                "updatedAt": "2025-03-11T11:16:18.350Z",
-                "isNewEntry": false,
-                "showPlaceholder": false
-              },
-              {
-                "id": "91f1fb1b-9309-41f5-b217-0fb454dbc6fe",
-                "skill": "MongoDB",
-                "createdAt": "2025-03-11T11:16:24.945Z",
-                "updatedAt": "2025-03-11T11:16:24.945Z",
-                "isNewEntry": false,
-                "showPlaceholder": false
-              },
-              {
-                "id": "8ffceae5-eca9-4d08-ac80-e10acce8e9b9",
-                "skill": "Node.js",
-                "createdAt": "2025-03-11T11:16:32.173Z",
-                "updatedAt": "2025-03-11T11:16:32.173Z",
-                "isNewEntry": false,
-                "showPlaceholder": false
-              },
-              {
-                "id": "ab6aceea-7ce1-4dff-b1a7-7b34919d1eae",
-                "skill": "Express.js",
-                "createdAt": "2025-03-11T11:16:40.656Z",
-                "updatedAt": "2025-03-11T11:16:40.656Z",
-                "isNewEntry": false,
-                "showPlaceholder": false
-              },
-              {
-                "id": "7ac92306-097c-46dd-90d2-38557ce50fa8",
-                "skill": "RESTful APIs",
-                "createdAt": "2025-03-11T11:16:49.335Z",
-                "updatedAt": "2025-03-11T11:16:49.335Z",
-                "isNewEntry": false,
-                "showPlaceholder": false
-              },
-              {
-                "id": "d1023840-10c4-42d7-931d-57696b948568",
-                "skill": "React.js",
-                "createdAt": "2025-03-11T11:16:57.630Z",
-                "updatedAt": "2025-03-11T11:16:57.630Z",
-                "isNewEntry": false,
-                "showPlaceholder": false
-              },
-              {
-                "id": "650a8bfb-5cb2-4972-96e1-e5315bb9530a",
-                "skill": "Next.js",
-                "createdAt": "2025-03-11T11:17:05.530Z",
-                "updatedAt": "2025-03-11T11:17:05.530Z",
-                "isNewEntry": false,
-                "showPlaceholder": false
-              },
-              {
-                "id": "4688f081-12fd-42d1-ba6f-1d27ecce5acb",
-                "skill": "Blockchain Security",
-                "createdAt": "2025-03-11T11:17:12.165Z",
-                "updatedAt": "2025-03-11T11:17:12.165Z",
-                "isNewEntry": false,
-                "showPlaceholder": false
-              },
-              {
-                "id": "241896d7-12a1-4257-a0f4-20b762b6dbb6",
-                "skill": "TailwindCSS",
-                "createdAt": "2025-03-11T11:17:16.452Z",
-                "updatedAt": "2025-03-11T11:17:16.452Z",
-                "isNewEntry": false,
+                "id": "bef9d644-225b-4d7d-8461-b8209a4f54e3",
+                "level": "",
+                "skill": "AI Integration",
+                "infoHtml": "<p>OpenAI APIs, AI Response Handling, Prompt-Based Feature Integration, AI tools</p>",
+                "isHidden": false,
+                "createdAt": "2026-03-03T11:10:52.633Z",
+                "updatedAt": "2026-03-03T12:04:44.922Z",
                 "showPlaceholder": false
               }
             ],
             "iconKey": "head-side-brain",
             "displayName": "Skills",
-            "sectionType": "skill",
-            "disableAutoSort": true
+            "sectionType": "skill"
           },
           "profile": {
             "entries": [
               {
                 "id": "e602d962-b056-4c99-a84c-497f482372ed",
-                "text": "<p>Full-stack &amp; Blockchain Developer with 3+ years of experience specializing in Web 3.0, DApps, and smart contracts. Built blockchain based platforms handling 200+ secure transactions, with zero disputes through a staking and escrow system. Optimized smart contracts to cut transaction fees by 35%, ensuring 99.9% uptime. Led a 10-day bootcamp, training 50+ developers in Aiken-based smart contract development. Contributed to 10+ open-source projects monthly, driving innovation in the Cardano ecosystem.</p>",
+                "text": "<p>Software Engineer with 3+ years of experience in frontend architecture, contract-driven API design, AI-integrated systems and blockchain; architected a system-wide state management refactor resulting in improved loading by 11 seconds, and optimized deployment workflows decreasing development build time by ~10 minutes per cycle.</p>",
                 "createdAt": "2025-03-11T11:10:31.015Z",
-                "updatedAt": "2026-01-26T12:34:42.302Z",
+                "updatedAt": "2026-03-03T12:46:58.527Z",
                 "isNewEntry": false,
                 "showPlaceholder": false
               }
@@ -264,20 +195,47 @@
               {
                 "id": "99f81653-b491-4da4-9480-e18ef7f63494",
                 "isHidden": true,
-                "subTitle": "sub title if any",
+                "subTitle": "",
                 "createdAt": "2026-02-14T11:19:20.348Z",
-                "updatedAt": "2026-02-14T11:19:20.348Z",
-                "endDateNew": "2026",
-                "description": "<ul><li><p>bullet point 1</p></li><li><p>bullet point 2</p></li></ul><p></p>",
-                "projectTitle": "Example project title",
-                "startDateNew": "06/2022",
+                "updatedAt": "2026-03-03T08:27:34.614Z",
+                "endDateNew": "02/2025",
+                "description": "<ul><li><p>Initiated and managed relationships with customers; wrote and executed business plan that resulted in 80% increase in customer engagement&nbsp;</p></li></ul><ul><li><p>Constructed 8+ Aiken-based smart contracts, implementing secure escrow payments and slashing mechanisms, facilitating over 200 successful transactions with zero reported disputes on the decentralized platform</p></li><li><p>Implemented transparent user profiles using Lucid.js and Mesh.js on the blockchain, achieving full data provenance and reducing disputes related to reputation by 35% within 6 months</p></li><li><p>Engineered a reputation-based staking mechanism for Talendro, a decentralized freelance platform on Cardano, increasing trust between 70+ freelancers and clients by ensuring secure and transparent dispute resolution processes</p></li></ul>",
+                "projectTitle": "Talendro",
+                "startDateNew": "06/2024",
                 "showPlaceholder": false,
                 "projectTitleLink": "https://link if any"
+              },
+              {
+                "id": "71f127be-718e-4a22-bb02-024f34628d25",
+                "isHidden": true,
+                "subTitle": "",
+                "createdAt": "2026-03-03T08:27:35.369Z",
+                "updatedAt": "2026-03-03T08:27:35.369Z",
+                "endDateNew": "12/2022",
+                "description": "<ul><li><p>Led the development of a matching algorithm, boosting successful mentor mentee pairings by 40%</p></li><li><p>Designed a profile system utilizing MongoDB for structured data storage, reducing mismatches by 30%</p></li><li><p>Engineered a calendar and scheduling tool, improving meeting coordination by 50% using React.js and Node.js</p></li></ul>",
+                "projectTitle": "ConnectingDots",
+                "startDateNew": "05/2022",
+                "showPlaceholder": false,
+                "projectTitleLink": ""
+              },
+              {
+                "id": "12f0d6b5-0c2c-4338-8403-067fa9ca07bd",
+                "isHidden": true,
+                "subTitle": "",
+                "createdAt": "2026-03-03T08:27:36.288Z",
+                "updatedAt": "2026-03-03T08:27:36.288Z",
+                "endDateNew": "04/2023",
+                "description": "<ul><li><p>Collaborated to construct an automated hiring platform, reducing time-to-hire by 60% through AI-driven assessments</p></li><li><p>Built a speech-to-text transcription system, leveraging RESTful APIs, cutting administrative overhead by 40%</p></li><li><p>Applied tone analysis for verbal communication, improving evaluation accuracy by 25%</p></li></ul>",
+                "projectTitle": "HirEx",
+                "startDateNew": "12/2022",
+                "showPlaceholder": false,
+                "projectTitleLink": ""
               }
             ],
             "iconKey": "folder-open",
             "displayName": "Projects",
-            "sectionType": "project"
+            "sectionType": "project",
+            "disableAutoSort": true
           },
           "education": {
             "entries": [
@@ -296,6 +254,7 @@
                   "customOngoingWord": "present"
                 },
                 "location": "Pune, India",
+                "createdAt": "2026-03-03T09:27:52.997Z",
                 "startDate": {
                   "hide": true,
                   "year": "2019",
@@ -303,8 +262,8 @@
                   "ongoing": false,
                   "onlyYear": false
                 },
-                "updatedAt": "2025-03-11T11:22:18.161Z",
-                "endDateNew": "2023",
+                "updatedAt": "2026-03-03T09:27:52.997Z",
+                "endDateNew": "06/2023",
                 "isNewEntry": false,
                 "schoolLink": "",
                 "description": "",
@@ -319,29 +278,70 @@
           "certificate": {
             "entries": [
               {
+                "id": "77e399c9-043d-41c9-98f3-401cb4a79271",
+                "infoHtml": "<p>In Progress</p>",
+                "isHidden": true,
+                "createdAt": "2026-03-03T09:12:00.142Z",
+                "updatedAt": "2026-03-03T11:23:49.729Z",
+                "certificate": "Namaste Frontend System Design",
+                "certificateLink": "",
+                "showPlaceholder": false
+              },
+              {
+                "id": "b5f0a40e-4d19-479d-bf04-1284c11233b6",
+                "infoHtml": "<p>In Progress</p>",
+                "isHidden": true,
+                "createdAt": "2026-03-03T09:12:27.736Z",
+                "updatedAt": "2026-03-03T11:23:48.672Z",
+                "certificate": "Harkirat Web Development Cohort",
+                "certificateLink": "",
+                "showPlaceholder": false
+              },
+              {
                 "id": "68308618-87be-4601-9db2-cf88da7cd2eb",
-                "infoHtml": "<p>Completed Certified Aiken Course by Emurgo Academt</p>",
-                "isHidden": false,
+                "infoHtml": "<p>Completed Certified Aiken Course by Emurgo Academy</p>",
+                "isHidden": true,
                 "createdAt": "2026-02-14T10:06:40.902Z",
-                "updatedAt": "2026-02-14T10:14:58.683Z",
+                "updatedAt": "2026-03-03T11:23:47.708Z",
                 "certificate": "Aiken Development Program",
+                "certificateLink": "",
+                "showPlaceholder": false
+              },
+              {
+                "id": "14f63335-329c-45fa-80d9-bf5b40322bae",
+                "infoHtml": "<p>Completed a comprehensive program at NIIT, in modern web development technologies.</p>",
+                "isHidden": true,
+                "createdAt": "2026-03-03T08:23:46.109Z",
+                "updatedAt": "2026-03-03T11:23:46.902Z",
+                "certificate": "Web Development Certification",
                 "certificateLink": "",
                 "showPlaceholder": false
               },
               {
                 "id": "c397b660-ddca-4241-beba-b19af6651611",
                 "infoHtml": "<p>Alpha Program 2 by Cardano Foundation</p>",
-                "isHidden": false,
+                "isHidden": true,
                 "createdAt": "2026-02-14T10:14:28.780Z",
-                "updatedAt": "2026-02-14T10:14:47.061Z",
+                "updatedAt": "2026-03-03T09:10:21.516Z",
                 "certificate": "Cardano Blockchain Certified Associate (CBCA)",
+                "certificateLink": "",
+                "showPlaceholder": false
+              },
+              {
+                "id": "743eb2c2-9050-4592-bd23-941f7f38fd74",
+                "infoHtml": "<p>Completed an intensive 300+ hour course with a holistic approach at Codedamn.</p>",
+                "isHidden": true,
+                "createdAt": "2026-03-03T08:23:28.584Z",
+                "updatedAt": "2026-03-03T09:10:23.593Z",
+                "certificate": "Ethereum and Solidity",
                 "certificateLink": "",
                 "showPlaceholder": false
               }
             ],
             "iconKey": "certificate",
             "displayName": "Certificates",
-            "sectionType": "certificate"
+            "sectionType": "certificate",
+            "disableAutoSort": true
           }
         },
         "customization": {
@@ -481,42 +481,31 @@
               "profile",
               "work",
               "education",
-              "skill",
-              "vdjr48IppXYqstotdRz34",
               "certificate",
-              "project"
+              "project",
+              "skill"
             ],
             "one": {
               "sectionsSorted": [
                 "education",
                 "work",
-                "skill",
-                "vdjr48IppXYqstotdRz34",
                 "profile",
                 "certificate",
-                "project"
+                "project",
+                "skill"
               ]
             },
             "two": {
-              "leftSectionsSorted": [
-                "education",
-                "skill",
-                "profile",
-                "project"
-              ],
-              "rightSectionsSorted": [
-                "work",
-                "vdjr48IppXYqstotdRz34",
-                "certificate"
-              ]
+              "leftSectionsSorted": ["education", "profile", "project"],
+              "rightSectionsSorted": ["work", "certificate", "skill"]
             }
           },
           "skillDisplay": {
             "grid": { "columns": "three" },
-            "text": "pipe",
-            "level": { "selected": "text" },
+            "text": "newLine",
+            "level": { "selected": "bar" },
             "selected": "text",
-            "subinfoSeparator": "colon"
+            "subinfoSeparator": "dash"
           },
           "fullDateFormat": "DD MMM YYYY",
           "interestDisplay": {
@@ -609,14 +598,43 @@
           "2025-05-01T10:46:02.813Z",
           "2025-05-02T07:52:37.751Z",
           { "date": "2026-01-29T01:41:54.039Z", "type": "direct" },
-          { "date": "2026-01-31T06:25:00.118Z", "type": "direct" }
+          { "date": "2026-01-31T06:25:00.118Z", "type": "direct" },
+          { "date": "2026-03-03T09:14:49.358Z", "type": "direct" },
+          { "date": "2026-03-03T09:32:42.568Z", "type": "direct" },
+          { "date": "2026-03-03T10:13:13.996Z", "type": "direct" },
+          { "date": "2026-03-03T10:46:40.705Z", "type": "direct" },
+          { "date": "2026-03-03T11:22:06.581Z", "type": "direct" },
+          { "date": "2026-03-03T11:24:01.049Z", "type": "direct" },
+          { "date": "2026-03-03T11:26:43.400Z", "type": "direct" },
+          { "date": "2026-03-03T11:26:43.736Z", "type": "direct" },
+          { "date": "2026-03-03T11:26:44.277Z", "type": "direct" },
+          { "date": "2026-03-03T11:32:24.813Z", "type": "direct" },
+          { "date": "2026-03-03T11:35:26.497Z", "type": "direct" },
+          { "date": "2026-03-03T11:36:48.751Z", "type": "direct" },
+          { "date": "2026-03-03T11:38:27.456Z", "type": "direct" },
+          { "date": "2026-03-03T11:42:56.154Z", "type": "direct" },
+          { "date": "2026-03-03T12:10:40.580Z", "type": "direct" },
+          { "date": "2026-03-03T12:12:05.563Z", "type": "direct" },
+          { "date": "2026-03-03T12:17:34.250Z", "type": "direct" },
+          { "date": "2026-03-03T12:19:15.332Z", "type": "direct" },
+          { "date": "2026-03-03T12:22:20.638Z", "type": "direct" },
+          { "date": "2026-03-03T12:24:57.542Z", "type": "direct" },
+          { "date": "2026-03-03T12:27:00.659Z", "type": "direct" },
+          { "date": "2026-03-03T12:30:05.960Z", "type": "direct" },
+          { "date": "2026-03-03T12:31:05.536Z", "type": "direct" },
+          { "date": "2026-03-03T12:35:18.011Z", "type": "direct" },
+          { "date": "2026-03-03T12:38:26.328Z", "type": "direct" },
+          { "date": "2026-03-03T12:45:04.895Z", "type": "direct" },
+          { "date": "2026-03-03T12:47:00.644Z", "type": "direct" },
+          { "date": "2026-03-03T12:50:32.493Z", "type": "direct" }
         ],
         "usingBusinessTemplateId": "",
-        "schemaVersion": "16",
-        "lastChangeAt": "2026-02-14T11:19:20.343Z",
+        "schemaVersion": "17",
+        "lastChangeAt": "2026-03-03T12:50:16.335Z",
         "createdAt": "2025-01-05T02:42:12.291Z",
-        "updatedAt": "2026-02-14T11:19:20.343Z",
-        "lng": "en"
+        "updatedAt": "2026-03-03T12:50:16.335Z",
+        "lng": "en",
+        "tags": []
       }
     ]
   },
