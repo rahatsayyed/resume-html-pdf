@@ -1,13 +1,6 @@
 {
   "type": "object",
-  "required": [
-    "name",
-    "summary",
-    "experience",
-    "projects",
-    "education",
-    "skills"
-  ],
+  "required": ["name", "summary", "experience", "education", "skills"],
   "properties": {
     "name": { "type": "string" },
     "jobTitle": { "type": "string" },
@@ -30,7 +23,7 @@
 
     "skills": {
       "type": "array",
-      "items": { "type": "string" }
+      "items": { "type": "object" }
     },
 
     "certificates": {
