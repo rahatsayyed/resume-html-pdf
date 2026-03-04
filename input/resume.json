@@ -24,7 +24,7 @@
       "company": "Copods",
       "companyUrl": "https://copods.co/",
       "location": null,
-      "start": "Jul 2025",
+      "start": "07/2025",
       "end": "Present",
       "description": [
         "Led the architecture and implementation of a modular, policy-driven governance layer centralizing MCP access control and model I/O auditing, enabling consistent enforcement across agent workflows and reducing policy misconfiguration issues by ~50%.",
@@ -42,8 +42,8 @@
       "company": "Konma Dao",
       "companyUrl": "https://www.konma.io/",
       "location": null,
-      "start": "Feb 2023",
-      "end": "Jun 2025",
+      "start": "02/2023",
+      "end": "06/2025",
       "description": [
         "Designed and deployed Aiken-based smart contracts for a carbon credit marketplace, refactoring validation logic to reduce transaction failures by 80%.",
         "Optimized smart contract architecture for Karbon Ledger, reducing transaction fees by ~35% through script refactoring and execution efficiency improvements.",
@@ -58,51 +58,66 @@
       "degree": "Bachelors’ of Engineering: Computer Engineering",
       "school": "Keystone School of Engineering",
       "location": "Pune, India",
-      "year": "Jun 2023"
+      "year": "06/2023"
     }
   ],
-  "skills": {
-    "Frontend": [
-      "React",
-      "Next.js",
-      "TypeScript",
-      "JavaScript",
-      "TailwindCSS",
-      "Server-Side Rendering",
-      "Client–Server Rendering Patterns",
-      "State Management with React Context",
-      "Performance Optimization"
-    ],
-    "Backend": [
-      "Node.js",
-      "Express.js",
-      "REST APIs",
-      "Server-Sent Events (SSE)",
-      "API Contract Design"
-    ],
-    "Blockchain": [
-      "Aiken",
-      "Solidity",
-      "Cardano CLI",
-      "Lucid.js",
-      "Mesh.js",
-      "Smart Contract Design",
-      "UTXO Model"
-    ],
-    "Infrastructure & Data": [
-      "Docker",
-      "AWS EC2",
-      "Environment Configuration",
-      "Supabase",
-      "NoSQL (MongoDB",
-      "Firestore)"
-    ],
-    "AI Integration": [
-      "OpenAI APIs",
-      "AI Response Handling",
-      "Prompt-Based Feature Integration",
-      "AI tools"
-    ]
-  },
+  "skills": [
+    {
+      "category": "Frontend",
+      "items": [
+        "React",
+        "Next.js",
+        "TypeScript",
+        "JavaScript",
+        "TailwindCSS",
+        "Server-Side Rendering",
+        "Client–Server Rendering Patterns",
+        "State Management with React Context",
+        "Performance Optimization"
+      ]
+    },
+    {
+      "category": "Backend",
+      "items": [
+        "Node.js",
+        "Express.js",
+        "REST APIs",
+        "Server-Sent Events (SSE)",
+        "API Contract Design"
+      ]
+    },
+    {
+      "category": "Blockchain",
+      "items": [
+        "Aiken",
+        "Solidity",
+        "Cardano CLI",
+        "Lucid.js",
+        "Mesh.js",
+        "Smart Contract Design",
+        "UTXO Model"
+      ]
+    },
+    {
+      "category": "Infrastructure & Data",
+      "items": [
+        "Docker",
+        "AWS EC2",
+        "Environment Configuration",
+        "Supabase",
+        "NoSQL (MongoDB",
+        "Firestore)"
+      ]
+    },
+    {
+      "category": "AI Integration",
+      "items": [
+        "OpenAI APIs",
+        "AI Response Handling",
+        "Prompt-Based Feature Integration",
+        "AI tools"
+      ]
+    }
+  ],
   "certificates": []
 }

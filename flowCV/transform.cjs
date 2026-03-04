@@ -130,20 +130,17 @@ const newResume = {
 
   skills: (data.content.skill?.entries || [])
     .filter((e) => !e.isHidden)
-    .reduce((acc, e) => {
-      const text = e.infoHtml
-        ? e.infoHtml
-            .replace(/<[^>]+>/g, "")
-            .replace(/&amp;/g, "&")
-            .replace(/&nbsp;/g, " ")
-            .trim()
-        : "";
-      acc[e.skill] = text
+    .map((e) => ({
+      category: e.skill,
+      items: (e.infoHtml || "")
+        .replace(/<[^>]+>/g, "")
+        .replace(/&amp;/g, "&")
+        .replace(/&nbsp;/g, " ")
+        .trim()
         .split(",")
         .map((s) => s.trim())
-        .filter(Boolean);
-      return acc;
-    }, {}),
+        .filter(Boolean),
+    })),
 
   certificates: (data.content.certificate?.entries || [])
     .filter((e) => !e.isHidden)

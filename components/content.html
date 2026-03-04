@@ -108,8 +108,8 @@
   <div class="skills-section">
     {{#each skills}}
     <div class="skill-category-row">
-      <span class="skills-group-label">{{@key}}</span> — {{#each
-      this}}{{this}}{{#unless @last}}, {{/unless}}{{/each}}
+      <span class="skills-group-label">{{category}}</span> — {{#each
+      items}}{{this}}{{#unless @last}}, {{/unless}}{{/each}}
     </div>
     {{/each}}
   </div>
