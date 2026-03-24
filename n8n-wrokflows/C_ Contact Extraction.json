@@ -1,0 +1,1089 @@
+{
+  "name": "C: Contact Extraction",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "hours",
+              "hoursInterval": 4
+            }
+          ]
+        }
+      },
+      "id": "ee201514-92fd-4da5-bfc5-1e6ea77715d7",
+      "name": "Every 4 Hours",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -1408,
+        192
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "bp-001",
+              "name": "basePath",
+              "type": "string",
+              "value": "/Users/copods/Documents/Projects/personal/resume"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "d5a2d347-d86f-4e96-8346-b7e352e469ae",
+      "name": "Set Base Path",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -1152,
+        192
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "d7c207ae",
+              "name": "telegram_chat_id",
+              "type": "string",
+              "value": "1125208540"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "88fb59fb-9084-43ff-bc98-7c4385c3dc51",
+      "name": "Set Global Vars",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -912,
+        192
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "tableId": "jobs",
+        "returnAll": true,
+        "matchType": "allFilters",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "contacts_extracted",
+              "condition": "is",
+              "keyValue": "false"
+            },
+            {
+              "keyName": "relavancy_score",
+              "condition": "gt",
+              "keyValue": "50"
+            }
+          ]
+        }
+      },
+      "id": "35dc1fcb-1c41-4855-b0dc-c93255ae2eff",
+      "name": "Fetch Relevant Unextracted Jobs",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        -608,
+        192
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "UgJZt2YIwF9raxzT",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "0f170295-68bb-47a7-a62c-3d379bc8b56b",
+      "name": "Loop Over Jobs",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        -304,
+        192
+      ]
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Set Global Vars').first().json.telegram_chat_id }}",
+        "text": "Contact Extraction done — contacts saved, ready for email sending.",
+        "additionalFields": {}
+      },
+      "id": "abde8862-2dd3-414d-b98e-efcfe78de201",
+      "name": "Notify Extraction Complete",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        0,
+        0
+      ],
+      "webhookId": "c-tg-001",
+      "credentials": {
+        "telegramApi": {
+          "id": "zR5TTxftQEm2MYTo",
+          "name": "Job Automation Bot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "69b33c3c",
+              "name": "job_id",
+              "type": "string",
+              "value": "={{ $json.id }}"
+            },
+            {
+              "id": "0d898d14",
+              "name": "job_title",
+              "type": "string",
+              "value": "={{ $json.job_title }}"
+            },
+            {
+              "id": "69d585d6",
+              "name": "company_name",
+              "type": "string",
+              "value": "={{ $json.company_name }}"
+            },
+            {
+              "id": "ec4705c3",
+              "name": "company_url",
+              "type": "string",
+              "value": "={{ $json.company_url }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "e7c94313-1fe3-454c-bc99-5885e1d0712b",
+      "name": "Set Job Details",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        0,
+        352
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "tableId": "jobs",
+        "returnAll": true,
+        "matchType": "allFilters",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "company_url",
+              "condition": "eq",
+              "keyValue": "={{ $('Set Job Details').first().json.company_url }}"
+            },
+            {
+              "keyName": "contacts_extracted",
+              "condition": "is",
+              "keyValue": "true"
+            },
+            {
+              "keyName": "id",
+              "condition": "neq",
+              "keyValue": "={{ $json.job_id }}"
+            }
+          ]
+        }
+      },
+      "id": "1a64b47d-aa8c-4829-8c87-110ab467d5b6",
+      "name": "Check Company Jobs",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        304,
+        352
+      ],
+      "alwaysOutputData": true,
+      "credentials": {
+        "supabaseApi": {
+          "id": "UgJZt2YIwF9raxzT",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const rawItems = $input.all();\n// Only consider real job rows (Supabase returns one empty item when alwaysOutputData and 0 rows)\nconst jobs = rawItems.filter(item => item.json && item.json.id != null);\nconst currentJobId = $('Set Job Details').first().json.job_id;\nconst currentCompanyUrl = $('Set Job Details').first().json.company_url;\n\n// No company_url means we cannot do a company match\nif (!currentCompanyUrl || !String(currentCompanyUrl).trim()) {\n  return [{ json: { hasCompanyContacts: false, jobIds: [], jobIdsStr: '' } }];\n}\n\n// Exclude current job (query already does id neq; this is safety)\nconst otherJobs = jobs.filter(item => item.json.id !== currentJobId);\n\nif (otherJobs.length === 0) {\n  return [{ json: { hasCompanyContacts: false, jobIds: [], jobIdsStr: '' } }];\n}\n\nconst jobIds = otherJobs.map(j => String(j.json.id));\nreturn [{ json: { hasCompanyContacts: true, jobIds, jobIdsStr: jobIds.join(',') } }];"
+      },
+      "id": "dd4e7ab9-4795-477e-91f8-381036f41472",
+      "name": "Build Company Job IDs",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        544,
+        352
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "version": 2,
+            "leftValue": "",
+            "caseSensitive": true,
+            "typeValidation": "strict"
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "cmp-001",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              },
+              "leftValue": "={{ $json.hasCompanyContacts }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "b899b3f3-2fd5-4f15-9aa3-fc8604884ce0",
+      "name": "If Company Contacts?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        800,
+        352
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "tableId": "contacts",
+        "returnAll": true,
+        "matchType": "allFilters",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "job_id",
+              "condition": "in",
+              "keyValue": "={{ $('Build Company Job IDs').first().json.jobIds }}"
+            }
+          ]
+        }
+      },
+      "id": "2ed6b2d3-3b2c-4967-b0f3-03ffbc73f0a1",
+      "name": "Fetch Company Contacts",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        1056,
+        96
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "UgJZt2YIwF9raxzT",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "tableId": "contacts",
+        "returnAll": true,
+        "matchType": "allFilters",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "job_id",
+              "condition": "eq",
+              "keyValue": "={{ $('Set Job Details').first().json.job_id }}"
+            }
+          ]
+        }
+      },
+      "id": "11b30c6c-b5b2-4a1e-94da-1408b1b14b06",
+      "name": "Fetch Current Job Contacts",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        1344,
+        96
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "UgJZt2YIwF9raxzT",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const companyContacts = $('Fetch Company Contacts').all();\nconst currentJobContacts = $('Fetch Current Job Contacts').all();\nconst currentJobId = $('Set Job Details').first().json.job_id;\n\n// Build set of linkedin profiles already linked to current job\nconst existingLinkedins = new Set(\n  currentJobContacts\n    .map(item => item.json.linkedin)\n    .filter(l => l && String(l).trim())\n    .map(l => String(l).trim().toLowerCase())\n);\n\n// Dedupe company contacts by linkedin; skip those already in current job\nconst seenLinkedins = new Set();\nconst newContacts = [];\n\nfor (const item of companyContacts) {\n  const linkedin = item.json.linkedin;\n  if (!linkedin || !String(linkedin).trim()) continue;\n  const key = String(linkedin).trim().toLowerCase();\n  if (seenLinkedins.has(key)) continue;\n  if (existingLinkedins.has(key)) continue;\n  seenLinkedins.add(key);\n  newContacts.push({\n    json: {\n      _skip: false,\n      job_id: currentJobId,\n      name: item.json.name || '',\n      linkedin: item.json.linkedin,\n      email: Array.isArray(item.json.email) ? item.json.email : (item.json.email ? [String(item.json.email)] : []),\n      email_sent_at: null,\n      email_thread_id: null,\n      followup1_sent_at: null,\n      followup2_sent_at: null,\n      reply_received: false\n    }\n  });\n}\n\nif (newContacts.length === 0) {\n  return [{ json: { _skip: true } }];\n}\n\nreturn newContacts;"
+      },
+      "id": "83f70a46-e875-48df-b234-2e6aaacdaef9",
+      "name": "Dedupe & Filter Contacts",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1648,
+        96
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "version": 2,
+            "leftValue": "",
+            "caseSensitive": true,
+            "typeValidation": "strict"
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "new-001",
+              "operator": {
+                "type": "boolean",
+                "operation": "false",
+                "singleValue": true
+              },
+              "leftValue": "={{ $json._skip }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "47a87ff7-bf9c-49a1-9c5f-4f54f84fb624",
+      "name": "If Any New Contacts?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1952,
+        96
+      ]
+    },
+    {
+      "parameters": {
+        "tableId": "contacts",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "job_id",
+              "fieldValue": "={{ $json.job_id }}"
+            },
+            {
+              "fieldId": "name",
+              "fieldValue": "={{ $json.name }}"
+            },
+            {
+              "fieldId": "linkedin",
+              "fieldValue": "={{ $json.linkedin }}"
+            },
+            {
+              "fieldId": "email",
+              "fieldValue": "={{ $json.email }}"
+            },
+            {
+              "fieldId": "email_sent_at",
+              "fieldValue": "={{ $json.email_sent_at || null }}"
+            },
+            {
+              "fieldId": "email_thread_id",
+              "fieldValue": "={{ $json.email_thread_id || null }}"
+            },
+            {
+              "fieldId": "followup1_sent_at",
+              "fieldValue": "={{ $json.followup1_sent_at || null }}"
+            },
+            {
+              "fieldId": "followup2_sent_at",
+              "fieldValue": "={{ $json.followup2_sent_at || null }}"
+            }
+          ]
+        }
+      },
+      "id": "ef602800-fe5a-4bd9-acff-01aa4f6c7abc",
+      "name": "Create Contact Reuse",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        2256,
+        0
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "UgJZt2YIwF9raxzT",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "id": "1f92d13c-ffc9-4af6-b677-de8f32a423c6",
+      "name": "Limit Reuse",
+      "type": "n8n-nodes-base.limit",
+      "typeVersion": 1,
+      "position": [
+        2496,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "actorSource": "store",
+        "actorId": {
+          "__rl": true,
+          "value": "https://console.apify.com/actors/M2FMdjRVeF1HPGFcc",
+          "mode": "url"
+        },
+        "customBody": "={\n    \"autoQuerySegmentation\": false,\n    \"currentCompanies\": [\n        \"{{ $('Set Job Details').item.json.company_url }}\"\n    ],\n    \"functionIds\": [\n        \"8\"\n    ],\n    \"maxItems\": 25,\n    \"profileScraperMode\": \"Full + email search\",\n    \"recentlyChangedJobs\": false,\n    \"searchQuery\": \"Full Stack Developer OR Developer OR Backend Developer OR Frontend Developer OR Software Engineer OR HR OR Human Resource\",\n    \"seniorityLevelIds\": [\n        \"120\",\n        \"110\",\n        \"130\",\n        \"200\",\n        \"210\",\n        \"220\",\n        \"300\",\n        \"310\"\n    ],\n    \"startPage\": 1,\n    \"yearsAtCurrentCompanyIds\": [\n        \"2\",\n        \"3\",\n        \"4\",\n        \"5\"\n    ]\n}",
+        "timeout": {}
+      },
+      "id": "8c4d981c-44de-4cea-abd5-3a7836b08f82",
+      "name": "Run Emails Actor",
+      "type": "@apify/n8n-nodes-apify.apify",
+      "typeVersion": 1,
+      "position": [
+        1056,
+        592
+      ],
+      "credentials": {
+        "apifyApi": {
+          "id": "ES64iNH9JLOkhXJM",
+          "name": "rahxtsayyed dafault"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "amount": 1,
+        "unit": "minutes"
+      },
+      "id": "a72d7cba-99aa-4fa7-9c73-5b2f3e3e70c2",
+      "name": "Wait - Polling",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        1296,
+        592
+      ],
+      "webhookId": "c-wait-001"
+    },
+    {
+      "parameters": {
+        "resource": "Actor runs",
+        "operation": "Get run",
+        "runId": {
+          "__rl": true,
+          "value": "={{ $('Run Emails Actor').first().json.id }}",
+          "mode": "id"
+        }
+      },
+      "id": "db391c0b-b1ee-433e-86cc-65f592bf1993",
+      "name": "Get Run Status",
+      "type": "@apify/n8n-nodes-apify.apify",
+      "typeVersion": 1,
+      "position": [
+        1552,
+        592
+      ],
+      "credentials": {
+        "apifyApi": {
+          "id": "ch9pSz2QbUB1t9yd",
+          "name": "Apify Default Token"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "version": 2,
+            "leftValue": "",
+            "caseSensitive": true,
+            "typeValidation": "strict"
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "c-run-check",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              },
+              "leftValue": "={{ $json.status }}",
+              "rightValue": "RUNNING"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "c7b22485-06a4-4082-a616-f6af9f2ba8d7",
+      "name": "If RUNNING",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1792,
+        592
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "version": 2,
+            "leftValue": "",
+            "caseSensitive": true,
+            "typeValidation": "strict"
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "c-success-check",
+              "operator": {
+                "name": "filter.operator.equals",
+                "type": "string",
+                "operation": "equals"
+              },
+              "leftValue": "={{ $json.status }}",
+              "rightValue": "SUCCEEDED"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "83dc1596-8950-4501-b225-0e66b69cbff4",
+      "name": "If SUCCEEDED",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        2048,
+        752
+      ]
+    },
+    {
+      "parameters": {
+        "errorMessage": "Apify Emails Actor did not SUCCEED"
+      },
+      "id": "eaa5f5ef-dedd-4ba2-992f-f6ea9de499c7",
+      "name": "Stop and Error",
+      "type": "n8n-nodes-base.stopAndError",
+      "typeVersion": 1,
+      "position": [
+        2304,
+        896
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "Datasets",
+        "datasetId": "={{ $json.storageIds.datasets.default }}",
+        "offset": {},
+        "limit": {},
+        "options": {}
+      },
+      "id": "cb209bfc-8d08-4d15-b4b9-188a0cd1b318",
+      "name": "Get Emails Dataset",
+      "type": "@apify/n8n-nodes-apify.apify",
+      "typeVersion": 1,
+      "position": [
+        2304,
+        640
+      ],
+      "credentials": {
+        "apifyApi": {
+          "id": "ch9pSz2QbUB1t9yd",
+          "name": "Apify Default Token"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "function toEmailArray(j) {\n  const raw = j.emails ?? j.email ?? j.emailAddresses ?? j.contactEmail ?? j.to ?? j.toEmail;\n  if (raw != null) {\n    if (Array.isArray(raw)) {\n      const arr = raw.map((e) => (typeof e === \"string\" ? e : e?.email ?? e?.address ?? e?.value ?? \"\")).filter((s) => typeof s === \"string\" && s.length > 0);\n      if (arr.length) return arr;\n    } else {\n      const s = String(raw);\n      if (s) return [s];\n    }\n  }\n  const collected = [];\n  for (const key of Object.keys(j)) {\n    if (!/email/i.test(key)) continue;\n    const v = j[key];\n    if (Array.isArray(v)) v.forEach((e) => { const s = typeof e === \"string\" ? e : e?.email ?? e?.address ?? e?.value; if (s) collected.push(String(s)); });\n    else if (v != null && v !== \"\") collected.push(String(v));\n  }\n  return collected;\n}\n\nfunction ensureEmailArray(v) {\n  if (Array.isArray(v)) return v;\n  if (typeof v === \"string\") return v ? [v] : [];\n  return [];\n}\n\nconst items = $input.all().filter((i) => !i.json?.cellValue && (i.json?.id != null || i.json?.name != null || i.json?.firstName != null));\nif (items.length === 0) {\n  return [{ json: { id: \"\", name: \"\", linkedin: \"\", email: [], emailSent: \"\", emailThread: \"\", followup1: \"\", followup2: \"\" } }];\n}\n\nconst newRecords = items.map(item => {\n  const j = item.json;\n  return {\n    job_id: $('Set Job Details').first().json.job_id,\n    name: String(j.firstName || j.lastName || \"\"),\n    linkedin: String(j.linkedinUrl || \"\"),\n    email: toEmailArray(j),\n    emailSent: \"\",\n    emailThread: \"\",\n    followup1: \"\",\n    followup2: \"\",\n    reply_received: false\n  };\n});\n\nreturn newRecords.map(r => ({ json: { ...r, email: ensureEmailArray(r.email) } }));"
+      },
+      "id": "a2f9579d-6499-458e-820f-d4c6a824ac19",
+      "name": "Format Emails for Storage",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2544,
+        640
+      ]
+    },
+    {
+      "parameters": {
+        "tableId": "contacts",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "job_id",
+              "fieldValue": "={{ $json.job_id }}"
+            },
+            {
+              "fieldId": "name",
+              "fieldValue": "={{ $json.name }}"
+            },
+            {
+              "fieldId": "linkedin",
+              "fieldValue": "={{ $json.linkedin }}"
+            },
+            {
+              "fieldId": "email",
+              "fieldValue": "={{ $json.email }}"
+            },
+            {
+              "fieldId": "email_sent_at",
+              "fieldValue": "={{ $json.emailSent || null }}"
+            },
+            {
+              "fieldId": "email_thread_id",
+              "fieldValue": "={{ $json.emailThread || null }}"
+            },
+            {
+              "fieldId": "followup1_sent_at",
+              "fieldValue": "={{ $json.followup1 || null }}"
+            },
+            {
+              "fieldId": "followup2_sent_at",
+              "fieldValue": "={{ $json.followup2 || null }}"
+            }
+          ]
+        }
+      },
+      "id": "d8ba3bb3-c467-47cc-834b-227f11a735e0",
+      "name": "Create Contact in Supabase",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        2800,
+        640
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "UgJZt2YIwF9raxzT",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "id": "f28eebf1-0f0f-4d83-8aa8-de2a12969ac9",
+      "name": "Limit",
+      "type": "n8n-nodes-base.limit",
+      "typeVersion": 1,
+      "position": [
+        3056,
+        640
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "tableId": "jobs",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "id",
+              "condition": "eq",
+              "keyValue": "={{ $('Set Job Details').first().json.job_id }}"
+            }
+          ]
+        },
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "contacts_extracted",
+              "fieldValue": "true"
+            }
+          ]
+        }
+      },
+      "id": "1e583c3e-6efe-4f49-acdb-66ee93cbd81e",
+      "name": "Mark contacts_extracted = true",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        3296,
+        352
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "UgJZt2YIwF9raxzT",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "id": "7824afea-f096-458c-a21b-3be07afc74eb",
+      "name": "Back to Job Loop",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        3552,
+        352
+      ]
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Every 4 Hours": {
+      "main": [
+        [
+          {
+            "node": "Set Base Path",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set Base Path": {
+      "main": [
+        [
+          {
+            "node": "Set Global Vars",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set Global Vars": {
+      "main": [
+        [
+          {
+            "node": "Fetch Relevant Unextracted Jobs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch Relevant Unextracted Jobs": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Jobs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Jobs": {
+      "main": [
+        [
+          {
+            "node": "Notify Extraction Complete",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Set Job Details",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set Job Details": {
+      "main": [
+        [
+          {
+            "node": "Check Company Jobs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check Company Jobs": {
+      "main": [
+        [
+          {
+            "node": "Build Company Job IDs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Build Company Job IDs": {
+      "main": [
+        [
+          {
+            "node": "If Company Contacts?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If Company Contacts?": {
+      "main": [
+        [
+          {
+            "node": "Fetch Company Contacts",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Run Emails Actor",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch Company Contacts": {
+      "main": [
+        [
+          {
+            "node": "Fetch Current Job Contacts",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch Current Job Contacts": {
+      "main": [
+        [
+          {
+            "node": "Dedupe & Filter Contacts",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Dedupe & Filter Contacts": {
+      "main": [
+        [
+          {
+            "node": "If Any New Contacts?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If Any New Contacts?": {
+      "main": [
+        [
+          {
+            "node": "Create Contact Reuse",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Mark contacts_extracted = true",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create Contact Reuse": {
+      "main": [
+        [
+          {
+            "node": "Limit Reuse",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Limit Reuse": {
+      "main": [
+        [
+          {
+            "node": "Mark contacts_extracted = true",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Run Emails Actor": {
+      "main": [
+        [
+          {
+            "node": "Wait - Polling",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait - Polling": {
+      "main": [
+        [
+          {
+            "node": "Get Run Status",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Run Status": {
+      "main": [
+        [
+          {
+            "node": "If RUNNING",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If RUNNING": {
+      "main": [
+        [
+          {
+            "node": "Wait - Polling",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "If SUCCEEDED",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If SUCCEEDED": {
+      "main": [
+        [
+          {
+            "node": "Get Emails Dataset",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Stop and Error",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Emails Dataset": {
+      "main": [
+        [
+          {
+            "node": "Format Emails for Storage",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Format Emails for Storage": {
+      "main": [
+        [
+          {
+            "node": "Create Contact in Supabase",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create Contact in Supabase": {
+      "main": [
+        [
+          {
+            "node": "Limit",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Limit": {
+      "main": [
+        [
+          {
+            "node": "Mark contacts_extracted = true",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Mark contacts_extracted = true": {
+      "main": [
+        [
+          {
+            "node": "Back to Job Loop",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Back to Job Loop": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Jobs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "saveDataErrorExecution": "all",
+    "saveDataSuccessExecution": "all",
+    "saveManualExecutions": true,
+    "saveExecutionProgress": true,
+    "callerPolicy": "workflowsFromSameOwner",
+    "availableInMCP": false,
+    "errorWorkflow": "tK9wOKSzk63ZLLhI"
+  },
+  "versionId": "dcff275d-b20b-477c-b9c0-69f5ad106d3d",
+  "meta": {
+    "instanceId": "79a7aa25fa1a526575e9d16be2e37e3eb8dbd841332f42a9d7ebcef52a77cfbc"
+  },
+  "id": "ez3cRhFmNdL8SUIp",
+  "tags": [
+    {
+      "updatedAt": "2026-02-28T05:54:41.496Z",
+      "createdAt": "2026-02-28T05:54:41.496Z",
+      "id": "AplX0ksFdMaAI7af",
+      "name": "Correct"
+    }
+  ]
+}

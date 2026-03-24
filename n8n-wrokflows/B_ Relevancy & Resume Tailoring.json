@@ -1,0 +1,1089 @@
+{
+  "name": "B: Relevancy & Resume Tailoring",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "hours",
+              "hoursInterval": 2
+            }
+          ]
+        }
+      },
+      "id": "fa3cc115-ce69-4ae6-99f0-1d4fe518bbbd",
+      "name": "Every 2 Hours",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -1264,
+        1200
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "bp-001",
+              "name": "basePath",
+              "type": "string",
+              "value": "/Users/copods/Documents/Projects/personal/resume"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "5a0bc521-bdb3-46b1-9f0c-082b6232f1dc",
+      "name": "Set Base Path",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -1008,
+        1200
+      ]
+    },
+    {
+      "parameters": {
+        "fileSelector": "={{ $json.basePath }}/input/resume.json",
+        "options": {}
+      },
+      "id": "d76d30b4-d911-420e-ad3f-a0dad3600075",
+      "name": "Read Resume File",
+      "type": "n8n-nodes-base.readWriteFile",
+      "typeVersion": 1.1,
+      "position": [
+        -768,
+        1200
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "fromJson",
+        "options": {}
+      },
+      "id": "23e60bd3-7c64-451c-9ec2-3027a237ac93",
+      "name": "Extract from File",
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1.1,
+      "position": [
+        -512,
+        1200
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "e4ce6e58-d537-42d3-9566-5555fbcd1ab3",
+              "name": "resume",
+              "type": "string",
+              "value": "={{ $json.data }}"
+            },
+            {
+              "id": "d7c207ae-5f67-4de7-a1bd-5d8d7706ae5b",
+              "name": "telegram_chat_id",
+              "type": "string",
+              "value": "1125208540"
+            },
+            {
+              "id": "6f9c722b-c14a-48f1-9aef-435fe279d182",
+              "name": "linkedinLink",
+              "value": "https://linkedin.com/in/rahatsayyed",
+              "type": "string"
+            },
+            {
+              "id": "8bbaa828-1cb6-4dce-a9aa-34089f75840e",
+              "name": "githubLink",
+              "value": "https://github.com/rahatsayyed",
+              "type": "string"
+            },
+            {
+              "id": "d98536ef-25a2-4223-b26b-34144d165ff9",
+              "name": "portfolioLink",
+              "value": "https://rahatsayyed.xyz",
+              "type": "string"
+            },
+            {
+              "id": "a6347f0c-c355-4197-9f25-1b8e9ed6d65b",
+              "name": "resumeLink",
+              "value": "https://flowcv.com/resume/w0f4aim4wh",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "b4021d13-ee67-4282-9e6b-f61eb252d7f6",
+      "name": "Set Global Vars",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -256,
+        1200
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "tableId": "jobs",
+        "returnAll": true,
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "relavancy_score",
+              "condition": "is",
+              "keyValue": "null"
+            }
+          ]
+        }
+      },
+      "id": "69f7fd32-db1c-48d5-8db8-754d98e85ffe",
+      "name": "Fetch Unscored Jobs",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        48,
+        1200
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "UgJZt2YIwF9raxzT",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "2edb32cc-956e-4cb6-9b5f-e4e283848bb4",
+      "name": "Loop Over Jobs",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        288,
+        1200
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "69b33c3c",
+              "name": "job_id",
+              "type": "string",
+              "value": "={{ $json.id }}"
+            },
+            {
+              "id": "0d898d14",
+              "name": "job_title",
+              "type": "string",
+              "value": "={{ $json.job_title }}"
+            },
+            {
+              "id": "eaee3ae6",
+              "name": "job_description",
+              "type": "string",
+              "value": "={{ $json.job_description }}"
+            },
+            {
+              "id": "ed2fc237",
+              "name": "job_url",
+              "type": "string",
+              "value": "={{ $json.job_url }}"
+            },
+            {
+              "id": "28c76a1e",
+              "name": "seniority_level",
+              "type": "string",
+              "value": "={{ $json.seniority_level }}"
+            },
+            {
+              "id": "69d585d6",
+              "name": "company_name",
+              "type": "string",
+              "value": "={{ $json.company_name }}"
+            },
+            {
+              "id": "ec4705c3",
+              "name": "company_url",
+              "type": "string",
+              "value": "={{ $json.company_url }}"
+            },
+            {
+              "id": "19a18e1f",
+              "name": "employment_type",
+              "type": "string",
+              "value": "={{ $json.employment_type }}"
+            },
+            {
+              "id": "67013fc0",
+              "name": "apply_url",
+              "type": "string",
+              "value": "={{ $json.apply_url }}"
+            },
+            {
+              "id": "b6809ef9",
+              "name": "time_posted",
+              "type": "string",
+              "value": "={{ $json.time_posted }}"
+            },
+            {
+              "id": "1066c870-d7a5-479d-b896-08460ab76963",
+              "name": "job_poster_profile_url",
+              "value": "={{ $json.job_poster_profile_url }}",
+              "type": "string"
+            },
+            {
+              "id": "bf92ae01-420b-49c6-8508-4f6593068be6",
+              "name": "job_poster_name",
+              "value": "={{ $json.job_poster_name }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "af5f972c-1b8a-448c-b84d-6ccdc2ed1f17",
+      "name": "Set Job Details",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        544,
+        1200
+      ]
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Here is the job description and my current resume. Evaluate alignment and generate output as defined in the System Prompt.\n\n### Job Description:\n{{ $('Set Job Details').item.json.job_description }}\n\n### My Resume:\n{{ $('Set Global Vars').first().json.resume }}",
+        "hasOutputParser": true,
+        "options": {
+          "systemMessage": "You are an expert ATS evaluator and résumé matching assistant.\n\nYour job is to analyze a Job Description (JD) and compare it with the user's résumé.\n\nYour output must be a JSON object with the following structure:\n{\n  \"relevancy\": boolean,\n  \"score\": \"XX%\",\n  \"justification\": [\n    \"Short bullet reasoning 1\",\n    \"Short bullet reasoning 2\",\n    \"Short bullet reasoning 3\"\n  ]\n}\n\nScoring rules:\n- Identify key JD requirements (skills, technologies, responsibilities, seniority)\n- Compare them against the résumé\n- Score must be an integer % between \"0%\" and \"100%\"\n- relevancy = true if score ≥ 50%, else false\n\nRules:\n- Justification must be 3–7 short bullets\n- JSON only — no text outside JSON\n- No hallucinations: base everything strictly on the provided résumé and JD"
+        }
+      },
+      "id": "4462368b-2334-4abd-bed1-b6416fa9a064",
+      "name": "Job Match AI",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.2,
+      "position": [
+        848,
+        1200
+      ]
+    },
+    {
+      "parameters": {
+        "schemaType": "manual",
+        "inputSchema": "{\n  \"$schema\": \"https://json-schema.org/draft/2020-12/schema\",\n  \"title\": \"Job Match & Tailored Resume Output\",\n  \"type\": \"object\",\n  \"required\": [\"relevancy\", \"score\", \"justification\"],\n  \"properties\": {\n    \"relevancy\": {\n      \"type\": \"boolean\",\n      \"description\": \"True if candidate suitability score >= 50%, else False\"\n    },\n    \"score\": {\n      \"type\": \"string\",\n      \"pattern\": \"^(100|[1-9][0-9]?|0)%$\",\n      \"description\": \"Percentage string from 0% to 100% without leading zeros\"\n    },\n    \"justification\": {\n      \"type\": \"array\",\n      \"minItems\": 1,\n      \"maxItems\": 10,\n      \"items\": {\n        \"type\": \"string\",\n        \"minLength\": 5,\n        \"description\": \"Short bullet point reasoning for relevancy\"\n      }\n    }\n  },\n  \"additionalProperties\": false\n}\n"
+      },
+      "id": "eca7e3b5-722a-45ab-8f88-c063049b5d94",
+      "name": "Structured Output Parser",
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        992,
+        1424
+      ]
+    },
+    {
+      "parameters": {
+        "model": "grok-4-1-fast-reasoning",
+        "options": {}
+      },
+      "id": "2094e56c-0fbf-48d0-b217-f10b47103c9d",
+      "name": "xAI Grok Chat Model",
+      "type": "@n8n/n8n-nodes-langchain.lmChatXAiGrok",
+      "typeVersion": 1,
+      "position": [
+        848,
+        1424
+      ],
+      "credentials": {
+        "xAiApi": {
+          "id": "QMuuAPX2Mhdd9cuv",
+          "name": "xAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "version": 2,
+            "leftValue": "",
+            "caseSensitive": true,
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "978abce9",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              },
+              "leftValue": "={{ $json.output.relevancy }}",
+              "rightValue": ""
+            }
+          ],
+          "combinator": "or"
+        },
+        "options": {}
+      },
+      "id": "e432194f-be24-4ea4-9e50-71ee5fcfd490",
+      "name": "If Relevant",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1136,
+        1200
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "tableId": "jobs",
+        "matchType": "allFilters",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "id",
+              "condition": "eq",
+              "keyValue": "={{ $('Set Job Details').first().json.job_id }}"
+            }
+          ]
+        },
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "relavancy_score",
+              "fieldValue": "={{ $json.output.score.replace(\"%\",\"\").toNumber() }}"
+            }
+          ]
+        }
+      },
+      "id": "a62c390f-58e7-454c-9946-67d87f18b7de",
+      "name": "Update Job Relevancy",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        1440,
+        1200
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "UgJZt2YIwF9raxzT",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "command": "=mkdir -p {{ $('Set Base Path').first().json.basePath }}/automation/{{ $('Set Job Details').item.json.job_id }}"
+      },
+      "id": "b3d1adf5-df01-46fa-8567-7146142c7f63",
+      "name": "Create Folder",
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [
+        1440,
+        1008
+      ]
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Here is the job description and my current resume. Evaluate alignment and generate output as defined in the System Prompt. I prefer 7-8 points on firts experience and 3-4 on second.\n\n### Job Description:\n{{ $('Set Job Details').first().json.job_description }}\n\n### My Resume:\n{{ $('Set Global Vars').first().json.resume }}",
+        "hasOutputParser": true,
+        "options": {
+          "systemMessage": "You are an expert ATS résumé optimizer and hiring-manager-grade résumé writer.\n\nYour task: Given a Job Description (JD) and the candidate's current résumé (as JSON), produce a tailored résumé as a JSON object with the EXACT same schema/structure as the input résumé. Every key, nesting level, and data type must match the input — do not add, remove, or rename any fields.\n\n═══════════════════════════════════════════\n CORE OBJECTIVE\n═══════════════════════════════════════════\nRewrite résumé content so it scores maximum relevance against the JD while passing ATS screening. Target 90%+ job fit — every bullet point must matter for the target role.\n\n═══════════════════════════════════════════\n BULLET POINT RULES (HIGHEST PRIORITY)\n═══════════════════════════════════════════\nEvery bullet in experience/project descriptions MUST follow this formula:\n  [Strong Action Verb] + [What You Did] + [Quantified Result/Impact]\n\n1. START every bullet with a unique, strong action verb. Use verbs like:\n   Architected, Automated, Built, Collaborated, Consolidated, Decreased, Delivered, Deployed, Designed, Developed, Directed, Eliminated, Engineered, Established, Expanded, Implemented, Improved, Increased, Initiated, Integrated, Introduced, Launched, Led, Mentored, Migrated, Modernized, Optimized, Orchestrated, Overhauled, Pioneered, Reduced, Redesigned, Refactored, Resolved, Revamped, Scaled, Simplified, Spearheaded, Standardized, Streamlined, Strengthened, Transformed, Unified, Upgraded\n\n2. QUANTIFY 75%+ of bullets with hard numbers. Types of metrics to use:\n   - Scale: users, requests, transactions, data volume\n   - Time: hours saved, delivery speed, reduction in load time\n   - Efficiency: percentage improvements, error reduction\n   - Financial: cost savings, revenue impact\n   - Team: people managed, departments coordinated with\n   - If the original bullet has a metric, ALWAYS preserve it\n   - If the original lacks a metric but one can be reasonably preserved from context, keep it\n   - Do NOT fabricate metrics that don't exist in the original résumé\n\n3. KEEP each bullet between 10–30 words. Never exceed 2 visual lines.\n\n4. TARGET 12–20 total bullet points across all experience entries.\n\n═══════════════════════════════════════════\n LANGUAGE RULES (MANDATORY)\n═══════════════════════════════════════════\n- ACTIVE VOICE only — never passive (\"was improved by\" → \"Improved ... by\")\n- NO personal pronouns: never use I, my, me, we, our, us\n- NO responsibility language: never \"Responsible for\", \"Duties included\", \"Tasked with\", \"In charge of\"\n- NO weak verbs: never \"Worked on\", \"Assisted with\", \"Helped to\", \"Contributed to\", \"Participated in\"\n- NO buzzwords/clichés: never \"team player\", \"results-driven\", \"hard worker\", \"self-starter\", \"detail-oriented\", \"go-getter\", \"passionate\"\n- NO filler words: never \"various\", \"several\", \"multiple\", \"in order to\", \"significantly\", \"effectively\", \"successfully\"\n- PAST TENSE for all previous roles. Present or past tense for the current role (be consistent within each role).\n- Each bullet must be accomplishment-oriented, NOT task-oriented\n- Never repeat the same action verb more than twice across the entire résumé\n\n═══════════════════════════════════════════\n JD KEYWORD OPTIMIZATION (ATS)\n═══════════════════════════════════════════\n- Extract key requirements from the JD: skills, technologies, methodologies, responsibilities, seniority signals\n- Mirror the JD's exact terminology in bullets (e.g., if JD says \"CI/CD pipelines\", use that exact phrase — not \"continuous integration\")\n- Weave JD keywords naturally into accomplishment bullets — never keyword-stuff\n- For skills array: prioritize skills that appear in the JD, add relevant JD-required skills the candidate plausibly has based on their experience, remove or deprioritize skills irrelevant to the JD\n\n═══════════════════════════════════════════\n SUMMARY RULES\n═══════════════════════════════════════════\n- Maximum 100 words\n- Must contain 2+ quantified achievements\n- Zero buzzwords or clichés\n- Template: \"[Target Job Title] with [X] years of experience in [2-3 JD-relevant skills]; [Achievement + Metric]; [Achievement + Metric].\"\n- Tailor the summary specifically to the JD's requirements and seniority level\n- Match the job title in the summary to the JD's title (or a close professional equivalent)\n\n═══════════════════════════════════════════\n SOFT SKILLS THROUGH EVIDENCE\n═══════════════════════════════════════════\nNever claim soft skills — prove them through bullet content:\n- Leadership: mention team sizes managed, mentoring, ownership of projects\n- Communication: mention stakeholder presentations, documentation, cross-team coordination\n- Initiative: mention things you founded, launched, introduced, or spearheaded\n- Analytical: mention data analysis, process improvements, problem-solving with outcomes\n- Teamwork: mention cross-functional collaboration with specific team names/sizes\n\n═══════════════════════════════════════════\n STRUCTURAL RULES\n═══════════════════════════════════════════\n- Output MUST be a valid JSON object with the EXACT same schema as the input résumé\n- Preserve ALL fields from the input — even if unchanged (return them as-is)\n- Do NOT output HTML, Markdown, or any text outside the JSON\n- If a field is missing or empty in the source, use null\n- Preserve all factual information: company names, dates, URLs, education details, certificate details\n- The jobTitle field should reflect the JD's target role title\n- Experience entries: preserve company, companyUrl, location, start, end — only rewrite title and description bullets\n- Education and certificates: return as-is unless minor relevance reordering helps\n\n═══════════════════════════════════════════\n TRUTH CONSTRAINT\n═══════════════════════════════════════════\n- NEVER fabricate experience, projects, skills, companies, or metrics\n- You may rephrase, reframe, and emphasize — but the underlying facts must come from the original résumé\n- You may adjust the job title to better align with JD terminology if the underlying role is equivalent\n- Optimize alignment with the JD through better wording, not through invention"
+        }
+      },
+      "id": "4bdfe2a6-4149-40b8-a44f-17ff4d8978ec",
+      "name": "Resume Tailoring AI",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.2,
+      "position": [
+        1744,
+        1008
+      ]
+    },
+    {
+      "parameters": {
+        "schemaType": "manual",
+        "inputSchema": "{\n  \"type\": \"object\",\n  \"required\": [\n    \"name\",\n    \"summary\",\n    \"experience\",\n    \"education\",\n    \"skills\"\n  ],\n  \"properties\": {\n    \"name\": { \"type\": \"string\" },\n    \"jobTitle\": { \"type\": \"string\" },\n    \"summary\": { \"type\": \"string\" },\n\n    \"experience\": {\n      \"type\": \"array\",\n      \"items\": { \"type\": \"object\" }\n    },\n\n    \"projects\": {\n      \"type\": \"array\",\n      \"items\": { \"type\": \"object\" }\n    },\n\n    \"education\": {\n      \"type\": \"array\",\n      \"items\": { \"type\": \"object\" }\n    },\n\n    \"skills\": {\n      \"type\": \"array\",\n      \"items\": { \"type\": \"object\" }\n    },\n\n    \"certificates\": {\n      \"type\": \"array\",\n      \"items\": { \"type\": \"object\" }\n    }\n  }\n}"
+      },
+      "id": "e5e058e1-9c97-4e53-8a76-95927258bc5e",
+      "name": "Structured Resume Output Parser",
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        1888,
+        1216
+      ]
+    },
+    {
+      "parameters": {
+        "model": "grok-4-1-fast-reasoning",
+        "options": {}
+      },
+      "id": "02afa37c-4f0a-4936-b4e1-8b7f402fd347",
+      "name": "xAI Grok Chat Model 2",
+      "type": "@n8n/n8n-nodes-langchain.lmChatXAiGrok",
+      "typeVersion": 1,
+      "position": [
+        1744,
+        1216
+      ],
+      "credentials": {
+        "xAiApi": {
+          "id": "QMuuAPX2Mhdd9cuv",
+          "name": "xAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const tailoredResume = $input.first().json.output;\nconst originalResume = typeof $(\"Set Global Vars\").first().json.resume === 'string' \n  ? JSON.parse($(\"Set Global Vars\").first().json.resume) \n  : $(\"Set Global Vars\").first().json.resume;\n\nfunction deepMerge(target, source) {\n  for (const key in source) {\n    if (source[key] && typeof source[key] === 'object' && !Array.isArray(source[key])) {\n      if (!target[key] || typeof target[key] !== 'object') {\n        target[key] = source[key];\n      } else {\n        deepMerge(target[key], source[key]);\n      }\n    } else if (target[key] === undefined || target[key] === null || target[key] === '') {\n      target[key] = source[key];\n    }\n  }\n  return target;\n}\n\nconst mergedResume = deepMerge(tailoredResume, originalResume);\nreturn mergedResume;"
+      },
+      "id": "c00a1425-d1e0-4e92-aff3-bf3234132c16",
+      "name": "Merge Resume",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2048,
+        1008
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "toJson",
+        "mode": "each",
+        "binaryPropertyName": "resume",
+        "options": {}
+      },
+      "id": "27bd85a3-36dc-4657-9896-838960641c98",
+      "name": "Convert to File",
+      "type": "n8n-nodes-base.convertToFile",
+      "typeVersion": 1.1,
+      "position": [
+        2288,
+        1008
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "write",
+        "fileName": "={{ $('Set Base Path').first().json.basePath }}/automation/{{ $('Set Job Details').item.json.job_id }}/resume.json",
+        "dataPropertyName": "resume",
+        "options": {}
+      },
+      "id": "4f341aba-189c-4ded-b8e0-16fc7541f4cc",
+      "name": "Save resume.json",
+      "type": "n8n-nodes-base.readWriteFile",
+      "typeVersion": 1.1,
+      "position": [
+        2544,
+        1008
+      ]
+    },
+    {
+      "parameters": {
+        "command": "=node /Users/copods/Documents/Projects/personal/resume/index.js {{ $('Set Job Details').item.json.job_id }}"
+      },
+      "id": "d51f2301-0b2c-4148-bfa7-9183629babd3",
+      "name": "Generate Resume PDF",
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [
+        2800,
+        1008
+      ]
+    },
+    {
+      "parameters": {
+        "amount": 1,
+        "unit": "minutes"
+      },
+      "id": "3d806d33-32ef-4c75-8a7c-e212b186e65b",
+      "name": "Wait (skip delay)",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        1440,
+        1408
+      ],
+      "webhookId": "b-wait-irr"
+    },
+    {
+      "parameters": {},
+      "id": "95f8ae89-1e14-4852-93b5-fc4e547ca4ef",
+      "name": "Back to Loop",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        3840,
+        1408
+      ]
+    },
+    {
+      "parameters": {
+        "chatId": "1125208540",
+        "text": "=Relevancy & Resume Tailoring batch complete!",
+        "additionalFields": {}
+      },
+      "id": "995d54c6-5391-4436-8918-92adc0166c9a",
+      "name": "Notify Scoring Complete",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        544,
+        1008
+      ],
+      "webhookId": "b-tg-done",
+      "credentials": {
+        "telegramApi": {
+          "id": "zR5TTxftQEm2MYTo",
+          "name": "Job Automation Bot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Set Global Vars').first().json.telegram_chat_id }}",
+        "text": "=<b>{{ $('Set Job Details').first().json.job_title }}</b>\n\nCompany: <a href=\"{{ $('Set Job Details').first().json.company_url }}\">{{ $('Set Job Details').first().json.company_name }}</a> | <a href=\"{{ $('Set Job Details').first().json.job_url || $('Set Job Details').first().json.apply_url }}\">Apply Here</a>\n\nJob Poster: <a href=\"{{ $('Set Job Details').first().json.job_poster_profile_url }}\">{{ $('Set Job Details').first().json.job_poster_name || \"Not Available\" }}</a>\n\n<b>Connection Message:</b>\n<pre>Hi {{ $('Set Job Details').first().json.job_poster_name || \"there\" }}, \n\nSaw the {{ $('Set Job Details').first().json.job_title }} role and it aligns closely with what I’ve been working on. \nWould be great to connect and learn more about what you're building.\n\nLet’s connect.</pre>",
+        "additionalFields": {
+          "appendAttribution": false,
+          "parse_mode": "HTML",
+          "reply_to_message_id": "={{ $json.result.message_id }}"
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        3520,
+        1008
+      ],
+      "id": "d3013dae-ecc4-41a6-9b20-f23c8d87ea15",
+      "name": "Send apply link and custom resume",
+      "webhookId": "1a750579-ac46-4262-bbe7-f361ac96b70f",
+      "credentials": {
+        "telegramApi": {
+          "id": "zR5TTxftQEm2MYTo",
+          "name": "Job Automation Bot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "fileSelector": "={{ $('Set Base Path').first().json.basePath }}/automation/{{ $('Set Job Details').item.json.job_id }}/resume.pdf",
+        "options": {
+          "fileName": "Rahat Sayyed - Resume"
+        }
+      },
+      "type": "n8n-nodes-base.readWriteFile",
+      "typeVersion": 1.1,
+      "position": [
+        3072,
+        1008
+      ],
+      "id": "b60ff88b-60f2-4410-a726-67a12116b7cb",
+      "name": "Read/Write Files from Disk"
+    },
+    {
+      "parameters": {
+        "operation": "sendDocument",
+        "chatId": "={{ $('Set Global Vars').item.json.telegram_chat_id }}",
+        "binaryData": true,
+        "additionalFields": {
+          "disable_notification": true
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        3280,
+        1008
+      ],
+      "id": "ae840491-eeb1-4e13-9a24-de0db914c147",
+      "name": "Send a document",
+      "webhookId": "f4ded0df-dfcf-48e4-a83b-2e4e096dadc1",
+      "credentials": {
+        "telegramApi": {
+          "id": "zR5TTxftQEm2MYTo",
+          "name": "Job Automation Bot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-2.5-pro",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        704,
+        1408
+      ],
+      "id": "487f1594-7c6b-473a-b2e6-a2621a49739b",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "h41OvNeNGliAuZFx",
+          "name": "rahatsay721"
+        }
+      }
+    }
+  ],
+  "pinData": {
+    "Resume Tailoring AI": [
+      {
+        "json": {
+          "output": {
+            "name": "Rahat Sayyed",
+            "jobTitle": "Engineering Manager I",
+            "summary": "Engineering Manager I with 3+ years of experience in scalable web applications, REST API design, and Docker/AWS deployments; Led policy-driven governance modules reducing misconfigurations by 50%; Directed React refactor eliminating redundant calls and cutting load times by 11 seconds.",
+            "experience": [
+              {
+                "title": "Software Engineering Lead",
+                "company": "Copods",
+                "companyUrl": "https://copods.co/",
+                "location": null,
+                "start": "Jul 2025",
+                "end": "Present",
+                "description": [
+                  "Led architecture and implementation of policy-driven governance modules centralizing MCP access control and model auditing for agent workflows, reducing misconfigurations by 50%.",
+                  "Designed contract-driven TypeScript REST APIs and multi-policy schemas, decreasing integration regressions by 70%.",
+                  "Directed system-wide React state management refactor, eliminating 9+ redundant API calls and cutting initial load time by 11 seconds.",
+                  "Built unified violations ingestion pipeline across LLM, MCP, and RAG flows, standardizing observability and reducing incident investigation time by 40%.",
+                  "Architected D3-based interactive risk analytics dashboards distinguishing LLM vs. tool exposures, accelerating policy debugging across 12+ policies.",
+                  "Optimized Docker-based frontend build pipeline on AWS EC2 with layer caching, decreasing development build times by 10 minutes per cycle.",
+                  "Engineered role-based authentication and tenant onboarding in Next.js, eliminating post-login misrouting and reducing user login errors by 30%.",
+                  "Spearheaded cross-functional collaboration between frontend, backend, and AI teams to integrate 3+ evolving model capabilities under governance constraints."
+                ]
+              },
+              {
+                "title": "Web 3.0 Developer",
+                "company": "Konma Dao",
+                "companyUrl": "https://www.konma.io/",
+                "location": null,
+                "start": "Feb 2023",
+                "end": "Jun 2025",
+                "description": [
+                  "Designed and deployed Aiken-based smart contracts for carbon credit marketplace, refactoring validation logic to reduce transaction failures by 80%.",
+                  "Optimized smart contract architecture for Karbon Ledger, reducing transaction fees by 35% through script refactoring and execution improvements.",
+                  "Developed secure Next.js frontend integrations using Lucid.js and Mesh.js, connecting 8+ Cardano smart contracts to Haskell backend and REST services.",
+                  "Conducted smart contract reviews and testing to identify edge cases, resolving 8 vulnerabilities before mainnet deployment."
+                ]
+              }
+            ],
+            "projects": [],
+            "education": [
+              {
+                "degree": "Bachelors’ of Engineering: Computer Engineering",
+                "school": "Keystone School of Engineering",
+                "location": "Pune, India",
+                "year": "Jun 2023"
+              }
+            ],
+            "skills": [
+              {
+                "category": "Frontend",
+                "items": [
+                  "React",
+                  "Next.js",
+                  "TypeScript",
+                  "JavaScript",
+                  "TailwindCSS",
+                  "Server-Side Rendering",
+                  "Client–Server Rendering Patterns",
+                  "State Management with React Context",
+                  "Performance Optimization"
+                ]
+              },
+              {
+                "category": "Backend",
+                "items": [
+                  "Node.js",
+                  "Express.js",
+                  "REST APIs",
+                  "Server-Sent Events (SSE)",
+                  "API Contract Design"
+                ]
+              },
+              {
+                "category": "Blockchain",
+                "items": [
+                  "Aiken",
+                  "Solidity",
+                  "Cardano CLI",
+                  "Lucid.js",
+                  "Mesh.js",
+                  "Smart Contract Design",
+                  "UTXO Model"
+                ]
+              },
+              {
+                "category": "Infrastructure & Data",
+                "items": [
+                  "Docker",
+                  "AWS EC2",
+                  "Environment Configuration",
+                  "Supabase",
+                  "NoSQL (MongoDB",
+                  "Firestore)"
+                ]
+              },
+              {
+                "category": "AI Integration",
+                "items": [
+                  "OpenAI APIs",
+                  "AI Response Handling",
+                  "Prompt-Based Feature Integration",
+                  "AI tools"
+                ]
+              }
+            ],
+            "certificates": []
+          }
+        }
+      }
+    ]
+  },
+  "connections": {
+    "Every 2 Hours": {
+      "main": [
+        [
+          {
+            "node": "Set Base Path",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set Base Path": {
+      "main": [
+        [
+          {
+            "node": "Read Resume File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Read Resume File": {
+      "main": [
+        [
+          {
+            "node": "Extract from File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract from File": {
+      "main": [
+        [
+          {
+            "node": "Set Global Vars",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set Global Vars": {
+      "main": [
+        [
+          {
+            "node": "Fetch Unscored Jobs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch Unscored Jobs": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Jobs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Jobs": {
+      "main": [
+        [
+          {
+            "node": "Notify Scoring Complete",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Set Job Details",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set Job Details": {
+      "main": [
+        [
+          {
+            "node": "Job Match AI",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Job Match AI": {
+      "main": [
+        [
+          {
+            "node": "If Relevant",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "Job Match AI",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "xAI Grok Chat Model": {
+      "ai_languageModel": [
+        []
+      ]
+    },
+    "If Relevant": {
+      "main": [
+        [
+          {
+            "node": "Update Job Relevancy",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Create Folder",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Update Job Relevancy",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Wait (skip delay)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create Folder": {
+      "main": [
+        [
+          {
+            "node": "Resume Tailoring AI",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Resume Tailoring AI": {
+      "main": [
+        [
+          {
+            "node": "Merge Resume",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Resume Output Parser": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "Resume Tailoring AI",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "xAI Grok Chat Model 2": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Resume Tailoring AI",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge Resume": {
+      "main": [
+        [
+          {
+            "node": "Convert to File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Convert to File": {
+      "main": [
+        [
+          {
+            "node": "Save resume.json",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Save resume.json": {
+      "main": [
+        [
+          {
+            "node": "Generate Resume PDF",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generate Resume PDF": {
+      "main": [
+        [
+          {
+            "node": "Read/Write Files from Disk",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait (skip delay)": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Jobs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Back to Loop": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Jobs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send apply link and custom resume": {
+      "main": [
+        [
+          {
+            "node": "Back to Loop",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Read/Write Files from Disk": {
+      "main": [
+        [
+          {
+            "node": "Send a document",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send a document": {
+      "main": [
+        [
+          {
+            "node": "Send apply link and custom resume",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Job Match AI",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "saveDataErrorExecution": "all",
+    "saveDataSuccessExecution": "all",
+    "saveManualExecutions": true,
+    "saveExecutionProgress": true,
+    "callerPolicy": "workflowsFromSameOwner",
+    "availableInMCP": false,
+    "errorWorkflow": "tK9wOKSzk63ZLLhI"
+  },
+  "versionId": "72e7ad16-8371-4f84-a320-ede8f2ffc7ce",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "79a7aa25fa1a526575e9d16be2e37e3eb8dbd841332f42a9d7ebcef52a77cfbc"
+  },
+  "id": "Y3kGi0dVgEiXM1Ch",
+  "tags": [
+    {
+      "updatedAt": "2026-02-28T05:54:41.496Z",
+      "createdAt": "2026-02-28T05:54:41.496Z",
+      "id": "AplX0ksFdMaAI7af",
+      "name": "Correct"
+    }
+  ]
+}

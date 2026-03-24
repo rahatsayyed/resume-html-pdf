@@ -1,0 +1,604 @@
+{
+  "name": "A: Jobs Discovery",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "triggerAtHour": 8
+            }
+          ]
+        }
+      },
+      "id": "1d93cbd8-0bd7-4f54-9d61-c333216112b8",
+      "name": "Daily 8 AM",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -1344,
+        48
+      ]
+    },
+    {
+      "parameters": {
+        "actorSource": "store",
+        "actorId": {
+          "__rl": true,
+          "value": "https://console.apify.com/actors/hKByXkMQaC5Qt9UMN/input",
+          "mode": "url"
+        },
+        "customBody": "={\n    \"scrapeCompany\": false,\n    \"splitByLocation\": false,\n    \"urls\": [\n        \"https://www.linkedin.com/jobs/search/?currentJobId=4373806029&f_E=3%2C4&f_F=it%2Ceng&f_JT=F&f_PP=103671728&f_TPR=r86400&f_WT=1%2C3%2C2&geoId=102713980&keywords=Engineer&origin=JOB_SEARCH_PAGE_JOB_FILTER&refresh=true&sortBy=DD&spellCorrectionEnabled=true\",\n        \"https://www.linkedin.com/jobs/search/?currentJobId=4311134079&f_E=3%2C4&f_F=it%2Ceng&f_JT=F&f_TPR=r86400&f_WT=2&geoId=102713980&keywords=Engineer&origin=JOB_SEARCH_PAGE_JOB_FILTER&refresh=true&sortBy=DD&spellCorrectionEnabled=true\"\n    ]\n}",
+        "waitForFinish": false
+      },
+      "id": "265e588a-3bfe-4b7b-b308-d989514d3a73",
+      "name": "Run JobScrape Actor",
+      "type": "@apify/n8n-nodes-apify.apify",
+      "typeVersion": 1,
+      "position": [
+        -1120,
+        48
+      ],
+      "retryOnFail": true,
+      "maxTries": 2,
+      "waitBetweenTries": 2000,
+      "credentials": {
+        "apifyApi": {
+          "id": "ch9pSz2QbUB1t9yd",
+          "name": "Apify Default Token"
+        }
+      },
+      "continueOnFail": true
+    },
+    {
+      "parameters": {
+        "amount": 1,
+        "unit": "minutes"
+      },
+      "id": "9e28f44c-df30-4093-9229-6a3264d41742",
+      "name": "Wait - Polling Apify",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        -896,
+        48
+      ],
+      "webhookId": "a-wait-001"
+    },
+    {
+      "parameters": {
+        "resource": "Actor runs",
+        "operation": "Get run",
+        "runId": {
+          "__rl": true,
+          "value": "={{ $('Run JobScrape Actor').first().json.id }}",
+          "mode": "id"
+        }
+      },
+      "id": "dada4aff-382e-4cf7-a8fa-b93e2c6d9087",
+      "name": "Get Run Status",
+      "type": "@apify/n8n-nodes-apify.apify",
+      "typeVersion": 1,
+      "position": [
+        -672,
+        48
+      ],
+      "retryOnFail": true,
+      "maxTries": 2,
+      "waitBetweenTries": 2000,
+      "credentials": {
+        "apifyApi": {
+          "id": "ch9pSz2QbUB1t9yd",
+          "name": "Apify Default Token"
+        }
+      },
+      "continueOnFail": true
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "version": 2,
+            "leftValue": "",
+            "caseSensitive": true,
+            "typeValidation": "strict"
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "a-run-check",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              },
+              "leftValue": "={{ $json.status }}",
+              "rightValue": "RUNNING"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "29b280d2-8393-4292-8d41-5b92fcbf628a",
+      "name": "If RUNNING",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -448,
+        48
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "version": 2,
+            "leftValue": "",
+            "caseSensitive": true,
+            "typeValidation": "strict"
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "a-success-check",
+              "operator": {
+                "name": "filter.operator.equals",
+                "type": "string",
+                "operation": "equals"
+              },
+              "leftValue": "={{ $json.status }}",
+              "rightValue": "SUCCEEDED"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "012e4902-da59-49c8-bd7a-fb3351d1c888",
+      "name": "If SUCCEEDED",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -224,
+        48
+      ]
+    },
+    {
+      "parameters": {
+        "errorMessage": "Apify scraper did not SUCCEED"
+      },
+      "id": "e3d94f0f-a0e7-4e0a-a53c-0fbf136c475e",
+      "name": "Stop and Error",
+      "type": "n8n-nodes-base.stopAndError",
+      "typeVersion": 1,
+      "position": [
+        0,
+        144
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "Datasets",
+        "datasetId": "={{ $json.storageIds.datasets.default }}",
+        "limit": null,
+        "options": {}
+      },
+      "id": "64263256-dcc2-4c69-afa6-bdb3021d27ab",
+      "name": "Get Dataset Items",
+      "type": "@apify/n8n-nodes-apify.apify",
+      "typeVersion": 1,
+      "position": [
+        0,
+        -48
+      ],
+      "retryOnFail": true,
+      "maxTries": 2,
+      "waitBetweenTries": 2000,
+      "credentials": {
+        "apifyApi": {
+          "id": "ch9pSz2QbUB1t9yd",
+          "name": "Apify Default Token"
+        }
+      },
+      "continueOnFail": true
+    },
+    {
+      "parameters": {
+        "jsCode": "const results = [];\nfor (const item of $input.all()) {\n  const json = item.json;\n  const jobPosterName = json.jobPosterName ?? json.jobPoster?.name ?? json.job_poster_name ?? null;\n  const jobPosterUrl = json.jobPosterProfileUrl ?? json.jobPoster?.profileUrl ?? json.jobPoster?.profile ?? json.job_poster_profile_url ?? null;\n  const timePosted = json.postedAt || json.publishedAt || null;\n  results.push({\n    json: {\n      id: json.id ?? '',\n      job_title: json.title ?? json.job_title ?? '',\n      job_description: (json.descriptionText ?? json.description ?? '') || null,\n      job_url: (json.link ?? json.url ?? '') || null,\n      company_name: (json.companyName ?? json.company ?? '') || null,\n      company_url: (json.companyLinkedinUrl ?? json.companyUrl ?? '') || null,\n      seniority_level: (json.seniorityLevel ?? json.seniority ?? '') || null,\n      employment_type: (json.employmentType ?? json.employment ?? '') || null,\n      time_posted: timePosted,\n      apply_url: (json.applyUrl ?? json.applyLink ?? '') || null,\n      job_poster_name: jobPosterName,\n      job_poster_profile_url: jobPosterUrl\n    }\n  });\n}\nreturn results;"
+      },
+      "id": "3bf95287-7b51-483f-8071-5c78dea07763",
+      "name": "Format Jobs",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        224,
+        -48
+      ]
+    },
+    {
+      "parameters": {
+        "tableId": "jobs",
+        "dataToSend": "autoMapInputData"
+      },
+      "id": "8d0d2396-5462-461d-a16b-5a6a5d1defb0",
+      "name": "Save Jobs in Supabase",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        448,
+        -48
+      ],
+      "retryOnFail": true,
+      "maxTries": 2,
+      "waitBetweenTries": 2000,
+      "credentials": {
+        "supabaseApi": {
+          "id": "UgJZt2YIwF9raxzT",
+          "name": "Supabase account"
+        }
+      },
+      "continueOnFail": true
+    },
+    {
+      "parameters": {
+        "chatId": "1125208540",
+        "text": "=Jobs Discovery Complete!\n{{ $input.all().length }} jobs saved to Supabase.",
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "id": "b1f45e53-ca42-4110-8dde-2377f34d36f5",
+      "name": "Notify Discovery Complete",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        864,
+        -48
+      ],
+      "webhookId": "a-tg-done",
+      "credentials": {
+        "telegramApi": {
+          "id": "zR5TTxftQEm2MYTo",
+          "name": "Job Automation Bot"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.limit",
+      "typeVersion": 1,
+      "position": [
+        656,
+        -48
+      ],
+      "id": "4e2fbee9-ed97-44b3-8bc2-6027fefff232",
+      "name": "Limit"
+    }
+  ],
+  "pinData": {
+    "Run JobScrape Actor": [
+      {
+        "json": {
+          "id": "yVWG6Chk2phbLadNy",
+          "actId": "hKByXkMQaC5Qt9UMN",
+          "userId": "f1yYJfRvABL3KSgKt",
+          "startedAt": "2026-02-28T05:45:05.862Z",
+          "finishedAt": null,
+          "status": "READY",
+          "meta": {
+            "origin": "API",
+            "userAgent": "n8n"
+          },
+          "stats": {
+            "inputBodyLen": 545,
+            "migrationCount": 0,
+            "rebootCount": 0,
+            "restartCount": 0,
+            "resurrectCount": 0,
+            "computeUnits": 0
+          },
+          "options": {
+            "build": "1.1.21",
+            "timeoutSecs": 3600,
+            "memoryMbytes": 1024,
+            "maxTotalChargeUsd": 5,
+            "maxItems": 5000,
+            "diskMbytes": 2048
+          },
+          "buildId": "Ye4PCjVWiQDqjBmGz",
+          "defaultKeyValueStoreId": "e6fPmEkY6LIZyz3W0",
+          "defaultDatasetId": "WOI0iWQaQ34bh8LPB",
+          "defaultRequestQueueId": "TFGPXu06IO8L8itLr",
+          "storageIds": {
+            "keyValueStores": {
+              "default": "e6fPmEkY6LIZyz3W0"
+            },
+            "datasets": {
+              "default": "WOI0iWQaQ34bh8LPB"
+            },
+            "requestQueues": {
+              "default": "TFGPXu06IO8L8itLr"
+            }
+          },
+          "pricingInfo": {
+            "pricingModel": "PAY_PER_EVENT",
+            "createdAt": "2026-02-16T15:05:29.437Z",
+            "startedAt": "2026-02-16T15:05:29.437Z",
+            "apifyMarginPercentage": 0.2,
+            "isPriceChangeNotificationSuppressed": true,
+            "reasonForChange": "Migration from Pay Per Result to Pay Per Event with apify-default-dataset-item event",
+            "forceContainsSignificantPriceChange": false,
+            "pricingPerEvent": {
+              "actorChargeEvents": {
+                "apify-default-dataset-item": {
+                  "eventTitle": "result",
+                  "eventDescription": "Single result in the default dataset.",
+                  "isPrimaryEvent": true,
+                  "eventPriceUsd": 0.001
+                }
+              }
+            }
+          },
+          "chargedEventCounts": {
+            "apify-default-dataset-item": 0
+          },
+          "platformUsageBillingModel": "DEVELOPER",
+          "accountedChargedEventCounts": {
+            "apify-default-dataset-item": 0
+          },
+          "integrationTracking": {
+            "platform": "n8n",
+            "isAiTool": false
+          },
+          "generalAccess": "FOLLOW_USER_SETTING",
+          "buildNumber": "1.1.21",
+          "containerUrl": "https://i295yfkgxoag.runs.apify.net",
+          "usageTotalUsd": 0
+        }
+      }
+    ],
+    "Get Run Status": [
+      {
+        "json": {
+          "id": "yVWG6Chk2phbLadNy",
+          "actId": "hKByXkMQaC5Qt9UMN",
+          "userId": "f1yYJfRvABL3KSgKt",
+          "startedAt": "2026-02-28T05:45:05.862Z",
+          "finishedAt": "2026-02-28T05:47:56.869Z",
+          "status": "SUCCEEDED",
+          "meta": {
+            "origin": "API",
+            "userAgent": "n8n"
+          },
+          "stats": {
+            "inputBodyLen": 545,
+            "migrationCount": 0,
+            "rebootCount": 0,
+            "restartCount": 0,
+            "durationMillis": 170822,
+            "resurrectCount": 0,
+            "runTimeSecs": 170.822,
+            "metamorph": 0,
+            "computeUnits": 0.04745055555555556,
+            "memAvgBytes": 247823567.5828209,
+            "memMaxBytes": 378982400,
+            "memCurrentBytes": 0,
+            "cpuAvgUsage": 11.24304548857909,
+            "cpuMaxUsage": 78.04756071805701,
+            "cpuCurrentUsage": 0,
+            "netRxBytes": 15654963,
+            "netTxBytes": 4897809
+          },
+          "options": {
+            "build": "1.1.21",
+            "timeoutSecs": 3600,
+            "memoryMbytes": 1024,
+            "maxTotalChargeUsd": 5,
+            "maxItems": 5000,
+            "diskMbytes": 2048
+          },
+          "buildId": "Ye4PCjVWiQDqjBmGz",
+          "exitCode": 0,
+          "defaultKeyValueStoreId": "e6fPmEkY6LIZyz3W0",
+          "defaultDatasetId": "WOI0iWQaQ34bh8LPB",
+          "defaultRequestQueueId": "TFGPXu06IO8L8itLr",
+          "storageIds": {
+            "keyValueStores": {
+              "default": "e6fPmEkY6LIZyz3W0"
+            },
+            "datasets": {
+              "default": "WOI0iWQaQ34bh8LPB"
+            },
+            "requestQueues": {
+              "default": "TFGPXu06IO8L8itLr"
+            }
+          },
+          "pricingInfo": {
+            "pricingModel": "PAY_PER_EVENT",
+            "createdAt": "2026-02-16T15:05:29.437Z",
+            "startedAt": "2026-02-16T15:05:29.437Z",
+            "apifyMarginPercentage": 0.2,
+            "isPriceChangeNotificationSuppressed": true,
+            "reasonForChange": "Migration from Pay Per Result to Pay Per Event with apify-default-dataset-item event",
+            "forceContainsSignificantPriceChange": false,
+            "pricingPerEvent": {
+              "actorChargeEvents": {
+                "apify-default-dataset-item": {
+                  "eventTitle": "result",
+                  "eventDescription": "Single result in the default dataset.",
+                  "isPrimaryEvent": true,
+                  "eventPriceUsd": 0.001
+                }
+              }
+            }
+          },
+          "chargedEventCounts": {
+            "apify-default-dataset-item": 696
+          },
+          "platformUsageBillingModel": "DEVELOPER",
+          "accountedChargedEventCounts": {
+            "apify-default-dataset-item": 696
+          },
+          "integrationTracking": {
+            "platform": "n8n",
+            "appId": null,
+            "isAiTool": false
+          },
+          "generalAccess": "FOLLOW_USER_SETTING",
+          "buildNumber": "1.1.21",
+          "containerUrl": "https://i295yfkgxoag.runs.apify.net",
+          "usageTotalUsd": 0.6960000000000001,
+          "consoleUrl": "https://console.apify.com/view/runs/yVWG6Chk2phbLadNy"
+        }
+      }
+    ]
+  },
+  "connections": {
+    "Daily 8 AM": {
+      "main": [
+        [
+          {
+            "node": "Run JobScrape Actor",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Run JobScrape Actor": {
+      "main": [
+        [
+          {
+            "node": "Wait - Polling Apify",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait - Polling Apify": {
+      "main": [
+        [
+          {
+            "node": "Get Run Status",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Run Status": {
+      "main": [
+        [
+          {
+            "node": "If RUNNING",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If RUNNING": {
+      "main": [
+        [
+          {
+            "node": "Wait - Polling Apify",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "If SUCCEEDED",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If SUCCEEDED": {
+      "main": [
+        [
+          {
+            "node": "Get Dataset Items",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Stop and Error",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Dataset Items": {
+      "main": [
+        [
+          {
+            "node": "Format Jobs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Format Jobs": {
+      "main": [
+        [
+          {
+            "node": "Save Jobs in Supabase",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Save Jobs in Supabase": {
+      "main": [
+        [
+          {
+            "node": "Limit",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Limit": {
+      "main": [
+        [
+          {
+            "node": "Notify Discovery Complete",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "saveDataErrorExecution": "all",
+    "saveDataSuccessExecution": "all",
+    "saveManualExecutions": true,
+    "saveExecutionProgress": true,
+    "callerPolicy": "workflowsFromSameOwner",
+    "availableInMCP": false,
+    "errorWorkflow": "tK9wOKSzk63ZLLhI"
+  },
+  "versionId": "b7a7ee8d-d9f7-4ccb-be61-52d5e2889631",
+  "meta": {
+    "instanceId": "79a7aa25fa1a526575e9d16be2e37e3eb8dbd841332f42a9d7ebcef52a77cfbc"
+  },
+  "id": "lUh4KP0sBocRdSL8",
+  "tags": [
+    {
+      "updatedAt": "2026-02-28T05:54:41.496Z",
+      "createdAt": "2026-02-28T05:54:41.496Z",
+      "id": "AplX0ksFdMaAI7af",
+      "name": "Correct"
+    }
+  ]
+}

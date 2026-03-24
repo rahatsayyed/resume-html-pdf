@@ -1,0 +1,787 @@
+{
+  "name": "D: Initial Email Sender",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "minutes",
+              "minutesInterval": 30
+            }
+          ]
+        }
+      },
+      "id": "f3468d7e-bcee-4cb5-846e-8249cdb38039",
+      "name": "Every 30 Minutes",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -736,
+        176
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "d-bp-001",
+              "name": "basePath",
+              "type": "string",
+              "value": "/Users/copods/Documents/Projects/personal/resume"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "1b58e0af-a9df-4981-bf02-a2a85be90f4c",
+      "name": "Set Base Path",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -480,
+        176
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "d-gv-001",
+              "name": "telegram_chat_id",
+              "type": "string",
+              "value": "1125208540"
+            },
+            {
+              "id": "d-gv-002",
+              "name": "linkedinLink",
+              "type": "string",
+              "value": "https://www.linkedin.com/in/rahxtsayyed/"
+            },
+            {
+              "id": "d-gv-003",
+              "name": "githubLink",
+              "type": "string",
+              "value": "https://github.com/rahxtsayyed"
+            },
+            {
+              "id": "d-gv-004",
+              "name": "portfolioLink",
+              "type": "string",
+              "value": "https://rahatsayyedwork.vercel.app"
+            },
+            {
+              "id": "d-gv-005",
+              "name": "resumeLink",
+              "type": "string",
+              "value": "https://drive.google.com/file/d/1kBMXSBwR8nVE56qlMaF2rdJWNm2PUf_A/view?usp=sharing"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "4d44979d-a90e-4973-b2fc-b1498f4d126d",
+      "name": "Set Global Vars",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -240,
+        176
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "tableId": "contacts",
+        "returnAll": true,
+        "matchType": "allFilters",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "email_sent_at",
+              "condition": "is",
+              "keyValue": "null"
+            }
+          ]
+        }
+      },
+      "id": "91a052ae-3339-42f1-aa43-c6aa495aa8b9",
+      "name": "Fetch Unsent Contacts",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        64,
+        176
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "UgJZt2YIwF9raxzT",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "version": 2,
+            "leftValue": "",
+            "caseSensitive": true,
+            "typeValidation": "strict"
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "d-chk-001",
+              "operator": {
+                "type": "number",
+                "operation": "gt"
+              },
+              "leftValue": "={{ $input.all().length }}",
+              "rightValue": 0
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "f94b7f95-50f1-4b29-867a-16e615cc0e07",
+      "name": "Any Unsent?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        320,
+        176
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "ff54a110-3179-48e1-b17f-6f7feed437b0",
+      "name": "No Unsent Contacts",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        576,
+        384
+      ]
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "556abf14-cdbe-45fb-abcf-27878033fed0",
+      "name": "Loop Over Contacts",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        576,
+        176
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "d-sc-001",
+              "name": "contact_id",
+              "type": "string",
+              "value": "={{ $json.id }}"
+            },
+            {
+              "id": "d-sc-002",
+              "name": "contact_name",
+              "type": "string",
+              "value": "={{ $json.name }}"
+            },
+            {
+              "id": "d-sc-003",
+              "name": "contact_email_raw",
+              "type": "string",
+              "value": "={{ $json.email }}"
+            },
+            {
+              "id": "d-sc-004",
+              "name": "job_id",
+              "type": "string",
+              "value": "={{ $json.job_id }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "5a693ef2-0154-49bb-9658-04b4cdc28faa",
+      "name": "Set Contact Details",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        816,
+        176
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "tableId": "jobs",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "id",
+              "keyValue": "={{ $json.job_id }}"
+            }
+          ]
+        }
+      },
+      "id": "64405dd9-8de0-488b-bf53-7e911181f64a",
+      "name": "Get Job Row",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        1072,
+        176
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "UgJZt2YIwF9raxzT",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "version": 2,
+            "leftValue": "",
+            "caseSensitive": true,
+            "typeValidation": "strict"
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "d-rel-001",
+              "operator": {
+                "type": "number",
+                "operation": "gt"
+              },
+              "leftValue": "={{ $json.relavancy_score }}",
+              "rightValue": 50
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "ae14efb8-9844-4c3a-81eb-3ceb433d2595",
+      "name": "Job Still Relevant?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1328,
+        176
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "abb50501-7977-474f-8210-989a3e42a889",
+      "name": "Skip Irrelevant",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        1568,
+        384
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "d-jd-001",
+              "name": "job_id",
+              "type": "string",
+              "value": "={{ $json.id }}"
+            },
+            {
+              "id": "d-jd-002",
+              "name": "job_title",
+              "type": "string",
+              "value": "={{ $json.job_title }}"
+            },
+            {
+              "id": "d-jd-003",
+              "name": "company_name",
+              "type": "string",
+              "value": "={{ $json.company_name }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "4608c9bb-65f8-43ba-b680-a9aa601d14f3",
+      "name": "Set Job Details",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1568,
+        176
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const contact = $('Set Contact Details').first().json;\nconst raw = contact.contact_email_raw;\n\nlet emails = [];\ntry {\n  const parsed = typeof raw === 'string' ? JSON.parse(raw) : raw;\n  if (Array.isArray(parsed)) {\n    emails = parsed.filter(e => typeof e === 'string' && e.includes('@'));\n  } else if (typeof parsed === 'string' && parsed.includes('@')) {\n    emails = [parsed];\n  }\n} catch (e) {\n  if (typeof raw === 'string' && raw.includes('@')) {\n    emails = [raw];\n  }\n}\n\nif (emails.length === 0) {\n  return [{ json: { skip: true, reason: 'No valid email address' } }];\n}\n\nreturn [{ json: {\n  skip: false,\n  to_email: emails[0],\n  contact_id: contact.contact_id,\n  contact_name: contact.contact_name,\n  job_id: contact.job_id\n} }];"
+      },
+      "id": "ce64f0db-1016-4b61-aecf-747129bb8439",
+      "name": "Parse Email Address",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1824,
+        176
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "version": 2,
+            "leftValue": "",
+            "caseSensitive": true,
+            "typeValidation": "strict"
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "d-em-001",
+              "operator": {
+                "type": "boolean",
+                "operation": "false",
+                "singleValue": true
+              },
+              "leftValue": "={{ $json.skip }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "6a48aa46-b8a2-4781-93e9-55cd457900a5",
+      "name": "Valid Email?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        2064,
+        176
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "5cfc145a-82b2-41d8-af09-0d7873c2f945",
+      "name": "Skip No Email",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        2320,
+        384
+      ]
+    },
+    {
+      "parameters": {
+        "fileSelector": "={{ $('Set Base Path').first().json.basePath }}/automation/{{ $('Set Contact Details').first().json.job_id }}/resume.pdf",
+        "options": {}
+      },
+      "id": "83fa2c8a-e6b7-42d3-9b46-7894aa1fdaee",
+      "name": "Read Resume PDF",
+      "type": "n8n-nodes-base.readWriteFile",
+      "typeVersion": 1,
+      "position": [
+        2320,
+        176
+      ]
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $('Parse Email Address').first().json.to_email }}",
+        "subject": "=Full Stack Developer role at {{ $('Set Job Details').first().json.company_name }}",
+        "emailType": "text",
+        "message": "=Hi {{ $('Parse Email Address').first().json.contact_name }},\n\nI came across the {{ $('Set Job Details').first().json.job_title }} role at {{ $('Set Job Details').first().json.company_name }} and I believe my background as a Full Stack Developer makes me a strong fit.\n\nI'd love to learn more about this opportunity and discuss how I can contribute. I've attached my resume for your reference.\n\nLinkedIn: {{ $('Set Global Vars').first().json.linkedinLink }}\nGitHub: {{ $('Set Global Vars').first().json.githubLink }}\nPortfolio: {{ $('Set Global Vars').first().json.portfolioLink }}\n\nLooking forward to connecting!\n\nBest regards,\nRahat Sayyed",
+        "options": {}
+      },
+      "id": "a39d427b-6ae2-4c07-9ba2-bdc33df1a588",
+      "name": "Send Initial Email",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        2576,
+        176
+      ],
+      "webhookId": "cd0706d9-86e6-4324-a3c2-21bebf42a088",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "t4yo8xcujGnb6dJC",
+          "name": "n8n job gmail"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "tableId": "contacts",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "id",
+              "condition": "eq",
+              "keyValue": "={{ $('Parse Email Address').first().json.contact_id }}"
+            }
+          ]
+        },
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "email_sent_at",
+              "fieldValue": "={{ $now.toISO() }}"
+            },
+            {
+              "fieldId": "email_thread_id",
+              "fieldValue": "={{ $json.threadId }}"
+            }
+          ]
+        }
+      },
+      "id": "4a04468f-90c7-4d2c-8c00-c8929a466c25",
+      "name": "Update Contact After Email",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        2816,
+        176
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "UgJZt2YIwF9raxzT",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Set Global Vars').first().json.telegram_chat_id }}",
+        "text": "=✅ Initial email sent to {{ $('Parse Email Address').first().json.contact_name }} at {{ $('Set Job Details').first().json.company_name }} ({{ $('Parse Email Address').first().json.to_email }})",
+        "additionalFields": {}
+      },
+      "id": "e19c1029-c2c6-48ea-8da3-561a2aa19db8",
+      "name": "Notify Email Sent",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        3072,
+        176
+      ],
+      "webhookId": "d-tg-001",
+      "credentials": {
+        "telegramApi": {
+          "id": "zR5TTxftQEm2MYTo",
+          "name": "Job Automation Bot"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "id": "9897680c-facb-4f56-b581-2e3254a34170",
+      "name": "Back to Contact Loop",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        3312,
+        384
+      ]
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Set Global Vars').first().json.telegram_chat_id }}",
+        "text": "D: Initial Email Sender — batch complete. All pending contacts processed.",
+        "additionalFields": {}
+      },
+      "id": "109dc9f5-f4c5-4bb8-a2da-e6951d15b9c6",
+      "name": "All Emails Sent",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        816,
+        -16
+      ],
+      "webhookId": "d-tg-002",
+      "credentials": {
+        "telegramApi": {
+          "id": "zR5TTxftQEm2MYTo",
+          "name": "Job Automation Bot"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Every 30 Minutes": {
+      "main": [
+        [
+          {
+            "node": "Set Base Path",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set Base Path": {
+      "main": [
+        [
+          {
+            "node": "Set Global Vars",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set Global Vars": {
+      "main": [
+        [
+          {
+            "node": "Fetch Unsent Contacts",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch Unsent Contacts": {
+      "main": [
+        [
+          {
+            "node": "Any Unsent?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Any Unsent?": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Contacts",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "No Unsent Contacts",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Contacts": {
+      "main": [
+        [
+          {
+            "node": "All Emails Sent",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Set Contact Details",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set Contact Details": {
+      "main": [
+        [
+          {
+            "node": "Get Job Row",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Job Row": {
+      "main": [
+        [
+          {
+            "node": "Job Still Relevant?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Job Still Relevant?": {
+      "main": [
+        [
+          {
+            "node": "Set Job Details",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Skip Irrelevant",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Skip Irrelevant": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Contacts",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set Job Details": {
+      "main": [
+        [
+          {
+            "node": "Parse Email Address",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parse Email Address": {
+      "main": [
+        [
+          {
+            "node": "Valid Email?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Valid Email?": {
+      "main": [
+        [
+          {
+            "node": "Read Resume PDF",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Skip No Email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Skip No Email": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Contacts",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Read Resume PDF": {
+      "main": [
+        [
+          {
+            "node": "Send Initial Email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Initial Email": {
+      "main": [
+        [
+          {
+            "node": "Update Contact After Email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update Contact After Email": {
+      "main": [
+        [
+          {
+            "node": "Notify Email Sent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Notify Email Sent": {
+      "main": [
+        [
+          {
+            "node": "Back to Contact Loop",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Back to Contact Loop": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Contacts",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "saveDataErrorExecution": "all",
+    "saveDataSuccessExecution": "all",
+    "saveManualExecutions": true,
+    "saveExecutionProgress": true,
+    "callerPolicy": "workflowsFromSameOwner",
+    "availableInMCP": false,
+    "errorWorkflow": "tK9wOKSzk63ZLLhI"
+  },
+  "versionId": "f77fb8a2-6434-434f-9ed5-a2a76aef41f8",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "79a7aa25fa1a526575e9d16be2e37e3eb8dbd841332f42a9d7ebcef52a77cfbc"
+  },
+  "id": "Kzdaera94JtLxeeY",
+  "tags": [
+    {
+      "updatedAt": "2026-02-28T05:54:41.496Z",
+      "createdAt": "2026-02-28T05:54:41.496Z",
+      "id": "AplX0ksFdMaAI7af",
+      "name": "Correct"
+    }
+  ]
+}
