@@ -216,7 +216,7 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        816,
+        1024,
         176
       ]
     },
@@ -238,7 +238,7 @@
       "type": "n8n-nodes-base.supabase",
       "typeVersion": 1,
       "position": [
-        1072,
+        1280,
         176
       ],
       "credentials": {
@@ -277,7 +277,7 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        1328,
+        1536,
         176
       ]
     },
@@ -288,7 +288,7 @@
       "type": "n8n-nodes-base.noOp",
       "typeVersion": 1,
       "position": [
-        1568,
+        1776,
         384
       ]
     },
@@ -323,20 +323,20 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        1568,
+        1776,
         176
       ]
     },
     {
       "parameters": {
-        "jsCode": "const contact = $('Set Contact Details').first().json;\nconst raw = contact.contact_email_raw;\n\nlet emails = [];\ntry {\n  const parsed = typeof raw === 'string' ? JSON.parse(raw) : raw;\n  if (Array.isArray(parsed)) {\n    emails = parsed.filter(e => typeof e === 'string' && e.includes('@'));\n  } else if (typeof parsed === 'string' && parsed.includes('@')) {\n    emails = [parsed];\n  }\n} catch (e) {\n  if (typeof raw === 'string' && raw.includes('@')) {\n    emails = [raw];\n  }\n}\n\nif (emails.length === 0) {\n  return [{ json: { skip: true, reason: 'No valid email address' } }];\n}\n\nreturn [{ json: {\n  skip: false,\n  to_email: emails[0],\n  contact_id: contact.contact_id,\n  contact_name: contact.contact_name,\n  job_id: contact.job_id\n} }];"
+        "jsCode": "const contact = $('Set Contact Details').first().json;\nconst raw = contact.contact_email_raw;\n\nlet emails = [];\ntry {\n  const parsed = typeof raw === 'string' ? JSON.parse(raw) : raw;\n  if (Array.isArray(parsed)) {\n    emails = parsed.filter(e => typeof e === 'string' && e.includes('@'));\n  } else if (typeof parsed === 'string' && parsed.includes('@')) {\n    emails = [parsed];\n  }\n} catch (e) {\n  if (typeof raw === 'string' && raw.includes('@')) {\n    emails = [raw];\n  }\n}\n\nif (emails.length === 0) {\n  return [{ json: { skip: true, reason: 'No valid email address' } }];\n}\n\nreturn [{ json: {\n  skip: false,\n  to_email: emails[0],\n  ccEmails: emails.slice(1),\n  contact_id: contact.contact_id,\n  contact_name: contact.contact_name,\n  job_id: contact.job_id\n} }];"
       },
       "id": "ce64f0db-1016-4b61-aecf-747129bb8439",
       "name": "Parse Email Address",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        1824,
+        2032,
         176
       ]
     },
@@ -369,7 +369,7 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        2064,
+        2272,
         176
       ]
     },
@@ -380,21 +380,23 @@
       "type": "n8n-nodes-base.noOp",
       "typeVersion": 1,
       "position": [
-        2320,
+        2528,
         384
       ]
     },
     {
       "parameters": {
         "fileSelector": "={{ $('Set Base Path').first().json.basePath }}/automation/{{ $('Set Contact Details').first().json.job_id }}/resume.pdf",
-        "options": {}
+        "options": {
+          "fileName": "Rahat Sayyed.pdf"
+        }
       },
       "id": "83fa2c8a-e6b7-42d3-9b46-7894aa1fdaee",
       "name": "Read Resume PDF",
       "type": "n8n-nodes-base.readWriteFile",
       "typeVersion": 1,
       "position": [
-        2320,
+        2528,
         176
       ]
     },
@@ -404,14 +406,22 @@
         "subject": "=Full Stack Developer role at {{ $('Set Job Details').first().json.company_name }}",
         "emailType": "text",
         "message": "=Hi {{ $('Parse Email Address').first().json.contact_name }},\n\nI came across the {{ $('Set Job Details').first().json.job_title }} role at {{ $('Set Job Details').first().json.company_name }} and I believe my background as a Full Stack Developer makes me a strong fit.\n\nI'd love to learn more about this opportunity and discuss how I can contribute. I've attached my resume for your reference.\n\nLinkedIn: {{ $('Set Global Vars').first().json.linkedinLink }}\nGitHub: {{ $('Set Global Vars').first().json.githubLink }}\nPortfolio: {{ $('Set Global Vars').first().json.portfolioLink }}\n\nLooking forward to connecting!\n\nBest regards,\nRahat Sayyed",
-        "options": {}
+        "options": {
+          "appendAttribution": false,
+          "attachmentsUi": {
+            "attachmentsBinary": [
+              {}
+            ]
+          },
+          "ccList": "={{ $('Parse Email Address').first().json.ccEmails.join(',') }}"
+        }
       },
       "id": "a39d427b-6ae2-4c07-9ba2-bdc33df1a588",
       "name": "Send Initial Email",
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.1,
       "position": [
-        2576,
+        2784,
         176
       ],
       "webhookId": "cd0706d9-86e6-4324-a3c2-21bebf42a088",
@@ -453,7 +463,7 @@
       "type": "n8n-nodes-base.supabase",
       "typeVersion": 1,
       "position": [
-        2816,
+        3024,
         176
       ],
       "credentials": {
@@ -467,14 +477,16 @@
       "parameters": {
         "chatId": "={{ $('Set Global Vars').first().json.telegram_chat_id }}",
         "text": "=✅ Initial email sent to {{ $('Parse Email Address').first().json.contact_name }} at {{ $('Set Job Details').first().json.company_name }} ({{ $('Parse Email Address').first().json.to_email }})",
-        "additionalFields": {}
+        "additionalFields": {
+          "appendAttribution": false
+        }
       },
       "id": "e19c1029-c2c6-48ea-8da3-561a2aa19db8",
       "name": "Notify Email Sent",
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        3072,
+        3280,
         176
       ],
       "webhookId": "d-tg-001",
@@ -492,7 +504,7 @@
       "type": "n8n-nodes-base.noOp",
       "typeVersion": 1,
       "position": [
-        3312,
+        3520,
         384
       ]
     },
@@ -500,14 +512,16 @@
       "parameters": {
         "chatId": "={{ $('Set Global Vars').first().json.telegram_chat_id }}",
         "text": "D: Initial Email Sender — batch complete. All pending contacts processed.",
-        "additionalFields": {}
+        "additionalFields": {
+          "appendAttribution": false
+        }
       },
       "id": "109dc9f5-f4c5-4bb8-a2da-e6951d15b9c6",
       "name": "All Emails Sent",
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        816,
+        1280,
         -16
       ],
       "webhookId": "d-tg-002",
@@ -517,6 +531,17 @@
           "name": "Job Automation Bot"
         }
       }
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.limit",
+      "typeVersion": 1,
+      "position": [
+        1024,
+        -16
+      ],
+      "id": "b07e54eb-c123-4deb-ab80-4521442e0dc4",
+      "name": "Limit"
     }
   ],
   "pinData": {},
@@ -587,7 +612,7 @@
       "main": [
         [
           {
-            "node": "All Emails Sent",
+            "node": "Limit",
             "type": "main",
             "index": 0
           }
@@ -757,6 +782,17 @@
           }
         ]
       ]
+    },
+    "Limit": {
+      "main": [
+        [
+          {
+            "node": "All Emails Sent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "active": false,
@@ -770,7 +806,7 @@
     "availableInMCP": false,
     "errorWorkflow": "tK9wOKSzk63ZLLhI"
   },
-  "versionId": "f77fb8a2-6434-434f-9ed5-a2a76aef41f8",
+  "versionId": "767321c7-e0fb-4d27-bef7-7c2ad6abf15a",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "79a7aa25fa1a526575e9d16be2e37e3eb8dbd841332f42a9d7ebcef52a77cfbc"

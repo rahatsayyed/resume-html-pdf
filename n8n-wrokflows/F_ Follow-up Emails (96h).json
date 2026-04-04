@@ -1,0 +1,779 @@
+{
+  "name": "F: Follow-up Emails (96h)",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "hours",
+              "hoursInterval": 6
+            }
+          ]
+        }
+      },
+      "id": "faa0a757-4c49-44a7-be67-1573d4c5a591",
+      "name": "Every 6 Hours",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -528,
+        816
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "e-gv-001",
+              "name": "telegram_chat_id",
+              "type": "string",
+              "value": "1125208540"
+            },
+            {
+              "id": "e-gv-002",
+              "name": "my_email",
+              "type": "string",
+              "value": "rahxtsayyed@gmail.com"
+            },
+            {
+              "id": "e-gv-003",
+              "name": "linkedinLink",
+              "type": "string",
+              "value": "https://www.linkedin.com/in/rahxtsayyed/"
+            },
+            {
+              "id": "e-gv-004",
+              "name": "githubLink",
+              "type": "string",
+              "value": "https://github.com/rahxtsayyed"
+            },
+            {
+              "id": "e-gv-005",
+              "name": "portfolioLink",
+              "type": "string",
+              "value": "https://rahatsayyedwork.vercel.app"
+            },
+            {
+              "id": "e-gv-006",
+              "name": "basePath",
+              "type": "string",
+              "value": "/Users/copods/Documents/Projects/personal/resume"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "1a39d646-e4c8-48f8-9adc-92832bab4daf",
+      "name": "Set Global Vars",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -304,
+        816
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "tableId": "contacts",
+        "returnAll": true,
+        "matchType": "allFilters",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "followup1_sent_at",
+              "condition": "lt",
+              "keyValue": "={{ $now.minus(48, 'hours').toISO() }}"
+            },
+            {
+              "keyName": "followup2_sent_at",
+              "condition": "is",
+              "keyValue": "null"
+            },
+            {
+              "keyName": "reply_received",
+              "condition": "is",
+              "keyValue": "false"
+            }
+          ]
+        }
+      },
+      "id": "8b1ab166-b294-4e1e-9817-00cb71c9566c",
+      "name": "Fetch Followup2 Due",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        -80,
+        816
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "UgJZt2YIwF9raxzT",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const now = Date.now();\nconst ninetyHours = 96 * 60 * 60 * 1000;\nconst fortyEightHours = 48 * 60 * 60 * 1000;\n\nreturn $input.all().filter(item => {\n  const followupSentAt = item.json.followup1_sent_at;\n  if (!followupSentAt) return false;\n  const sent = new Date(followupSentAt).getTime();\n  return (now - sent) >= fortyEightHours;\n}).map(item => ({ json: item.json }));"
+      },
+      "id": "f0d68382-24bd-4da1-93eb-ddca76a584e7",
+      "name": "Filter FU2 96h Passed",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        144,
+        816
+      ]
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "d605d679-1876-4d31-836d-77c6bc29cacd",
+      "name": "Loop FU2 Contacts",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        368,
+        816
+      ]
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Set Global Vars').first().json.telegram_chat_id }}",
+        "text": "E: Followup-2 batch complete.",
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "id": "df1525c5-da4f-4929-a77d-b1e71f9147ef",
+      "name": "FU2 Batch Done",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        816,
+        672
+      ],
+      "webhookId": "0d61877d-1de6-4112-a9eb-99e88b0c0c4e",
+      "credentials": {
+        "telegramApi": {
+          "id": "zR5TTxftQEm2MYTo",
+          "name": "Job Automation Bot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "e-fu2-001",
+              "name": "contact_id",
+              "type": "string",
+              "value": "={{ $json.id }}"
+            },
+            {
+              "id": "e-fu2-002",
+              "name": "contact_name",
+              "type": "string",
+              "value": "={{ $json.name }}"
+            },
+            {
+              "id": "e-fu2-003",
+              "name": "thread_id",
+              "type": "string",
+              "value": "={{ $json.email_thread_id }}"
+            },
+            {
+              "id": "e-fu2-004",
+              "name": "email_raw",
+              "type": "string",
+              "value": "={{ $json.email }}"
+            },
+            {
+              "id": "e-fu2-005",
+              "name": "job_id",
+              "type": "string",
+              "value": "={{ $json.job_id }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "5654ad27-c8a4-4a04-bfc8-fd8a408193a6",
+      "name": "Set FU2 Contact",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        592,
+        864
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "thread",
+        "operation": "get",
+        "threadId": "={{ $json.thread_id }}",
+        "simple": false,
+        "options": {}
+      },
+      "id": "d5a93f3b-03fb-4531-9f92-a74994d16e5d",
+      "name": "Get Thread FU2",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        816,
+        864
+      ],
+      "webhookId": "1e328e33-1bef-4b78-b480-5a67e81d08e6",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "t4yo8xcujGnb6dJC",
+          "name": "n8n job gmail"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const thread = $input.first().json\nconst myEmail = $('Set Global Vars').first().json.my_email;\nconst messages = thread.messages || (thread.payload ? [thread] : []);\n\n// Sort by date ascending to ensure correct order\nconst sorted = [...messages].sort((a, b) => \n  parseInt(a.internalDate) - parseInt(b.internalDate)\n);\n\n// Skip the first message (your outreach), check the rest for a reply from someone else\nconst hasReply = sorted.slice(1).some(msg => {\n  const headers = msg.payload?.headers || msg.payload?.parts?.[0]?.headers || [];\n  const fromHeader = headers.find(h => h.name?.toLowerCase() === 'from')?.value || '';\n  const from = fromHeader || msg.From || msg.from || '';\n  return from && !from.toLowerCase().includes(myEmail.toLowerCase());\n});\n\nreturn [{ json: { \n  hasReply, \n  contact_id: $('Set FU2 Contact').first().json.contact_id, \n  contact_name: $('Set FU2 Contact').first().json.contact_name, \n  thread_id: $('Set FU2 Contact').first().json.thread_id, \n  email_raw: $('Set FU2 Contact').first().json.email_raw, \n  job_id: $('Set FU2 Contact').first().json.job_id \n} }];"
+      },
+      "id": "a2cf2961-e422-49d3-bfbc-ec4851a38fe3",
+      "name": "Check Reply FU2",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1040,
+        864
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "version": 2,
+            "leftValue": "",
+            "caseSensitive": true,
+            "typeValidation": "strict"
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "e-rr-fu2",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              },
+              "leftValue": "={{ $json.hasReply }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "f5e4e08f-126d-4591-83eb-dbf5671d2cd0",
+      "name": "Reply Received FU2?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1264,
+        864
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "tableId": "contacts",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "id",
+              "condition": "eq",
+              "keyValue": "={{ $json.contact_id }}"
+            }
+          ]
+        },
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "reply_received",
+              "fieldValue": "true"
+            }
+          ]
+        }
+      },
+      "id": "0106528b-efbc-4a81-95e6-a405ef9c2b19",
+      "name": "Mark Reply FU2",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        1488,
+        768
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "UgJZt2YIwF9raxzT",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "tableId": "jobs",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "id",
+              "keyValue": "={{ $json.job_id }}"
+            }
+          ]
+        }
+      },
+      "id": "50acdd63-dce2-487a-98c6-38648940e519",
+      "name": "Get Job FU2",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        1488,
+        960
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "UgJZt2YIwF9raxzT",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const raw = $('Set FU2 Contact').first().json.email_raw;\nlet emails = [];\ntry {\n  const parsed = typeof raw === 'string' ? JSON.parse(raw) : raw;\n  if (Array.isArray(parsed)) emails = parsed.filter(e => typeof e === 'string' && e.includes('@'));\n  else if (typeof parsed === 'string' && parsed.includes('@')) emails = [parsed];\n} catch (e) {\n  if (typeof raw === 'string' && raw.includes('@')) emails = [raw];\n}\nconst job = $input.first().json;\nreturn [{ json: { to_email: emails[0] || '',\n                  ccEmails: emails.slice(1),\n                  job_title: job.job_title, company_name: job.company_name, job_id: job.id } }];"
+      },
+      "id": "2ab8939e-7a14-486e-b462-1245a3b4fb0c",
+      "name": "Parse Email FU2",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1712,
+        1008
+      ]
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $json.to_email }}",
+        "subject": "=Last follow-up — {{ $json.job_title }} at {{ $json.company_name }}",
+        "emailType": "text",
+        "message": "=Hi {{ $('Set FU2 Contact').first().json.contact_name }},\n\nI hope this message finds you well. This is my final follow-up regarding the {{ $json.job_title }} role at {{ $json.company_name }}.\n\nI remain genuinely excited about the opportunity to contribute to your team. If there's a better time to connect, or if the role has been filled, please don't hesitate to let me know.\n\nThank you for your time and consideration!\n\nBest regards,\nRahat Sayyed\n\nLinkedIn: {{ $('Set Global Vars').first().json.linkedinLink }}\nPortfolio: {{ $('Set Global Vars').first().json.portfolioLink }}",
+        "options": {
+          "appendAttribution": false,
+          "ccList": "={{ $json.ccEmails.join(',') }}"
+        }
+      },
+      "id": "df1c659c-8d4f-4c55-87e0-15f034056aa9",
+      "name": "Send Followup 2 Email",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        1936,
+        1008
+      ],
+      "webhookId": "12813641-d219-45d0-996a-bbfcf513170d",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "t4yo8xcujGnb6dJC",
+          "name": "n8n job gmail"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "tableId": "contacts",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "id",
+              "condition": "eq",
+              "keyValue": "={{ $('Set FU2 Contact').first().json.contact_id }}"
+            }
+          ]
+        },
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "followup2_sent_at",
+              "fieldValue": "={{ $now.toISO() }}"
+            }
+          ]
+        }
+      },
+      "id": "f7c35a20-d88c-495d-8079-5b5727d9bed1",
+      "name": "Update followup2_sent_at",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        2160,
+        1008
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "UgJZt2YIwF9raxzT",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "id": "cc1cce42-d275-4ee2-a628-518d455ab4de",
+      "name": "Back to FU2 Loop",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        2384,
+        1080
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "c41e782f-46af-4bba-b539-f4faf1e3298d",
+      "name": "Back to FU2 Loop (Reply)",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        1712,
+        816
+      ]
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.limit",
+      "typeVersion": 1,
+      "position": [
+        592,
+        672
+      ],
+      "id": "6a6777b0-b1bf-450b-a1b6-b26a0ccd4f39",
+      "name": "Limit"
+    }
+  ],
+  "pinData": {
+    "Get Thread FU2": [
+      {
+        "json": {
+          "id": "19d56a7c77d1e055",
+          "historyId": "269345",
+          "messages": [
+            {
+              "id": "19d56a7c77d1e055",
+              "threadId": "19d56a7c77d1e055",
+              "snippet": "Hi USERNAME 1, I came across the HCL Now CloudOps Product _Sr. DevOps Engineer_ Hyderabad / Pune role at HCLSoftware and I believe my background as a Full Stack Developer makes me a strong fit. I&#39;d",
+              "payload": {
+                "partId": "",
+                "mimeType": "multipart/mixed",
+                "filename": "",
+                "body": {
+                  "size": 0
+                },
+                "parts": [
+                  {
+                    "partId": "0",
+                    "mimeType": "text/plain",
+                    "filename": "",
+                    "headers": [
+                      {
+                        "name": "Content-Type",
+                        "value": "text/plain; charset=utf-8"
+                      },
+                      {
+                        "name": "Content-Transfer-Encoding",
+                        "value": "quoted-printable"
+                      }
+                    ],
+                    "body": {
+                      "size": 516,
+                      "data": "SGkgVVNFUk5BTUUgMSwKCkkgY2FtZSBhY3Jvc3MgdGhlIEhDTCBOb3cgQ2xvdWRPcHMgUHJvZHVjdCBfU3IuIERldk9wcyBFbmdpbmVlcl8gSHlkZXJhYmFkIC8gUHVuZSByb2xlIGF0IEhDTFNvZnR3YXJlIGFuZCBJIGJlbGlldmUgbXkgYmFja2dyb3VuZCBhcyBhIEZ1bGwgU3RhY2sgRGV2ZWxvcGVyIG1ha2VzIG1lIGEgc3Ryb25nIGZpdC4KCkknZCBsb3ZlIHRvIGxlYXJuIG1vcmUgYWJvdXQgdGhpcyBvcHBvcnR1bml0eSBhbmQgZGlzY3VzcyBob3cgSSBjYW4gY29udHJpYnV0ZS4gSSd2ZSBhdHRhY2hlZCBteSByZXN1bWUgZm9yIHlvdXIgcmVmZXJlbmNlLgoKTGlua2VkSW46IGh0dHBzOi8vd3d3LmxpbmtlZGluLmNvbS9pbi9yYWh4dHNheXllZC8KR2l0SHViOiBodHRwczovL2dpdGh1Yi5jb20vcmFoeHRzYXl5ZWQKUG9ydGZvbGlvOiBodHRwczovL3JhaGF0c2F5eWVkd29yay52ZXJjZWwuYXBwCgpMb29raW5nIGZvcndhcmQgdG8gY29ubmVjdGluZyEKCkJlc3QgcmVnYXJkcywKUmFoYXQgU2F5eWVk"
+                    }
+                  },
+                  {
+                    "partId": "1",
+                    "mimeType": "application/pdf",
+                    "filename": "Rahat Sayyed.pdf",
+                    "headers": [
+                      {
+                        "name": "Content-Type",
+                        "value": "application/pdf; name=\"Rahat Sayyed.pdf\""
+                      },
+                      {
+                        "name": "Content-Transfer-Encoding",
+                        "value": "base64"
+                      },
+                      {
+                        "name": "Content-Disposition",
+                        "value": "attachment; filename=\"Rahat Sayyed.pdf\""
+                      }
+                    ],
+                    "body": {
+                      "attachmentId": "ANGjdJ-xO9aJNc-XtSPqodUrCLnKMkD8hFaRkvy9OffJFV30QR2iFcoIyDRqY2E-n6gz07chpLNvtfjkP_75Sg9lAgn38FhkKsNUAUliq3rhrHOuYWKkU5jdK-bc7jn-6tjiCqT3SW5IuPNAloZXSdc8sy0Yd5FOmJ4bxO27Eme40gdajwmef8NhG9yXqiE57SZWA7KtSBGF4BakTPszRSA3PHB17ZiQgYMOgRjkQRjMLo9dZpxb5-CCRjBo1crq79jLlXFwash_MZYKevBK_ArvG-G1RWQq1l-13mRcFJNnpwCImKurHqKFSzQ7JnHeYLfHkc7Kdq1bMxles8Pju6A0I-jCoIPdwFZDSctAQRfrGQFaOTm1_wXOz3Bv2v0hF9_aYRuOJYXOE6bezw88",
+                      "size": 112754
+                    }
+                  }
+                ]
+              },
+              "sizeEstimate": 155769,
+              "historyId": "269345",
+              "internalDate": "1775275329000",
+              "labels": [
+                {
+                  "id": "SENT",
+                  "name": "SENT"
+                }
+              ],
+              "Received": "from 345657476490 named unknown by gmailapi.google.com with HTTPREST; Fri, 3 Apr 2026 21:02:09 -0700",
+              "To": "saadzmaruf@gmail.com",
+              "Cc": "rahatsay721@gmail.com",
+              "Subject": "Full Stack Developer role at HCLSoftware",
+              "Message-Id": "<CAC5N0zGtmQKsN_9CTQ8n_35N5HFTUzdkD6vdu9nAybWghZut6A@mail.gmail.com>",
+              "Date": "Fri, 3 Apr 2026 21:02:09 -0700",
+              "MIME-Version": "1.0",
+              "Content-Type": "multipart/mixed; boundary=\"--_NmP-d15e3a3075aa7f33-Part_1\"",
+              "From": "rahxtsayyed@gmail.com"
+            }
+          ]
+        },
+        "pairedItem": {
+          "item": 0
+        }
+      }
+    ]
+  },
+  "connections": {
+    "Every 6 Hours": {
+      "main": [
+        [
+          {
+            "node": "Set Global Vars",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set Global Vars": {
+      "main": [
+        [
+          {
+            "node": "Fetch Followup2 Due",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch Followup2 Due": {
+      "main": [
+        [
+          {
+            "node": "Filter FU2 96h Passed",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter FU2 96h Passed": {
+      "main": [
+        [
+          {
+            "node": "Loop FU2 Contacts",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop FU2 Contacts": {
+      "main": [
+        [
+          {
+            "node": "Limit",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Set FU2 Contact",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set FU2 Contact": {
+      "main": [
+        [
+          {
+            "node": "Get Thread FU2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Thread FU2": {
+      "main": [
+        [
+          {
+            "node": "Check Reply FU2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check Reply FU2": {
+      "main": [
+        [
+          {
+            "node": "Reply Received FU2?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Reply Received FU2?": {
+      "main": [
+        [
+          {
+            "node": "Mark Reply FU2",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Get Job FU2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Mark Reply FU2": {
+      "main": [
+        [
+          {
+            "node": "Back to FU2 Loop (Reply)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Job FU2": {
+      "main": [
+        [
+          {
+            "node": "Parse Email FU2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parse Email FU2": {
+      "main": [
+        [
+          {
+            "node": "Send Followup 2 Email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Followup 2 Email": {
+      "main": [
+        [
+          {
+            "node": "Update followup2_sent_at",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update followup2_sent_at": {
+      "main": [
+        [
+          {
+            "node": "Back to FU2 Loop",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Back to FU2 Loop": {
+      "main": [
+        [
+          {
+            "node": "Loop FU2 Contacts",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Back to FU2 Loop (Reply)": {
+      "main": [
+        [
+          {
+            "node": "Loop FU2 Contacts",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Limit": {
+      "main": [
+        [
+          {
+            "node": "FU2 Batch Done",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "saveDataErrorExecution": "all",
+    "saveDataSuccessExecution": "all",
+    "saveManualExecutions": true,
+    "saveExecutionProgress": true,
+    "callerPolicy": "workflowsFromSameOwner",
+    "availableInMCP": false,
+    "errorWorkflow": "tK9wOKSzk63ZLLhI"
+  },
+  "versionId": "569eb324-ede7-4acd-8b13-9f015b98618b",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "79a7aa25fa1a526575e9d16be2e37e3eb8dbd841332f42a9d7ebcef52a77cfbc"
+  },
+  "id": "eFYngy9pYI8xDPOP",
+  "tags": [
+    {
+      "updatedAt": "2026-02-28T05:54:41.496Z",
+      "createdAt": "2026-02-28T05:54:41.496Z",
+      "id": "AplX0ksFdMaAI7af",
+      "name": "Correct"
+    }
+  ]
+}

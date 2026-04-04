@@ -120,7 +120,9 @@
       "parameters": {
         "chatId": "={{ $('Set Global Vars').first().json.telegram_chat_id }}",
         "text": "Contact Extraction done — contacts saved, ready for email sending.",
-        "additionalFields": {}
+        "additionalFields": {
+          "appendAttribution": false
+        }
       },
       "id": "abde8862-2dd3-414d-b98e-efcfe78de201",
       "name": "Notify Extraction Complete",
@@ -449,8 +451,7 @@
           "value": "https://console.apify.com/actors/M2FMdjRVeF1HPGFcc",
           "mode": "url"
         },
-        "customBody": "={\n    \"autoQuerySegmentation\": false,\n    \"currentCompanies\": [\n        \"{{ $('Set Job Details').item.json.company_url }}\"\n    ],\n    \"functionIds\": [\n        \"8\"\n    ],\n    \"maxItems\": 25,\n    \"profileScraperMode\": \"Full + email search\",\n    \"recentlyChangedJobs\": false,\n    \"searchQuery\": \"Full Stack Developer OR Developer OR Backend Developer OR Frontend Developer OR Software Engineer OR HR OR Human Resource\",\n    \"seniorityLevelIds\": [\n        \"120\",\n        \"110\",\n        \"130\",\n        \"200\",\n        \"210\",\n        \"220\",\n        \"300\",\n        \"310\"\n    ],\n    \"startPage\": 1,\n    \"yearsAtCurrentCompanyIds\": [\n        \"2\",\n        \"3\",\n        \"4\",\n        \"5\"\n    ]\n}",
-        "timeout": {}
+        "customBody": "={\n    \"autoQuerySegmentation\": false,\n    \"currentCompanies\": [\n        \"{{ $('Set Job Details').item.json.company_url }}\"\n    ],\n    \"functionIds\": [\n        \"8\"\n    ],\n    \"maxItems\": 25,\n    \"profileScraperMode\": \"Full + email search\",\n    \"recentlyChangedJobs\": false,\n    \"searchQuery\": \"Full Stack Developer OR Developer OR Backend Developer OR Frontend Developer OR Software Engineer OR HR OR Human Resource\",\n    \"seniorityLevelIds\": [\n        \"120\",\n        \"110\",\n        \"130\",\n        \"200\",\n        \"210\",\n        \"220\",\n        \"300\",\n        \"310\"\n    ],\n    \"startPage\": 1,\n    \"yearsAtCurrentCompanyIds\": [\n        \"2\",\n        \"3\",\n        \"4\",\n        \"5\"\n    ]\n}"
       },
       "id": "8c4d981c-44de-4cea-abd5-3a7836b08f82",
       "name": "Run Emails Actor",
@@ -591,8 +592,7 @@
       "parameters": {
         "resource": "Datasets",
         "datasetId": "={{ $json.storageIds.datasets.default }}",
-        "offset": {},
-        "limit": {},
+        "limit": null,
         "options": {}
       },
       "id": "cb209bfc-8d08-4d15-b4b9-188a0cd1b318",
@@ -738,7 +738,2125 @@
       ]
     }
   ],
-  "pinData": {},
+  "pinData": {
+    "Run Emails Actor": [
+      {
+        "json": {
+          "id": "yVWG6Chk2phbLadNy",
+          "actId": "hKByXkMQaC5Qt9UMN",
+          "userId": "f1yYJfRvABL3KSgKt",
+          "startedAt": "2026-02-28T05:45:05.862Z",
+          "finishedAt": null,
+          "status": "READY",
+          "meta": {
+            "origin": "API",
+            "userAgent": "n8n"
+          },
+          "stats": {
+            "inputBodyLen": 545,
+            "migrationCount": 0,
+            "rebootCount": 0,
+            "restartCount": 0,
+            "resurrectCount": 0,
+            "computeUnits": 0
+          },
+          "options": {
+            "build": "1.1.21",
+            "timeoutSecs": 3600,
+            "memoryMbytes": 1024,
+            "maxTotalChargeUsd": 5,
+            "maxItems": 5000,
+            "diskMbytes": 2048
+          },
+          "buildId": "Ye4PCjVWiQDqjBmGz",
+          "defaultKeyValueStoreId": "e6fPmEkY6LIZyz3W0",
+          "defaultDatasetId": "WOI0iWQaQ34bh8LPB",
+          "defaultRequestQueueId": "TFGPXu06IO8L8itLr",
+          "storageIds": {
+            "keyValueStores": {
+              "default": "e6fPmEkY6LIZyz3W0"
+            },
+            "datasets": {
+              "default": "WOI0iWQaQ34bh8LPB"
+            },
+            "requestQueues": {
+              "default": "TFGPXu06IO8L8itLr"
+            }
+          },
+          "pricingInfo": {
+            "pricingModel": "PAY_PER_EVENT",
+            "createdAt": "2026-02-16T15:05:29.437Z",
+            "startedAt": "2026-02-16T15:05:29.437Z",
+            "apifyMarginPercentage": 0.2,
+            "isPriceChangeNotificationSuppressed": true,
+            "reasonForChange": "Migration from Pay Per Result to Pay Per Event with apify-default-dataset-item event",
+            "forceContainsSignificantPriceChange": false,
+            "pricingPerEvent": {
+              "actorChargeEvents": {
+                "apify-default-dataset-item": {
+                  "eventTitle": "result",
+                  "eventDescription": "Single result in the default dataset.",
+                  "isPrimaryEvent": true,
+                  "eventPriceUsd": 0.001
+                }
+              }
+            }
+          },
+          "chargedEventCounts": {
+            "apify-default-dataset-item": 0
+          },
+          "platformUsageBillingModel": "DEVELOPER",
+          "accountedChargedEventCounts": {
+            "apify-default-dataset-item": 0
+          },
+          "integrationTracking": {
+            "platform": "n8n",
+            "isAiTool": false
+          },
+          "generalAccess": "FOLLOW_USER_SETTING",
+          "buildNumber": "1.1.21",
+          "containerUrl": "https://i295yfkgxoag.runs.apify.net",
+          "usageTotalUsd": 0
+        }
+      }
+    ],
+    "Get Emails Dataset": [
+      {
+        "json": {
+          "id": "ACoAACjBMI4BhoZ_pPX4-z2WreVIMjmTwdfcip0",
+          "publicIdentifier": "alejandro-consigli",
+          "linkedinUrl": "https://www.linkedin.com/in/alejandro-consigli",
+          "firstName": "Saad",
+          "lastName": "Consigli",
+          "emails": [
+            {
+              "email": "saadzmaruf@gmail.com",
+              "catchAllDomain": true,
+              "validEmailServer": true,
+              "free": false,
+              "status": "risky",
+              "qualityScore": 60
+            },
+            {
+              "email": "rahatsay721@gmail.com",
+              "catchAllDomain": true,
+              "validEmailServer": true,
+              "free": false,
+              "status": "risky",
+              "qualityScore": 60
+            }
+          ],
+          "companyWebsites": [
+            {
+              "url": "https://www.deel.com/",
+              "domain": "deel.com",
+              "validEmailServer": true
+            }
+          ],
+          "headline": "Software Engineer at Deel",
+          "openToWork": false,
+          "hiring": false,
+          "premium": false,
+          "influencer": false,
+          "memorialized": false,
+          "location": {
+            "linkedinText": "Barcelona, Catalonia, Spain",
+            "countryCode": "ES",
+            "parsed": {
+              "text": "Barcelona, Spain",
+              "countryCode": "ES",
+              "regionCode": null,
+              "country": "Spain",
+              "countryFull": "Spain",
+              "state": "Catalonia",
+              "city": "Barcelona"
+            }
+          },
+          "objectUrn": "683749518",
+          "registeredAt": "2018-09-17T18:56:51.006Z",
+          "topSkills": null,
+          "connectionsCount": 2968,
+          "followerCount": 2959,
+          "verified": false,
+          "about": null,
+          "currentPosition": [
+            {
+              "companyId": "18922914",
+              "companyLinkedinUrl": "https://www.linkedin.com/company/18922914/",
+              "companyName": "Deel",
+              "dateRange": {
+                "start": {
+                  "month": 7,
+                  "year": 2023,
+                  "day": null
+                },
+                "end": null
+              }
+            }
+          ],
+          "profileTopEducation": [
+            {
+              "schoolId": "10163",
+              "companyId": "573021",
+              "schoolLinkedinUrl": "https://www.linkedin.com/company/573021/",
+              "schoolName": "Universidad Tecnológica Nacional"
+            }
+          ],
+          "profileActions": [],
+          "profilePicture": {
+            "url": "https://media.licdn.com/dms/image/v2/C4E03AQEkT5lcLZ0REQ/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1663418351421?e=1772668800&v=beta&t=9Qxr1empcKaDUWfM0Y-89sOts2JK70g4mNucvAhhsEU",
+            "sizes": [
+              {
+                "url": "https://media.licdn.com/dms/image/v2/C4E03AQEkT5lcLZ0REQ/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1663418351421?e=1772668800&v=beta&t=9Qxr1empcKaDUWfM0Y-89sOts2JK70g4mNucvAhhsEU",
+                "width": 800,
+                "height": 800,
+                "expiresAt": 1772668800000
+              },
+              {
+                "url": "https://media.licdn.com/dms/image/v2/C4E03AQEkT5lcLZ0REQ/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1663418351421?e=1772668800&v=beta&t=YAJHg8x4GPoqkjdlNWdzFX4-XbGHjY1KHeu0eoGHL_Y",
+                "width": 400,
+                "height": 400,
+                "expiresAt": 1772668800000
+              },
+              {
+                "url": "https://media.licdn.com/dms/image/v2/C4E03AQEkT5lcLZ0REQ/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1663418351421?e=1772668800&v=beta&t=7irXXfr3O_AAdlOoSpi1XwBb615xaSUI80PEPCC7F3w",
+                "width": 200,
+                "height": 200,
+                "expiresAt": 1772668800000
+              },
+              {
+                "url": "https://media.licdn.com/dms/image/v2/C4E03AQEkT5lcLZ0REQ/profile-displayphoto-shrink_100_100/profile-displayphoto-shrink_100_100/0/1663418351421?e=1772668800&v=beta&t=bnde5uWGupR9FFooT3L8CM8bKAcGzDcWaOF6_g03yjQ",
+                "width": 100,
+                "height": 100,
+                "expiresAt": 1772668800000
+              }
+            ]
+          },
+          "coverPicture": {
+            "url": "https://media.licdn.com/dms/image/v2/D4E16AQGdXz1dPcGikw/profile-displaybackgroundimage-shrink_350_1400/profile-displaybackgroundimage-shrink_350_1400/0/1663418603316?e=1772668800&v=beta&t=7M3Q1fycxSGuZNWTwIUASH2cJYksLIlW9DbP8PiTR6E",
+            "sizes": [
+              {
+                "url": "https://media.licdn.com/dms/image/v2/D4E16AQGdXz1dPcGikw/profile-displaybackgroundimage-shrink_350_1400/profile-displaybackgroundimage-shrink_350_1400/0/1663418603316?e=1772668800&v=beta&t=7M3Q1fycxSGuZNWTwIUASH2cJYksLIlW9DbP8PiTR6E",
+                "width": 1080,
+                "height": 270,
+                "expiresAt": 1772668800000
+              },
+              {
+                "url": "https://media.licdn.com/dms/image/v2/D4E16AQGdXz1dPcGikw/profile-displaybackgroundimage-shrink_200_800/profile-displaybackgroundimage-shrink_200_800/0/1663418603316?e=1772668800&v=beta&t=hBniR77VdFR2JLh5uvZje9UuJmTUgHPANbhGOqbR6e4",
+                "width": 800,
+                "height": 200,
+                "expiresAt": 1772668800000
+              }
+            ]
+          },
+          "photo": "https://media.licdn.com/dms/image/v2/C4E03AQEkT5lcLZ0REQ/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1663418351421?e=1772668800&v=beta&t=9Qxr1empcKaDUWfM0Y-89sOts2JK70g4mNucvAhhsEU",
+          "profileLocales": [
+            {
+              "country": "ES",
+              "language": "es"
+            }
+          ],
+          "primaryLocale": {
+            "country": "ES",
+            "language": "es"
+          },
+          "services": null,
+          "experience": [
+            {
+              "position": "Software Engineer",
+              "location": null,
+              "employmentType": "Full-time",
+              "workplaceType": "Remote",
+              "companyName": "Deel",
+              "companyLinkedinUrl": "https://www.linkedin.com/company/deel/",
+              "companyId": "18922914",
+              "companyUniversalName": "deel",
+              "duration": "2 yrs 8 mos",
+              "description": null,
+              "skills": null,
+              "startDate": {
+                "month": "Jul",
+                "year": 2023,
+                "text": "Jul 2023"
+              },
+              "endDate": {
+                "text": "Present"
+              },
+              "companyLogo": {
+                "url": "https://media.licdn.com/dms/image/v2/D560BAQEFXl5JlEEmUg/company-logo_400_400/B56ZikukJoHMAc-/0/1755110327795/deel_logo?e=1772668800&v=beta&t=-z5gnhFBmsgVSpV591xCpzcrS2XD6ASHudehmj3Ry0I",
+                "sizes": [
+                  {
+                    "url": "https://media.licdn.com/dms/image/v2/D560BAQEFXl5JlEEmUg/company-logo_400_400/B56ZikukJoHMAc-/0/1755110327795/deel_logo?e=1772668800&v=beta&t=-z5gnhFBmsgVSpV591xCpzcrS2XD6ASHudehmj3Ry0I",
+                    "width": 400,
+                    "height": 400,
+                    "expiresAt": 1772668800000
+                  },
+                  {
+                    "url": "https://media.licdn.com/dms/image/v2/D560BAQEFXl5JlEEmUg/company-logo_200_200/B56ZikukJoHMAM-/0/1755110327795/deel_logo?e=1772668800&v=beta&t=Fk3q2e6Kzs-N237594MMMZk1eE1aAjVbVnatPJ4Ok7o",
+                    "width": 200,
+                    "height": 200,
+                    "expiresAt": 1772668800000
+                  },
+                  {
+                    "url": "https://media.licdn.com/dms/image/v2/D560BAQEFXl5JlEEmUg/company-logo_100_100/B56ZikukJoHMAU-/0/1755110327795/deel_logo?e=1772668800&v=beta&t=FD3LZbBIYg0MPt5cfe5p0a5aIxl_FRdcsMMQM3dBTE4",
+                    "width": 100,
+                    "height": 100,
+                    "expiresAt": 1772668800000
+                  }
+                ]
+              }
+            },
+            {
+              "position": "Software Engineer",
+              "location": "Barcelona, Catalonia, Spain",
+              "employmentType": "Full-time",
+              "workplaceType": null,
+              "companyName": "Capgemini Engineering",
+              "companyLinkedinUrl": "https://www.linkedin.com/company/72092703/",
+              "companyId": "72092703",
+              "duration": "2 yrs 1 mo",
+              "description": null,
+              "skills": null,
+              "startDate": {
+                "month": "Jul",
+                "year": 2021,
+                "text": "Jul 2021"
+              },
+              "endDate": {
+                "month": "Jul",
+                "year": 2023,
+                "text": "Jul 2023"
+              },
+              "companyLogo": {
+                "url": "https://media.licdn.com/dms/image/v2/D4E0BAQF65j53YY6XWA/company-logo_400_400/B4EZqB8jt5GUAY-/0/1763116728049/capgemini_engineering_logo?e=1772668800&v=beta&t=CdCyih3o4CdKpqRn_g_3bTsRAQu1gXzhVHx1o4lKebc",
+                "sizes": [
+                  {
+                    "url": "https://media.licdn.com/dms/image/v2/D4E0BAQF65j53YY6XWA/company-logo_400_400/B4EZqB8jt5GUAY-/0/1763116728049/capgemini_engineering_logo?e=1772668800&v=beta&t=CdCyih3o4CdKpqRn_g_3bTsRAQu1gXzhVHx1o4lKebc",
+                    "width": 400,
+                    "height": 400,
+                    "expiresAt": 1772668800000
+                  },
+                  {
+                    "url": "https://media.licdn.com/dms/image/v2/D4E0BAQF65j53YY6XWA/company-logo_200_200/B4EZqB8jt5GUAI-/0/1763116728049/capgemini_engineering_logo?e=1772668800&v=beta&t=k0SfC7mYQN-wloOY853eewJgOWjahjfG4I0x8p_6FBU",
+                    "width": 200,
+                    "height": 200,
+                    "expiresAt": 1772668800000
+                  },
+                  {
+                    "url": "https://media.licdn.com/dms/image/v2/D4E0BAQF65j53YY6XWA/company-logo_100_100/B4EZqB8jt5GUAQ-/0/1763116728049/capgemini_engineering_logo?e=1772668800&v=beta&t=8FNwPkQCdj6QC7C0Pa2hnjuCa_ZLvGcst16ELm46OT8",
+                    "width": 100,
+                    "height": 100,
+                    "expiresAt": 1772668800000
+                  }
+                ]
+              }
+            },
+            {
+              "position": "Software Engineer",
+              "location": "Cordoba, Córdoba, Argentina",
+              "employmentType": "Full-time",
+              "workplaceType": null,
+              "companyName": "Global Think Technolology SA",
+              "companyLinkedinUrl": "https://www.linkedin.com/company/2222056/",
+              "companyId": "2222056",
+              "duration": "1 yr 3 mos",
+              "description": null,
+              "skills": null,
+              "startDate": {
+                "month": "May",
+                "year": 2020,
+                "text": "May 2020"
+              },
+              "endDate": {
+                "month": "Jul",
+                "year": 2021,
+                "text": "Jul 2021"
+              },
+              "companyLogo": {
+                "url": "https://media.licdn.com/dms/image/v2/C4D0BAQEH1iGN7WOZug/company-logo_400_400/company-logo_400_400/0/1630540834279/global_think_technolology_sa_logo?e=1772668800&v=beta&t=mcNGUD7GbJUEPJe6fTdN586s_Y0bqvewQW9WsIBTq4U",
+                "sizes": [
+                  {
+                    "url": "https://media.licdn.com/dms/image/v2/C4D0BAQEH1iGN7WOZug/company-logo_400_400/company-logo_400_400/0/1630540834279/global_think_technolology_sa_logo?e=1772668800&v=beta&t=mcNGUD7GbJUEPJe6fTdN586s_Y0bqvewQW9WsIBTq4U",
+                    "width": 400,
+                    "height": 400,
+                    "expiresAt": 1772668800000
+                  },
+                  {
+                    "url": "https://media.licdn.com/dms/image/v2/C4D0BAQEH1iGN7WOZug/company-logo_200_200/company-logo_200_200/0/1630540834279/global_think_technolology_sa_logo?e=1772668800&v=beta&t=HQi00R7jOJz_RJm1e_PVh8V5_ks_W0qmKh-A3nu3iNE",
+                    "width": 200,
+                    "height": 200,
+                    "expiresAt": 1772668800000
+                  },
+                  {
+                    "url": "https://media.licdn.com/dms/image/v2/C4D0BAQEH1iGN7WOZug/company-logo_100_100/company-logo_100_100/0/1630540834279/global_think_technolology_sa_logo?e=1772668800&v=beta&t=QQ88sZjr7uCyuZYZRRI6voJbnDJjQszGR6Gv9nHGf_M",
+                    "width": 100,
+                    "height": 100,
+                    "expiresAt": 1772668800000
+                  }
+                ]
+              }
+            },
+            {
+              "position": "Frontend Engineer",
+              "location": "Cordoba, Córdoba, Argentina",
+              "employmentType": "Full-time",
+              "workplaceType": null,
+              "companyName": "Churrasco.cc",
+              "companyLinkedinUrl": "https://www.linkedin.com/company/10643675/",
+              "companyId": "10643675",
+              "duration": "1 yr 2 mos",
+              "description": null,
+              "skills": null,
+              "startDate": {
+                "month": "Apr",
+                "year": 2019,
+                "text": "Apr 2019"
+              },
+              "endDate": {
+                "month": "May",
+                "year": 2020,
+                "text": "May 2020"
+              },
+              "companyLogo": {
+                "url": "https://media.licdn.com/dms/image/v2/C4E0BAQG7f83CGKfdkw/company-logo_400_400/company-logo_400_400/0/1630570692721/churrascocc_logo?e=1772668800&v=beta&t=mEFh1JQVn9NC48JxzQoW6gk0xclVYk_aLuAX6IOS77o",
+                "sizes": [
+                  {
+                    "url": "https://media.licdn.com/dms/image/v2/C4E0BAQG7f83CGKfdkw/company-logo_400_400/company-logo_400_400/0/1630570692721/churrascocc_logo?e=1772668800&v=beta&t=mEFh1JQVn9NC48JxzQoW6gk0xclVYk_aLuAX6IOS77o",
+                    "width": 400,
+                    "height": 400,
+                    "expiresAt": 1772668800000
+                  },
+                  {
+                    "url": "https://media.licdn.com/dms/image/v2/C4E0BAQG7f83CGKfdkw/company-logo_200_200/company-logo_200_200/0/1630570692721/churrascocc_logo?e=1772668800&v=beta&t=HL-p1_K78RPSE7WtLvniUq88u1qI9fQq40iWUBfuxEo",
+                    "width": 200,
+                    "height": 200,
+                    "expiresAt": 1772668800000
+                  },
+                  {
+                    "url": "https://media.licdn.com/dms/image/v2/C4E0BAQG7f83CGKfdkw/company-logo_100_100/company-logo_100_100/0/1630570692721/churrascocc_logo?e=1772668800&v=beta&t=TceibnASSg0JVcZNMHa0T4BQCZ1mXGx7OphULtrFExQ",
+                    "width": 100,
+                    "height": 100,
+                    "expiresAt": 1772668800000
+                  }
+                ]
+              }
+            },
+            {
+              "position": "Frontend Engineer",
+              "location": "Cordoba, Córdoba, Argentina",
+              "employmentType": "Full-time",
+              "workplaceType": null,
+              "companyName": "Grupo Max Desarrollista Inmobiliario",
+              "companyLinkedinUrl": "https://www.linkedin.com/company/15087068/",
+              "companyId": "15087068",
+              "duration": "1 yr",
+              "description": null,
+              "skills": null,
+              "startDate": {
+                "month": "May",
+                "year": 2018,
+                "text": "May 2018"
+              },
+              "endDate": {
+                "month": "Apr",
+                "year": 2019,
+                "text": "Apr 2019"
+              },
+              "companyLogo": {
+                "url": "https://media.licdn.com/dms/image/v2/C4E0BAQGCs9AEIdt2Eg/company-logo_400_400/company-logo_400_400/0/1630601398107/grupo_max___marketing_logo?e=1772668800&v=beta&t=b0tShJl9BGSJjlZz8WRIueuXtUc1lEujgseHyAD2rlI",
+                "sizes": [
+                  {
+                    "url": "https://media.licdn.com/dms/image/v2/C4E0BAQGCs9AEIdt2Eg/company-logo_400_400/company-logo_400_400/0/1630601398107/grupo_max___marketing_logo?e=1772668800&v=beta&t=b0tShJl9BGSJjlZz8WRIueuXtUc1lEujgseHyAD2rlI",
+                    "width": 400,
+                    "height": 400,
+                    "expiresAt": 1772668800000
+                  },
+                  {
+                    "url": "https://media.licdn.com/dms/image/v2/C4E0BAQGCs9AEIdt2Eg/company-logo_200_200/company-logo_200_200/0/1630601398107/grupo_max___marketing_logo?e=1772668800&v=beta&t=V6guBoj4YANSNvkJ4cUCy4j4ikdCJvvosuz5lWpNZOw",
+                    "width": 200,
+                    "height": 200,
+                    "expiresAt": 1772668800000
+                  },
+                  {
+                    "url": "https://media.licdn.com/dms/image/v2/C4E0BAQGCs9AEIdt2Eg/company-logo_100_100/company-logo_100_100/0/1630601398107/grupo_max___marketing_logo?e=1772668800&v=beta&t=4RV2dgCNrXrZsAZapbUac8XEuKxl4gqh76ydfQ7T9n0",
+                    "width": 100,
+                    "height": 100,
+                    "expiresAt": 1772668800000
+                  }
+                ]
+              }
+            }
+          ],
+          "education": [
+            {
+              "schoolName": "Universidad Tecnológica Nacional",
+              "schoolLinkedinUrl": "https://www.linkedin.com/company/573021/",
+              "schoolId": "573021",
+              "degree": "Engineer's degree",
+              "fieldOfStudy": "Electrical and Electronics Engineering",
+              "skills": [],
+              "startDate": {
+                "year": 2013,
+                "text": "2013"
+              },
+              "endDate": {
+                "year": 2019,
+                "text": "2019"
+              },
+              "period": "2013 - 2019",
+              "schoolLogo": {
+                "url": "https://media.licdn.com/dms/image/v2/C4E0BAQGeb4HjTCzsFg/company-logo_400_400/company-logo_400_400/0/1630632917858/universidad_tecnologica_nacional_logo?e=1772668800&v=beta&t=WWkQyCV2z_WPoeumYpNKyV8hWqyO-38Tn05F7xL77TU",
+                "sizes": [
+                  {
+                    "url": "https://media.licdn.com/dms/image/v2/C4E0BAQGeb4HjTCzsFg/company-logo_400_400/company-logo_400_400/0/1630632917858/universidad_tecnologica_nacional_logo?e=1772668800&v=beta&t=WWkQyCV2z_WPoeumYpNKyV8hWqyO-38Tn05F7xL77TU",
+                    "width": 400,
+                    "height": 400,
+                    "expiresAt": 1772668800000
+                  },
+                  {
+                    "url": "https://media.licdn.com/dms/image/v2/C4E0BAQGeb4HjTCzsFg/company-logo_200_200/company-logo_200_200/0/1630632917858/universidad_tecnologica_nacional_logo?e=1772668800&v=beta&t=5bDA-c9MG_eUTHRSYDv97rlfp2_OdkQvDS05R19t8cE",
+                    "width": 200,
+                    "height": 200,
+                    "expiresAt": 1772668800000
+                  },
+                  {
+                    "url": "https://media.licdn.com/dms/image/v2/C4E0BAQGeb4HjTCzsFg/company-logo_100_100/company-logo_100_100/0/1630632917858/universidad_tecnologica_nacional_logo?e=1772668800&v=beta&t=4wLY4JKoeE53kqjwbJkz-FB3ROAiWmOltfHuYwxaoE0",
+                    "width": 100,
+                    "height": 100,
+                    "expiresAt": 1772668800000
+                  }
+                ]
+              }
+            },
+            {
+              "schoolName": "Colegio Cinco Ríos",
+              "schoolLinkedinUrl": "https://www.linkedin.com/search/results/all/?keywords=Colegio+Cinco+R%C3%ADos",
+              "schoolId": null,
+              "degree": "High School Diploma",
+              "fieldOfStudy": "Humanities/Humanistic Studies",
+              "skills": [],
+              "startDate": {
+                "year": 2007,
+                "text": "2007"
+              },
+              "endDate": {
+                "year": 2012,
+                "text": "2012"
+              },
+              "period": "2007 - 2012",
+              "schoolLogo": null
+            }
+          ],
+          "certifications": [],
+          "projects": [],
+          "volunteering": [],
+          "receivedRecommendations": [
+            {
+              "givenBy": "Carolina Bustos Goainochea",
+              "givenByHeadline": "Sr. Software Developer at @IUGO | React | Node.js | AWS",
+              "givenAt": "August 17, 2020, Carolina worked with Alejandro on the same team",
+              "givenByLink": "https://www.linkedin.com/in/carobsts",
+              "description": "Con Alejandro trabajamos juntos en dos proyectos de índoles muy distintas; sin embargo, la didáctica de equipo siempre fue la más óptima. Es una persona muy abierta a las críticas constructivas y sumamente predispuesta a mejorar día a día. Es constante y responsable; responde excelentemente ante la delegación de tareas, donde podemos confiar 100% que las llevará a cabo de la mejor manera. Fue verdaderamente un gusto trabajar a su lado porque además de ser muy buen profesional, tiene una calidez humana que hace muy sencillo el trabajo en equipo. ",
+              "givenByPicture": {
+                "url": "https://media.licdn.com/dms/image/v2/D4D03AQEhDPFMhWx_eg/profile-displayphoto-shrink_800_800/B4DZY7H62qHIAc-/0/1744748659692?e=1772668800&v=beta&t=reDgsktSBSnrAk9g6QQTfDR87lsFAx4JRY7rRhhikFk",
+                "sizes": [
+                  {
+                    "url": "https://media.licdn.com/dms/image/v2/D4D03AQEhDPFMhWx_eg/profile-displayphoto-shrink_800_800/B4DZY7H62qHIAc-/0/1744748659692?e=1772668800&v=beta&t=reDgsktSBSnrAk9g6QQTfDR87lsFAx4JRY7rRhhikFk",
+                    "width": 800,
+                    "height": 800,
+                    "expiresAt": 1772668800000
+                  },
+                  {
+                    "url": "https://media.licdn.com/dms/image/v2/D4D03AQEhDPFMhWx_eg/profile-displayphoto-shrink_400_400/B4DZY7H62qHIAg-/0/1744748659660?e=1772668800&v=beta&t=LaeI5aOPTT09b6ojTTtcvIRvoDN6DfX8VMlyy2LukYE",
+                    "width": 400,
+                    "height": 400,
+                    "expiresAt": 1772668800000
+                  },
+                  {
+                    "url": "https://media.licdn.com/dms/image/v2/D4D03AQEhDPFMhWx_eg/profile-displayphoto-shrink_200_200/B4DZY7H62qHIAY-/0/1744748659692?e=1772668800&v=beta&t=boa9SHq4UCW7Y0ci_v5JVOARhqUq-kmrp2s3G1yItPs",
+                    "width": 200,
+                    "height": 200,
+                    "expiresAt": 1772668800000
+                  },
+                  {
+                    "url": "https://media.licdn.com/dms/image/v2/D4D03AQEhDPFMhWx_eg/profile-displayphoto-shrink_100_100/B4DZY7H62qHIAU-/0/1744748659692?e=1772668800&v=beta&t=2-T2uOBOQWZ6QKRj2LGguHGip3EHTXXUZiFKLa9ziLE",
+                    "width": 100,
+                    "height": 100,
+                    "expiresAt": 1772668800000
+                  }
+                ]
+              }
+            },
+            {
+              "givenBy": "Victoria Barrigon",
+              "givenByHeadline": "UX/UI Designer",
+              "givenAt": "June 11, 2020, Victoria worked with Alejandro on the same team",
+              "givenByLink": "https://www.linkedin.com/in/victoriabarrigon",
+              "description": "Tuve el placer de trabajar con Alejandro en dos proyectos distintos y no podría pedir un mejor compañero de trabajo. Ha tenido un enorme crecimiento dentro de lo profesional y cada día aprende más. Crea opurtinidades a donde la gente sólo ve problemas y ese es un atributo que muy poca gente posee. Tiene una gran capacidad para trabajar en equipo y colaborar en orden para mantener un excelente clima laboral.",
+              "givenByPicture": {
+                "url": "https://media.licdn.com/dms/image/v2/D5603AQGhzMiACgKKgw/profile-displayphoto-shrink_800_800/B56ZO45sXpG4Ac-/0/1733973952508?e=1772668800&v=beta&t=F-9GXmDDoNyyF7gdUgh7WqZSte9ozXG49e9TDeJmWA8",
+                "sizes": [
+                  {
+                    "url": "https://media.licdn.com/dms/image/v2/D5603AQGhzMiACgKKgw/profile-displayphoto-shrink_800_800/B56ZO45sXpG4Ac-/0/1733973952508?e=1772668800&v=beta&t=F-9GXmDDoNyyF7gdUgh7WqZSte9ozXG49e9TDeJmWA8",
+                    "width": 800,
+                    "height": 800,
+                    "expiresAt": 1772668800000
+                  },
+                  {
+                    "url": "https://media.licdn.com/dms/image/v2/D5603AQGhzMiACgKKgw/profile-displayphoto-shrink_400_400/B56ZO45sXpG4Ag-/0/1733973952508?e=1772668800&v=beta&t=GDVSvUPv1EXxZswGPlanwLF6oHJCKqQAptnwt7ItVO0",
+                    "width": 400,
+                    "height": 400,
+                    "expiresAt": 1772668800000
+                  },
+                  {
+                    "url": "https://media.licdn.com/dms/image/v2/D5603AQGhzMiACgKKgw/profile-displayphoto-shrink_200_200/B56ZO45sXpG4AY-/0/1733973952489?e=1772668800&v=beta&t=bxM4otMa7i-jZSMbM4dR8TgwuTsuH6tN-xmzsu0lc3g",
+                    "width": 200,
+                    "height": 200,
+                    "expiresAt": 1772668800000
+                  },
+                  {
+                    "url": "https://media.licdn.com/dms/image/v2/D5603AQGhzMiACgKKgw/profile-displayphoto-shrink_100_100/B56ZO45sXpG4AU-/0/1733973952508?e=1772668800&v=beta&t=8ydEeZWiXjI2cPEb9eSQ4QJ3vfrKU7cRcVgKBKK_wuc",
+                    "width": 100,
+                    "height": 100,
+                    "expiresAt": 1772668800000
+                  }
+                ]
+              }
+            },
+            {
+              "givenBy": "Gustavo Jorge Ríos",
+              "givenByHeadline": "Software Architect, Technical Leader, NodeJS Developer at Intive (formerly Simtlix)",
+              "givenAt": "June 3, 2020, Gustavo Jorge managed Alejandro directly",
+              "givenByLink": "https://www.linkedin.com/in/gustavojorgerios",
+              "description": "Alejandro es una persona sumamente colaboradora y atenta a todas las solicitudes que se le manifiestan, respondiendo con trabajo y resultados a todo lo que se le pide.\nDesde lo personal es una persona muy cálida, correcta, educada, y manifiesta sus buenos modales y educación en cada minuto que pude compartir trabajando a su lado.\nDesde lo técnico e intelectual, el crecimiento que mostró desde el primer momento que pude conversar con él hasta que pudimos completar el proyecto que nos puso en contacto se pudo apreciar su dedicación y preocupación por aprender y desarrollarse profesionalmente.\nEl hecho de que hoy podamos estar orgullosos del producto logrado en gran medida es gracias a tu esfuerzo, paciencia, dedicación y la capacidad técnica que con tiempos acelerados pudiste construirte.\nQuienes coordinamos equipos y desarrollamos necesitamos personas como Alejandro para lograr nuestros objetivos. ",
+              "givenByPicture": {
+                "url": "https://media.licdn.com/dms/image/v2/C4E03AQFZE_g3i_6RCA/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1626297005925?e=1772668800&v=beta&t=vhXJ4I3BtoUWJUrUTsss414uLH8E0v_L4_zDvpzbRMA",
+                "sizes": [
+                  {
+                    "url": "https://media.licdn.com/dms/image/v2/C4E03AQFZE_g3i_6RCA/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1626297005925?e=1772668800&v=beta&t=vhXJ4I3BtoUWJUrUTsss414uLH8E0v_L4_zDvpzbRMA",
+                    "width": 377,
+                    "height": 377,
+                    "expiresAt": 1772668800000
+                  },
+                  {
+                    "url": "https://media.licdn.com/dms/image/v2/C4E03AQFZE_g3i_6RCA/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1626297005925?e=1772668800&v=beta&t=bUx7BN7f1cNwIu9-aqARBX5MqsMcSpY8GI7E0vsbBqs",
+                    "width": 377,
+                    "height": 377,
+                    "expiresAt": 1772668800000
+                  },
+                  {
+                    "url": "https://media.licdn.com/dms/image/v2/C4E03AQFZE_g3i_6RCA/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1626297005925?e=1772668800&v=beta&t=9tLcgXBfNgQlHov_L5EzhdsFqZgT7gyLTFnjvJHT5MQ",
+                    "width": 200,
+                    "height": 200,
+                    "expiresAt": 1772668800000
+                  },
+                  {
+                    "url": "https://media.licdn.com/dms/image/v2/C4E03AQFZE_g3i_6RCA/profile-displayphoto-shrink_100_100/profile-displayphoto-shrink_100_100/0/1626297005925?e=1772668800&v=beta&t=z0aFFK24OZlxPUdIbbSnlPrMHvUaDt4ywEeTvrDoCdE",
+                    "width": 100,
+                    "height": 100,
+                    "expiresAt": 1772668800000
+                  }
+                ]
+              }
+            }
+          ],
+          "skills": [
+            {
+              "name": "Storybooks"
+            },
+            {
+              "name": "TypeScript",
+              "endorsements": "2 endorsements"
+            },
+            {
+              "name": "Express.js",
+              "endorsements": "2 endorsements"
+            },
+            {
+              "name": "Kubernetes"
+            },
+            {
+              "name": "JavaScript",
+              "positions": [
+                "Endorsed by 3 colleagues at Churrasco Digital"
+              ],
+              "endorsements": "5 endorsements"
+            },
+            {
+              "name": "React.js",
+              "positions": [
+                "Endorsed by 3 colleagues at Churrasco Digital"
+              ],
+              "endorsements": "4 endorsements"
+            },
+            {
+              "name": "Node.js",
+              "positions": [
+                "Endorsed by 3 colleagues at Churrasco Digital"
+              ],
+              "endorsements": "4 endorsements"
+            },
+            {
+              "name": "HTML5",
+              "endorsements": "4 endorsements"
+            },
+            {
+              "name": "CSS3",
+              "endorsements": "4 endorsements"
+            },
+            {
+              "name": "Lenguaje SASS",
+              "endorsements": "3 endorsements"
+            },
+            {
+              "name": "Lenguaje de hojas de estilo LESS",
+              "endorsements": "3 endorsements"
+            },
+            {
+              "name": "AngularJS",
+              "endorsements": "2 endorsements"
+            },
+            {
+              "name": "Redux",
+              "endorsements": "1 endorsement"
+            },
+            {
+              "name": "Next.js"
+            },
+            {
+              "name": "PHP",
+              "endorsements": "1 endorsement"
+            },
+            {
+              "name": "GraphQL",
+              "endorsements": "2 endorsements"
+            },
+            {
+              "name": "Apollo"
+            },
+            {
+              "name": "Docker"
+            },
+            {
+              "name": "C",
+              "endorsements": "2 endorsements"
+            },
+            {
+              "name": "C++",
+              "endorsements": "2 endorsements"
+            },
+            {
+              "name": "Python",
+              "endorsements": "2 endorsements"
+            },
+            {
+              "name": "React Native",
+              "endorsements": "1 endorsement"
+            },
+            {
+              "name": "MongoDB",
+              "endorsements": "2 endorsements"
+            },
+            {
+              "name": "Mongoose ODM"
+            },
+            {
+              "name": "MySQL",
+              "endorsements": "2 endorsements"
+            },
+            {
+              "name": "PostgreSQL"
+            },
+            {
+              "name": "Prisma ORM"
+            },
+            {
+              "name": "Jest"
+            },
+            {
+              "name": "React Testing Library"
+            },
+            {
+              "name": "Amazon Web Services (AWS)"
+            },
+            {
+              "name": "Microsoft Azure"
+            }
+          ],
+          "publications": [],
+          "courses": [],
+          "patents": [],
+          "honorsAndAwards": [
+            {
+              "title": "Ganador Programa Becas Académicas",
+              "issuedBy": "Gobierno de la Provincia de Córdoba",
+              "issuedAt": "May 2013",
+              "description": "Programa de Becas académicas provisto por el Gobierno de la Provincia de Córdoba con el fin de impulsar el estudio de diversas Carreras Universitarias. ",
+              "associatedWith": "Associated with Universidad Tecnológica Nacional",
+              "associatedWithLink": "https://www.linkedin.com/company/573021/"
+            }
+          ],
+          "languages": [
+            {
+              "name": "Español",
+              "proficiency": "Native or bilingual proficiency"
+            },
+            {
+              "name": "Inglés",
+              "proficiency": "Professional working proficiency"
+            }
+          ],
+          "causes": [],
+          "featured": null,
+          "composeOptionType": "UPSELL",
+          "moreProfiles": [
+            {
+              "id": "ACoAAAZMKSQB4Ws-9dP4EHcNDywdJVht0eIRXjk",
+              "firstName": "Brijesh",
+              "lastName": "Gajjar",
+              "publicIdentifier": "brijesh-gajjar-8304722b",
+              "linkedinUrl": "https://www.linkedin.com/in/brijesh-gajjar-8304722b"
+            },
+            {
+              "id": "ACoAABoBwYwBGh1oKpXSGKHCdkowGlDYdBxv3NY",
+              "firstName": "Puneet",
+              "lastName": "Jain",
+              "publicIdentifier": "techiepuneet",
+              "linkedinUrl": "https://www.linkedin.com/in/techiepuneet"
+            },
+            {
+              "id": "ACoAABDC3TMBy5WtrRhJ2ZQiMYudU6ZuFNc_NV8",
+              "firstName": "Ignacio",
+              "lastName": "Tosello",
+              "publicIdentifier": "ignacio-tosello-bab2127a",
+              "linkedinUrl": "https://www.linkedin.com/in/ignacio-tosello-bab2127a"
+            },
+            {
+              "id": "ACoAAAy035sBrBchYK1mxtFEpxWyqgTA-BFagXo",
+              "firstName": "Valentin",
+              "lastName": "Robles Menichelli",
+              "publicIdentifier": "valentin-robles-menichelli",
+              "linkedinUrl": "https://www.linkedin.com/in/valentin-robles-menichelli"
+            },
+            {
+              "id": "ACoAABysCbkBPXmLgT2S292aABaSDVC4c2IZoE4",
+              "firstName": "Sagar",
+              "lastName": "Bajpai",
+              "publicIdentifier": "sagarbajpai",
+              "linkedinUrl": "https://www.linkedin.com/in/sagarbajpai"
+            },
+            {
+              "id": "ACoAABpwEU8BQA9mAp1XGKTW8iZUPbV_8cmPJcM",
+              "firstName": "Dorina",
+              "lastName": "Filova",
+              "publicIdentifier": "dorina-filova-293665104",
+              "linkedinUrl": "https://www.linkedin.com/in/dorina-filova-293665104"
+            },
+            {
+              "id": "ACoAABcvQf0Bj4be6Y-NZpju-HEW4ZEplPZornk",
+              "firstName": "Fabian",
+              "lastName": "Bastidas Guerra",
+              "publicIdentifier": "fabianbg",
+              "linkedinUrl": "https://www.linkedin.com/in/fabianbg"
+            },
+            {
+              "id": "ACoAAAzGWMIB-MwkYcOVKQu3-FzTg4q5BWNuNyA",
+              "firstName": "Sharif",
+              "lastName": "Baduan",
+              "publicIdentifier": "sharif-baduan",
+              "linkedinUrl": "https://www.linkedin.com/in/sharif-baduan"
+            },
+            {
+              "id": "ACoAABRiJjwBnemTC2F7UYnzGvVvopQnokTjo-U",
+              "firstName": "Priyanka",
+              "lastName": "Tiwary",
+              "publicIdentifier": "priyanka-tiwary-19063b96",
+              "linkedinUrl": "https://www.linkedin.com/in/priyanka-tiwary-19063b96"
+            },
+            {
+              "id": "ACoAACGw8OoBg67jjIgUzHRgDm8dZHHGZdl525I",
+              "firstName": "Martiniano",
+              "lastName": "Baridón",
+              "publicIdentifier": "mbaridonbalice",
+              "linkedinUrl": "https://www.linkedin.com/in/mbaridonbalice"
+            },
+            {
+              "id": "ACoAADAh9D0B-kWxLjensNp9c6JcaVUJTsZJn9E",
+              "firstName": "Keshav",
+              "lastName": "Gupta",
+              "publicIdentifier": "keshav27",
+              "linkedinUrl": "https://www.linkedin.com/in/keshav27"
+            },
+            {
+              "id": "ACoAADhQUj8BZAEeYbNYBm_CzvYjqHEOBPiAEC4",
+              "firstName": "Diego Alejandro ",
+              "lastName": "Julcamoro Sierralta",
+              "publicIdentifier": "diego-alejandro-julcamoro-sierralta-3bb4a8224",
+              "linkedinUrl": "https://www.linkedin.com/in/diego-alejandro-julcamoro-sierralta-3bb4a8224"
+            },
+            {
+              "id": "ACoAADb6qr4BvCEChJtREkJTNa0_yST17C9epCw",
+              "firstName": "Mariano",
+              "lastName": "Tymcziszyn",
+              "publicIdentifier": "mariano-tymcziszyn-93aaaa218",
+              "linkedinUrl": "https://www.linkedin.com/in/mariano-tymcziszyn-93aaaa218"
+            },
+            {
+              "id": "ACoAADRgyG4Bt8meDcYbEex9dEfHU0de3itKIxU",
+              "firstName": "Enrique Gaspar",
+              "lastName": "Caeiro",
+              "publicIdentifier": "enrique-gaspar-caeiro-612364206",
+              "linkedinUrl": "https://www.linkedin.com/in/enrique-gaspar-caeiro-612364206"
+            },
+            {
+              "id": "ACoAADv-4FwBfOBA--5gdhp2eJbv8q8XeBeRCbk",
+              "firstName": "Maximus",
+              "lastName": "Rivera Rios",
+              "publicIdentifier": "maximus-rivera-rios-738117241",
+              "linkedinUrl": "https://www.linkedin.com/in/maximus-rivera-rios-738117241"
+            },
+            {
+              "id": "ACoAAAZcFccB0IwSdQQLj336oij9EgX5Ail6SaY",
+              "firstName": "Gergely",
+              "lastName": "Vizvari",
+              "publicIdentifier": "gergelyvizvari",
+              "linkedinUrl": "https://www.linkedin.com/in/gergelyvizvari"
+            },
+            {
+              "id": "ACoAAAGowisBPnyx05siMentLrCb5u-NTUSNNMs",
+              "firstName": "Dario",
+              "lastName": "Mancuso",
+              "publicIdentifier": "dariomancuso",
+              "linkedinUrl": "https://www.linkedin.com/in/dariomancuso"
+            },
+            {
+              "id": "ACoAAAsQwFwBVUTHDYA7C7U5GbkZrfTqjEz0CV0",
+              "firstName": "Carolina",
+              "lastName": "Rivera",
+              "publicIdentifier": "carolina-rivera-87820a52",
+              "linkedinUrl": "https://www.linkedin.com/in/carolina-rivera-87820a52"
+            },
+            {
+              "id": "ACoAACdv9swBWdF8MUzp6Iyv-flsrk04hesp-Vs",
+              "firstName": "karan",
+              "lastName": "loona ~ FullStack (SDE)",
+              "publicIdentifier": "karan-loona",
+              "linkedinUrl": "https://www.linkedin.com/in/karan-loona"
+            },
+            {
+              "id": "ACoAAB8-tQsB4nVZgl45ntUc4cNRMEjfOAcXilw",
+              "firstName": "Gabriel",
+              "lastName": "Mochi",
+              "publicIdentifier": "gabriel-mochi",
+              "linkedinUrl": "https://www.linkedin.com/in/gabriel-mochi"
+            },
+            {
+              "id": "ACoAAGIi0tYBQ08AMoqi9DbPR-Dzq9IukMO_H6Q",
+              "firstName": "Lucas",
+              "lastName": "Parets",
+              "position": "Backend Developer | Data Science | Information Systems Engineering Student",
+              "publicIdentifier": "lucas-parets-41a48639b",
+              "linkedinUrl": "https://www.linkedin.com/in/lucas-parets-41a48639b"
+            },
+            {
+              "id": "ACoAAFtrLNkBQlfvftCgLuzONfu_v9XzRSMwWIA",
+              "firstName": "Rocio",
+              "lastName": "Molina",
+              "position": "Analista de Operaciones & Planificación Comercial | KPIs & Performance | Sales/Business Operations | Excel | Sector Financiero",
+              "publicIdentifier": "romolina-",
+              "linkedinUrl": "https://www.linkedin.com/in/romolina-"
+            },
+            {
+              "id": "ACoAAFxXNbUBVy77uCcADwbozPIABblqZRk4WEo",
+              "firstName": "Candela",
+              "lastName": "Marcos",
+              "position": "Community Manager | Social Media | Estudiante de Marketing Digital & E-commerce | Buscando primeras experiencias laborales",
+              "publicIdentifier": "candela-marcos-b059b6372",
+              "linkedinUrl": "https://www.linkedin.com/in/candela-marcos-b059b6372"
+            },
+            {
+              "id": "ACoAAGODqTwBYjWVWbQ4UY8eni9crXNVFcTNsyQ",
+              "firstName": "Denis",
+              "lastName": "Sanhueza",
+              "position": "Administrador de Finanzas",
+              "publicIdentifier": "denis-sanhueza-0501783a7",
+              "linkedinUrl": "https://www.linkedin.com/in/denis-sanhueza-0501783a7"
+            },
+            {
+              "id": "ACoAAFvVjc8B-qdsZf5VU2921v0BJQ34rboc0vo",
+              "firstName": "Brahian",
+              "lastName": "Castilla",
+              "position": "Estudiante de ingenieria en sistemas de información en la Universidad Tecnológica Nacional",
+              "publicIdentifier": "brahian-castilla-727b9936b",
+              "linkedinUrl": "https://www.linkedin.com/in/brahian-castilla-727b9936b"
+            },
+            {
+              "id": "ACoAAF3aR3YBbxXbAYWg_Uv79DVRPr-ac0arZdU",
+              "firstName": "Esteban",
+              "lastName": "Ogadri",
+              "position": "QA Automation Engineer | E2E Testing con Cypress | Enfoque en riesgo y flujos críticos de negocio",
+              "publicIdentifier": "ogadri-esteban",
+              "linkedinUrl": "https://www.linkedin.com/in/ogadri-esteban"
+            },
+            {
+              "id": "ACoAAGOyVw8BeHzR_FTnoG-eTexiARtaczmlAIo",
+              "firstName": "Daiana Noemí ",
+              "lastName": "González",
+              "position": "Atención al Cliente y Ventas | Manejo de Caja | Retail y Servicios",
+              "publicIdentifier": "daianagonzalez1",
+              "linkedinUrl": "https://www.linkedin.com/in/daianagonzalez1"
+            },
+            {
+              "id": "ACoAAGKUtuUBdVlbW4M9MCqeTkFfNGC2HpAM9ao",
+              "firstName": "Tadeo",
+              "lastName": "Vazquez Cañoto",
+              "position": "Estudiante de Ingeniería en Sistemas (UTN-FRBA) | Ayudante de Cátedra | Buscando experiencia profesional en backend",
+              "publicIdentifier": "tadeo-vazquez-cañoto-919a853a1",
+              "linkedinUrl": "https://www.linkedin.com/in/tadeo-vazquez-cañoto-919a853a1"
+            },
+            {
+              "id": "ACoAAGI59qUBNTtWRcZGruzT2nYXT6u00JUCQc8",
+              "firstName": "Tomás",
+              "lastName": "Rodríguez Spuch",
+              "position": "Information Systems Engineering Student | UTN FRBA",
+              "publicIdentifier": "tomás-rodríguez-spuch",
+              "linkedinUrl": "https://www.linkedin.com/in/tomás-rodríguez-spuch"
+            },
+            {
+              "id": "ACoAAFx9OK0BkmO5PyJhnz9GQqXM17eD1XJjH44",
+              "firstName": "Sergio Martin",
+              "lastName": "Garcia",
+              "position": "Desarrollador de software | C# .NET, Javascript, Python | SQL Server, MySQL, MongoDB | React, React Native, BootStrap, Sass",
+              "publicIdentifier": "sergio-martingarcia",
+              "linkedinUrl": "https://www.linkedin.com/in/sergio-martingarcia"
+            }
+          ],
+          "openProfile": false,
+          "_meta": {
+            "pagination": {
+              "totalElements": 657,
+              "totalPages": 27,
+              "pageNumber": 1,
+              "previousElements": 0,
+              "pageSize": 25
+            }
+          }
+        }
+      },
+      {
+        "json": {
+          "id": "ACoAAB1D03QBbnPNRwYnZqOEBSTckkOYtSMJavY",
+          "publicIdentifier": "henryangulo",
+          "linkedinUrl": "https://www.linkedin.com/in/henryangulo",
+          "firstName": "Rahat",
+          "lastName": "Angulo",
+          "emails": [
+            {
+              "email": "sayyedrahat721@gmail.com",
+              "deliverable": true,
+              "catchAllDomain": false,
+              "validEmailServer": true,
+              "free": false,
+              "status": "valid",
+              "qualityScore": 90
+            },
+            {
+              "email": "saadzmaruf@gmail.com",
+              "deliverable": true,
+              "catchAllDomain": false,
+              "validEmailServer": true,
+              "free": false,
+              "status": "valid",
+              "qualityScore": 90
+            },
+            {
+              "email": "rahatsay721@gmail.com",
+              "deliverable": true,
+              "catchAllDomain": false,
+              "validEmailServer": true,
+              "free": false,
+              "status": "valid",
+              "qualityScore": 90
+            }
+          ],
+          "companyWebsites": [
+            {
+              "url": "https://www.deel.com/",
+              "domain": "deel.com",
+              "validEmailServer": true
+            }
+          ],
+          "headline": "Senior Software Engineer | Javascript / Typescript Expert | NodeJS | AWS | React",
+          "openToWork": false,
+          "hiring": false,
+          "premium": false,
+          "influencer": false,
+          "memorialized": false,
+          "location": {
+            "linkedinText": "Santiago, Santiago Metropolitan Region, Chile",
+            "countryCode": "CL",
+            "parsed": {
+              "text": "Santiago, Chile",
+              "countryCode": "CL",
+              "regionCode": null,
+              "country": "Chile",
+              "countryFull": "Chile",
+              "state": "Región Metropolitana de Santiago",
+              "city": "Santiago"
+            }
+          },
+          "objectUrn": "490984308",
+          "registeredAt": "2016-03-21T21:51:41.834Z",
+          "topSkills": "JavaScript • Node.js • React.js • Amazon Web Services (AWS) • Docker",
+          "connectionsCount": 855,
+          "followerCount": 853,
+          "verified": true,
+          "about": "Ingeniero de Software Senior con 8 años de experiencia en desarrollo full-stack, participando en backend, frontend e infrastructura. Especializado en ecosistemas JavaScript/TypeScript sobre AWS, y familiar con otros lenguajes como Python, Rust y Go. Historial probado en liderazgo de equipos técnicos, implementación de tecnologías de vanguardia y toma de decisiones arquitectónicas alineadas con los objetivos de negocio.",
+          "currentPosition": [
+            {
+              "companyId": "18922914",
+              "companyLinkedinUrl": "https://www.linkedin.com/company/18922914/",
+              "companyName": "Deel",
+              "dateRange": {
+                "start": {
+                  "month": 8,
+                  "year": 2024,
+                  "day": null
+                },
+                "end": null
+              }
+            }
+          ],
+          "profileTopEducation": [
+            {
+              "schoolId": "19765",
+              "companyId": "15102759",
+              "schoolLinkedinUrl": "https://www.linkedin.com/company/15102759/",
+              "schoolName": "Universidad José Antonio Páez"
+            }
+          ],
+          "profileActions": [],
+          "profilePicture": {
+            "url": "https://media.licdn.com/dms/image/v2/D4E03AQG-sX09Hd8SxA/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1687899586470?e=1772668800&v=beta&t=Va1H3HbRWWtH0TJdfa1vN4w1gAhPIWVH6renRBGoa9M",
+            "sizes": [
+              {
+                "url": "https://media.licdn.com/dms/image/v2/D4E03AQG-sX09Hd8SxA/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1687899586470?e=1772668800&v=beta&t=Va1H3HbRWWtH0TJdfa1vN4w1gAhPIWVH6renRBGoa9M",
+                "width": 567,
+                "height": 567,
+                "expiresAt": 1772668800000
+              },
+              {
+                "url": "https://media.licdn.com/dms/image/v2/D4E03AQG-sX09Hd8SxA/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1687899586470?e=1772668800&v=beta&t=HnyRcoV_810pECK4-LocZ5-MQ8cF_LMFgaydo13oD0M",
+                "width": 400,
+                "height": 400,
+                "expiresAt": 1772668800000
+              },
+              {
+                "url": "https://media.licdn.com/dms/image/v2/D4E03AQG-sX09Hd8SxA/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1687899586470?e=1772668800&v=beta&t=leSfkJIFWSqGT35Gj9ZtMx56uFHy9jwM9r8mbu19LhU",
+                "width": 200,
+                "height": 200,
+                "expiresAt": 1772668800000
+              },
+              {
+                "url": "https://media.licdn.com/dms/image/v2/D4E03AQG-sX09Hd8SxA/profile-displayphoto-shrink_100_100/profile-displayphoto-shrink_100_100/0/1687899586470?e=1772668800&v=beta&t=1ZiDKSBWuSehIWBDDx6fNfWw-n9ExRoWNHXLNAolk5Q",
+                "width": 100,
+                "height": 100,
+                "expiresAt": 1772668800000
+              }
+            ]
+          },
+          "coverPicture": null,
+          "photo": "https://media.licdn.com/dms/image/v2/D4E03AQG-sX09Hd8SxA/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1687899586470?e=1772668800&v=beta&t=Va1H3HbRWWtH0TJdfa1vN4w1gAhPIWVH6renRBGoa9M",
+          "profileLocales": [
+            {
+              "country": "ES",
+              "language": "es"
+            }
+          ],
+          "primaryLocale": {
+            "country": "ES",
+            "language": "es"
+          },
+          "services": null,
+          "experience": [
+            {
+              "position": "Senior Backend Engineer",
+              "location": "Gran Santiago, Región Metropolitana de Santiago, Chile",
+              "employmentType": "Full-time",
+              "workplaceType": "Remote",
+              "companyName": "Deel",
+              "companyLinkedinUrl": "https://www.linkedin.com/company/deel/",
+              "companyId": "18922914",
+              "companyUniversalName": "deel",
+              "duration": "1 yr 7 mos",
+              "description": null,
+              "skills": [
+                "Node.js",
+                "Amazon Web Services (AWS)",
+                "JavaScript",
+                "TypeScript",
+                "backend"
+              ],
+              "startDate": {
+                "month": "Aug",
+                "year": 2024,
+                "text": "Aug 2024"
+              },
+              "endDate": {
+                "text": "Present"
+              },
+              "companyLogo": {
+                "url": "https://media.licdn.com/dms/image/v2/D560BAQEFXl5JlEEmUg/company-logo_400_400/B56ZikukJoHMAc-/0/1755110327795/deel_logo?e=1772668800&v=beta&t=-z5gnhFBmsgVSpV591xCpzcrS2XD6ASHudehmj3Ry0I",
+                "sizes": [
+                  {
+                    "url": "https://media.licdn.com/dms/image/v2/D560BAQEFXl5JlEEmUg/company-logo_400_400/B56ZikukJoHMAc-/0/1755110327795/deel_logo?e=1772668800&v=beta&t=-z5gnhFBmsgVSpV591xCpzcrS2XD6ASHudehmj3Ry0I",
+                    "width": 400,
+                    "height": 400,
+                    "expiresAt": 1772668800000
+                  },
+                  {
+                    "url": "https://media.licdn.com/dms/image/v2/D560BAQEFXl5JlEEmUg/company-logo_200_200/B56ZikukJoHMAM-/0/1755110327795/deel_logo?e=1772668800&v=beta&t=Fk3q2e6Kzs-N237594MMMZk1eE1aAjVbVnatPJ4Ok7o",
+                    "width": 200,
+                    "height": 200,
+                    "expiresAt": 1772668800000
+                  },
+                  {
+                    "url": "https://media.licdn.com/dms/image/v2/D560BAQEFXl5JlEEmUg/company-logo_100_100/B56ZikukJoHMAU-/0/1755110327795/deel_logo?e=1772668800&v=beta&t=FD3LZbBIYg0MPt5cfe5p0a5aIxl_FRdcsMMQM3dBTE4",
+                    "width": 100,
+                    "height": 100,
+                    "expiresAt": 1772668800000
+                  }
+                ]
+              }
+            },
+            {
+              "position": "Staff Software Developer",
+              "location": "Área metropolitana de Santiago",
+              "employmentType": "Full-time",
+              "workplaceType": "Hybrid",
+              "companyName": "Keirón",
+              "companyLinkedinUrl": "https://www.linkedin.com/company/51704934/",
+              "companyId": "51704934",
+              "duration": "2 yrs 7 mos",
+              "description": "Como Staff Engineer, he liderado la dirección técnica de la empresa, innovando el stack tecnológico, migrando proyectos a nuevos estándares y formando un equipo de aceleración para el desarrollo de proyectos de alto impacto. Además, he trabajado en colaboración con múltiples equipos para mejorar la calidad de los desarrollos.\n\nHitos más relevantes:\n\n- Dirigí la implementación de nuevas tecnologías, incluyendo Typescript, NestJs, Next.js y MikroOrm, como parte de la renovación del stack de desarrollo.\n- Mejoré la documentación de desarrollos implementando Swagger y otras herramientas.\n- Colaboré en la migración de la infraestructura a IaC (Infrastructure as Code) utilizando Docker y Kubernetes, lo que aumentó la eficiencia y escalabilidad de nuestros sistemas.\n- Optimicé los procesos de revisión y despliegue de proyectos, lo que resultó en una reducción del tiempo de entrega y en la mejora de la calidad del software.\n- Implementé ciclos de charlas educativas para promover el intercambio de conocimientos, fortaleciendo la cultura de aprendizaje y desarrollo profesional en el equipo.",
+              "skills": [
+                "JavaScript",
+                "Amazon Web Services (AWS)",
+                "NestJS",
+                "React.js",
+                "Node.js",
+                "Docker",
+                "TypeScript"
+              ],
+              "experienceGroupId": "266ee58f1da1b8db62494bd17082093389a33f2e",
+              "startDate": {
+                "month": "Jan",
+                "year": 2022,
+                "text": "Jan 2022"
+              },
+              "endDate": {
+                "month": "Jul",
+                "year": 2024,
+                "text": "Jul 2024"
+              },
+              "companyLogo": {
+                "url": "https://media.licdn.com/dms/image/v2/C4D0BAQEnoMN8CgByoA/company-logo_400_400/company-logo_400_400/0/1636119564793/keironcl_logo?e=1772668800&v=beta&t=AYUaaw8bh_3Tr-rmfFtIIT1GfLFcKtyOxKC077B9xrE",
+                "sizes": [
+                  {
+                    "url": "https://media.licdn.com/dms/image/v2/C4D0BAQEnoMN8CgByoA/company-logo_400_400/company-logo_400_400/0/1636119564793/keironcl_logo?e=1772668800&v=beta&t=AYUaaw8bh_3Tr-rmfFtIIT1GfLFcKtyOxKC077B9xrE",
+                    "width": 400,
+                    "height": 400,
+                    "expiresAt": 1772668800000
+                  },
+                  {
+                    "url": "https://media.licdn.com/dms/image/v2/C4D0BAQEnoMN8CgByoA/company-logo_200_200/company-logo_200_200/0/1636119564793/keironcl_logo?e=1772668800&v=beta&t=1JZMAjEOArpIrFAwK9YD2rrm_dNjbXSwGfpEiRRw-OQ",
+                    "width": 200,
+                    "height": 200,
+                    "expiresAt": 1772668800000
+                  },
+                  {
+                    "url": "https://media.licdn.com/dms/image/v2/C4D0BAQEnoMN8CgByoA/company-logo_100_100/company-logo_100_100/0/1636119564793/keironcl_logo?e=1772668800&v=beta&t=5BiS36thjkl9J6byMoy9fzUmy5CKPmmvKL5bniEo_pw",
+                    "width": 100,
+                    "height": 100,
+                    "expiresAt": 1772668800000
+                  }
+                ]
+              }
+            },
+            {
+              "position": "Software Engineering Lead",
+              "location": "Santiago, Región Metropolitana de Santiago, Chile",
+              "employmentType": "Full-time",
+              "workplaceType": null,
+              "companyName": "Keirón",
+              "companyLinkedinUrl": "https://www.linkedin.com/company/51704934/",
+              "companyId": "51704934",
+              "duration": "2 yrs 7 mos",
+              "description": "Como líder, me he orientado a implementar buenos hábitos y practicas de desarrollo, tales como automatización de tareas, code reviews, pair programming, integración continua, contenerización, capacitación continua del equipo, testing,entre otros, ademas de participar activamente en el desarrollo de las soluciones en pos de garantizar desarrollos agiles y de calidad.\n\nNuestro stack de preferencia  incluye:\n-React\n-React Native\n-NodeJS\n-ExpressJS\n-MySQL\n-MongoDB\n-Firebase (firestore, fcm, entre otros)\n-Amazon web services\n-Sequelize",
+              "skills": [
+                "JavaScript",
+                "Amazon Web Services (AWS)",
+                "NestJS",
+                "React.js",
+                "Node.js",
+                "Docker",
+                "TypeScript"
+              ],
+              "experienceGroupId": "266ee58f1da1b8db62494bd17082093389a33f2e",
+              "startDate": {
+                "month": "Jul",
+                "year": 2019,
+                "text": "Jul 2019"
+              },
+              "endDate": {
+                "month": "Jan",
+                "year": 2022,
+                "text": "Jan 2022"
+              },
+              "companyLogo": {
+                "url": "https://media.licdn.com/dms/image/v2/C4D0BAQEnoMN8CgByoA/company-logo_400_400/company-logo_400_400/0/1636119564793/keironcl_logo?e=1772668800&v=beta&t=AYUaaw8bh_3Tr-rmfFtIIT1GfLFcKtyOxKC077B9xrE",
+                "sizes": [
+                  {
+                    "url": "https://media.licdn.com/dms/image/v2/C4D0BAQEnoMN8CgByoA/company-logo_400_400/company-logo_400_400/0/1636119564793/keironcl_logo?e=1772668800&v=beta&t=AYUaaw8bh_3Tr-rmfFtIIT1GfLFcKtyOxKC077B9xrE",
+                    "width": 400,
+                    "height": 400,
+                    "expiresAt": 1772668800000
+                  },
+                  {
+                    "url": "https://media.licdn.com/dms/image/v2/C4D0BAQEnoMN8CgByoA/company-logo_200_200/company-logo_200_200/0/1636119564793/keironcl_logo?e=1772668800&v=beta&t=1JZMAjEOArpIrFAwK9YD2rrm_dNjbXSwGfpEiRRw-OQ",
+                    "width": 200,
+                    "height": 200,
+                    "expiresAt": 1772668800000
+                  },
+                  {
+                    "url": "https://media.licdn.com/dms/image/v2/C4D0BAQEnoMN8CgByoA/company-logo_100_100/company-logo_100_100/0/1636119564793/keironcl_logo?e=1772668800&v=beta&t=5BiS36thjkl9J6byMoy9fzUmy5CKPmmvKL5bniEo_pw",
+                    "width": 100,
+                    "height": 100,
+                    "expiresAt": 1772668800000
+                  }
+                ]
+              }
+            },
+            {
+              "position": "Full Stack Developer",
+              "location": "Provincia de Santiago, Chile",
+              "employmentType": "Full-time",
+              "workplaceType": null,
+              "companyName": "Keirón",
+              "companyLinkedinUrl": "https://www.linkedin.com/company/51704934/",
+              "companyId": "51704934",
+              "duration": "2 yrs",
+              "description": "Nuestro stack de preferencia  incluye:\n-React\n-React Native\n-NodeJS\n-ExpressJS\n-MySQL\n-MongoDB\n-Firebase (firestore, fcm, entre otros)\n-Amazon web services\n-Sequelize\n\nComo líder, me he orientado a implementar buenos hábitos y practicas de desarrollo, como automatización de tareas, code reviews, pair programming, capacitación continua del equipo, testing,entre otros, en pos de garantizar desarrollos agiles y de calidad.",
+              "skills": [
+                "JavaScript",
+                "Amazon Web Services (AWS)",
+                "React.js",
+                "Node.js",
+                "Docker",
+                "TypeScript"
+              ],
+              "experienceGroupId": "266ee58f1da1b8db62494bd17082093389a33f2e",
+              "startDate": {
+                "month": "Aug",
+                "year": 2017,
+                "text": "Aug 2017"
+              },
+              "endDate": {
+                "month": "Jul",
+                "year": 2019,
+                "text": "Jul 2019"
+              },
+              "companyLogo": {
+                "url": "https://media.licdn.com/dms/image/v2/C4D0BAQEnoMN8CgByoA/company-logo_400_400/company-logo_400_400/0/1636119564793/keironcl_logo?e=1772668800&v=beta&t=AYUaaw8bh_3Tr-rmfFtIIT1GfLFcKtyOxKC077B9xrE",
+                "sizes": [
+                  {
+                    "url": "https://media.licdn.com/dms/image/v2/C4D0BAQEnoMN8CgByoA/company-logo_400_400/company-logo_400_400/0/1636119564793/keironcl_logo?e=1772668800&v=beta&t=AYUaaw8bh_3Tr-rmfFtIIT1GfLFcKtyOxKC077B9xrE",
+                    "width": 400,
+                    "height": 400,
+                    "expiresAt": 1772668800000
+                  },
+                  {
+                    "url": "https://media.licdn.com/dms/image/v2/C4D0BAQEnoMN8CgByoA/company-logo_200_200/company-logo_200_200/0/1636119564793/keironcl_logo?e=1772668800&v=beta&t=1JZMAjEOArpIrFAwK9YD2rrm_dNjbXSwGfpEiRRw-OQ",
+                    "width": 200,
+                    "height": 200,
+                    "expiresAt": 1772668800000
+                  },
+                  {
+                    "url": "https://media.licdn.com/dms/image/v2/C4D0BAQEnoMN8CgByoA/company-logo_100_100/company-logo_100_100/0/1636119564793/keironcl_logo?e=1772668800&v=beta&t=5BiS36thjkl9J6byMoy9fzUmy5CKPmmvKL5bniEo_pw",
+                    "width": 100,
+                    "height": 100,
+                    "expiresAt": 1772668800000
+                  }
+                ]
+              }
+            },
+            {
+              "position": "Desarrollador web freelance.",
+              "location": null,
+              "employmentType": null,
+              "workplaceType": null,
+              "companyName": "Independiente.",
+              "companyLinkedinUrl": "https://www.linkedin.com/search/results/all/?keywords=Independiente%2E",
+              "duration": "1 yr 1 mo",
+              "description": "Desarrollador front-end para diversas agencias internacionales, trabajando junto con sus equipos de diseño para entregar soluciones web a sus clientes (ver portafolio) .Las mencionadas agencias son:\nCru1z (Perú)  - www.cru1z.com\nDstoryMachine (EEUU) - http://dstorymachine.com/\nFusioNET(España) -https://www.fusionet.es/\n\nPortafolio: https://henryangulo.github.io/",
+              "skills": null,
+              "startDate": {
+                "month": "Aug",
+                "year": 2016,
+                "text": "Aug 2016"
+              },
+              "endDate": {
+                "month": "Aug",
+                "year": 2017,
+                "text": "Aug 2017"
+              }
+            },
+            {
+              "position": "Analista de ambiente y permisiones.",
+              "location": "Valencia, Carabobo, Venezuela.",
+              "employmentType": null,
+              "workplaceType": null,
+              "companyName": "Alimentos Super-S",
+              "companyLinkedinUrl": "https://www.linkedin.com/search/results/all/?keywords=Alimentos+Super-S",
+              "duration": "6 mos",
+              "description": "-Supervisión de que la planta cumpla con las normativas legales y ambientales vigentes\n-Coordinación con el personal de limpieza para el mantenimiento de la misma. \n-Proyectos de mejoras en el área ambiental.  \n-Solicitudes de compra y recepción de facturas usando modulo MM de SAP. \n-Tramites para permisologia de plantas pertenecientes al grupo corporativo La Caridad. ",
+              "skills": null,
+              "startDate": {
+                "month": "Sep",
+                "year": 2015,
+                "text": "Sep 2015"
+              },
+              "endDate": {
+                "month": "Feb",
+                "year": 2016,
+                "text": "Feb 2016"
+              }
+            },
+            {
+              "position": "Pasante de Mantenimiento mecanico.",
+              "location": "Valencia, Carabobo, Venezuela.",
+              "employmentType": null,
+              "workplaceType": null,
+              "companyName": "Protinal Proagro C.A.",
+              "companyLinkedinUrl": "https://www.linkedin.com/search/results/all/?keywords=Protinal+Proagro+C%2EA%2E",
+              "duration": "6 mos",
+              "description": "-Levantamiento de información técnica y propuesta de proyecto de mejoras en manejo de materiales\n-Realización de los planos correspondientes. \n-Apoyo en emisión de solicitudes de pedido y manejo de inventarios de repuestos mecánicos.\n",
+              "skills": null,
+              "startDate": {
+                "month": "Apr",
+                "year": 2015,
+                "text": "Apr 2015"
+              },
+              "endDate": {
+                "month": "Sep",
+                "year": 2015,
+                "text": "Sep 2015"
+              }
+            }
+          ],
+          "education": [
+            {
+              "schoolName": "Universidad José Antonio Páez",
+              "schoolLinkedinUrl": "https://www.linkedin.com/company/15102759/",
+              "schoolId": "15102759",
+              "degree": "Ingeniero Industrial",
+              "fieldOfStudy": "Ingenieria",
+              "skills": [],
+              "description": "Estudiante con pasion por la carrera de ingenieria, habiendo recibido en diversas oportunidades reconocimientos por excelencia academica, y participando en eventos y conferencias facilitados por la universidad, principalmente enfocados al area de tecnologia y programación, que fui aprendiendo por mi cuenta a la par de la carrera.",
+              "startDate": {
+                "year": 2011,
+                "text": "2011"
+              },
+              "endDate": {
+                "year": 2016,
+                "text": "2016"
+              },
+              "period": "2011 - 2016",
+              "schoolLogo": {
+                "url": "https://media.licdn.com/dms/image/v2/C510BAQGg11sd7qawHg/company-logo_400_400/company-logo_400_400/0/1631408796279/universidad_jos_antonio_pez_logo?e=1772668800&v=beta&t=f9rlDkKPyDVajb8PIPiVRk_yC1xkDGdmXZ1DXhFKQg4",
+                "sizes": [
+                  {
+                    "url": "https://media.licdn.com/dms/image/v2/C510BAQGg11sd7qawHg/company-logo_400_400/company-logo_400_400/0/1631408796279/universidad_jos_antonio_pez_logo?e=1772668800&v=beta&t=f9rlDkKPyDVajb8PIPiVRk_yC1xkDGdmXZ1DXhFKQg4",
+                    "width": 400,
+                    "height": 400,
+                    "expiresAt": 1772668800000
+                  },
+                  {
+                    "url": "https://media.licdn.com/dms/image/v2/C510BAQGg11sd7qawHg/company-logo_200_200/company-logo_200_200/0/1631408796279/universidad_jos_antonio_pez_logo?e=1772668800&v=beta&t=HmqSFV3NY0fe6rFCq571kHmtmiL4GZm6jdR85paA-Ns",
+                    "width": 200,
+                    "height": 200,
+                    "expiresAt": 1772668800000
+                  },
+                  {
+                    "url": "https://media.licdn.com/dms/image/v2/C510BAQGg11sd7qawHg/company-logo_100_100/company-logo_100_100/0/1631408796279/universidad_jos_antonio_pez_logo?e=1772668800&v=beta&t=6gXLhHYWww83eA8GAis989s1I86QfW37Ma3wMJM2UMc",
+                    "width": 100,
+                    "height": 100,
+                    "expiresAt": 1772668800000
+                  }
+                ]
+              }
+            },
+            {
+              "schoolName": "freeCodeCamp",
+              "schoolLinkedinUrl": "https://www.linkedin.com/company/4831032/",
+              "schoolId": "4831032",
+              "degree": "Full Stack Web Development Certification",
+              "fieldOfStudy": "Computer Software Engineering",
+              "skills": [],
+              "description": "Diversos proyectos para la certificacion (inicialmente front-end). Pueden ser encontrados en http://codepen.io/HenryMAC/ junto con el codigo implementado. Ademas, ayudar y colaborar con otros estudiantes mediante los foros y chats del campamento, promoviendo asi el trabajo en equipo a una escala global.\nDiverse projects in order to obtain the certification (initially front-end). They can be found in http://codepen.io/HenryMAC/ along with the code implemented. Besides, help and colaborate with other students using the forums and chats of the camp, in order to promote the teamwork at a global scale.",
+              "startDate": {
+                "year": 2016,
+                "text": "2016"
+              },
+              "endDate": {
+                "year": 2017,
+                "text": "2017"
+              },
+              "period": "2016 - 2017",
+              "schoolLogo": {
+                "url": "https://media.licdn.com/dms/image/v2/C4E0BAQGLKj3JHcof0w/company-logo_400_400/company-logo_400_400/0/1630639684997/free_code_camp_logo?e=1772668800&v=beta&t=4NFvh_mcUz2SoIkfRh2HdNIasBZ4B1cE7Ct_6SH1FMo",
+                "sizes": [
+                  {
+                    "url": "https://media.licdn.com/dms/image/v2/C4E0BAQGLKj3JHcof0w/company-logo_400_400/company-logo_400_400/0/1630639684997/free_code_camp_logo?e=1772668800&v=beta&t=4NFvh_mcUz2SoIkfRh2HdNIasBZ4B1cE7Ct_6SH1FMo",
+                    "width": 400,
+                    "height": 400,
+                    "expiresAt": 1772668800000
+                  },
+                  {
+                    "url": "https://media.licdn.com/dms/image/v2/C4E0BAQGLKj3JHcof0w/company-logo_200_200/company-logo_200_200/0/1630639684997/free_code_camp_logo?e=1772668800&v=beta&t=gUbJH0zhzUzg0ezw4Z-rdBMozJONerSzbdmc-8brMdw",
+                    "width": 200,
+                    "height": 200,
+                    "expiresAt": 1772668800000
+                  },
+                  {
+                    "url": "https://media.licdn.com/dms/image/v2/C4E0BAQGLKj3JHcof0w/company-logo_100_100/company-logo_100_100/0/1630639684997/free_code_camp_logo?e=1772668800&v=beta&t=dVJTgejiXHkUy61VYxyDg4psYb6ggxxuMGzD4gq04C0",
+                    "width": 100,
+                    "height": 100,
+                    "expiresAt": 1772668800000
+                  }
+                ]
+              }
+            },
+            {
+              "schoolName": "Alliance française de Toulouse",
+              "schoolLinkedinUrl": "https://www.linkedin.com/company/10591701/",
+              "schoolId": "10591701",
+              "degree": "Certifiancion en Francés",
+              "fieldOfStudy": "Formación en idiomas extranjeros",
+              "skills": [],
+              "insights": "Grade: Sede Valencia, Venezuela.",
+              "startDate": {
+                "year": 2016,
+                "text": "2016"
+              },
+              "endDate": {
+                "year": 2017,
+                "text": "2017"
+              },
+              "period": "2016 - 2017",
+              "schoolLogo": {
+                "url": "https://media.licdn.com/dms/image/v2/C4D0BAQGO1JDzpDGXUQ/company-logo_400_400/company-logo_400_400/0/1630510082019/alliance_franaise_de_toulouse_logo?e=1772668800&v=beta&t=9XVmgx_9JqejXjl7eB1IAxTsXWyiFxG4cMq_r2sJf1A",
+                "sizes": [
+                  {
+                    "url": "https://media.licdn.com/dms/image/v2/C4D0BAQGO1JDzpDGXUQ/company-logo_400_400/company-logo_400_400/0/1630510082019/alliance_franaise_de_toulouse_logo?e=1772668800&v=beta&t=9XVmgx_9JqejXjl7eB1IAxTsXWyiFxG4cMq_r2sJf1A",
+                    "width": 400,
+                    "height": 400,
+                    "expiresAt": 1772668800000
+                  },
+                  {
+                    "url": "https://media.licdn.com/dms/image/v2/C4D0BAQGO1JDzpDGXUQ/company-logo_200_200/company-logo_200_200/0/1630510082019/alliance_franaise_de_toulouse_logo?e=1772668800&v=beta&t=JObpHCcdyVeyu7OF41j_xaXHkAcHM8uSeLVwV_uW0MA",
+                    "width": 200,
+                    "height": 200,
+                    "expiresAt": 1772668800000
+                  },
+                  {
+                    "url": "https://media.licdn.com/dms/image/v2/C4D0BAQGO1JDzpDGXUQ/company-logo_100_100/company-logo_100_100/0/1630510082019/alliance_franaise_de_toulouse_logo?e=1772668800&v=beta&t=kOTKal0sEnZmRU4qD2sQTrhSvJChNAUDfoV0D7vgeck",
+                    "width": 100,
+                    "height": 100,
+                    "expiresAt": 1772668800000
+                  }
+                ]
+              }
+            }
+          ],
+          "certifications": [
+            {
+              "title": "Scrum master (PSM I)",
+              "issuedAt": "Issued Jul 2019",
+              "link": "https://www.scrum.org/certificates/433794",
+              "issuedBy": "Scrum.org",
+              "issuedByLink": "https://www.linkedin.com/company/1153894/",
+              "issuedByLogo": {
+                "url": "https://media.licdn.com/dms/image/v2/C560BAQFzF6WZjNSHkQ/company-logo_400_400/company-logo_400_400/0/1631433558836?e=1772668800&v=beta&t=OU3M1viSHCei_YOv1IvPf4A6-zhP3_SBxTOjr7nR5kI",
+                "sizes": [
+                  {
+                    "url": "https://media.licdn.com/dms/image/v2/C560BAQFzF6WZjNSHkQ/company-logo_400_400/company-logo_400_400/0/1631433558836?e=1772668800&v=beta&t=OU3M1viSHCei_YOv1IvPf4A6-zhP3_SBxTOjr7nR5kI",
+                    "width": 400,
+                    "height": 400,
+                    "expiresAt": 1772668800000
+                  },
+                  {
+                    "url": "https://media.licdn.com/dms/image/v2/C560BAQFzF6WZjNSHkQ/company-logo_200_200/company-logo_200_200/0/1631433558836?e=1772668800&v=beta&t=YBY19niYbXQzrjR-cN4U_grkzk7ZwDzQqpMmx2rEFcU",
+                    "width": 200,
+                    "height": 200,
+                    "expiresAt": 1772668800000
+                  },
+                  {
+                    "url": "https://media.licdn.com/dms/image/v2/C560BAQFzF6WZjNSHkQ/company-logo_100_100/company-logo_100_100/0/1631433558836?e=1772668800&v=beta&t=R8FkZh2kdardZQvE6_t4swcg7cLPqc9JbwZmZY8JYU0",
+                    "width": 100,
+                    "height": 100,
+                    "expiresAt": 1772668800000
+                  }
+                ]
+              }
+            },
+            {
+              "title": " Using Databases with Python",
+              "issuedAt": "Issued Mar 2017",
+              "link": "https://www.coursera.org/account/accomplishments/records/9KAF2T6QFD3Q",
+              "issuedBy": "Coursera Course Certificates",
+              "issuedByLink": null,
+              "issuedByLogo": {
+                "url": null,
+                "sizes": []
+              }
+            },
+            {
+              "title": "Using Python to Access Web Data",
+              "issuedAt": "Issued Jan 2017",
+              "link": "https://www.coursera.org/account/accomplishments/records/FWBT9P6RXFAJ",
+              "issuedBy": "Coursera Course Certificates",
+              "issuedByLink": null,
+              "issuedByLogo": {
+                "url": null,
+                "sizes": []
+              }
+            },
+            {
+              "title": " Python Data Structures",
+              "issuedAt": "Issued Dec 2016",
+              "link": "https://www.coursera.org/account/accomplishments/records/X7AJYA7NSP8N",
+              "issuedBy": "Coursera Course Certificates",
+              "issuedByLink": null,
+              "issuedByLogo": {
+                "url": null,
+                "sizes": []
+              }
+            },
+            {
+              "title": "Programming for Everybody (Getting Started with Python)",
+              "issuedAt": "Issued Dec 2016",
+              "link": "https://www.coursera.org/account/accomplishments/records/B7LH66XHVTZY",
+              "issuedBy": "Coursera Course Certificates",
+              "issuedByLink": null,
+              "issuedByLogo": {
+                "url": null,
+                "sizes": []
+              }
+            },
+            {
+              "title": "Multiplatform Mobile App Development with Web Technologies",
+              "issuedAt": "Issued Mar 2017",
+              "link": "https://www.coursera.org/account/accomplishments/records/WDVP2ZX4D5QF",
+              "issuedBy": "Coursera Course Certificates",
+              "issuedByLink": null,
+              "issuedByLogo": {
+                "url": null,
+                "sizes": []
+              }
+            },
+            {
+              "title": "Server-side Development with NodeJS",
+              "issuedAt": "Issued Apr 2017",
+              "link": "https://www.coursera.org/account/accomplishments/records/QDLD8MGRAREH",
+              "issuedBy": "Coursera Course Certificates",
+              "issuedByLink": null,
+              "issuedByLogo": {
+                "url": null,
+                "sizes": []
+              }
+            },
+            {
+              "title": "Front-End JavaScript Frameworks: AngularJS",
+              "issuedAt": "Issued Jul 2016",
+              "link": "https://www.coursera.org/account/accomplishments/records/KB9ZUYMCJTBZ",
+              "issuedBy": "Coursera Course Certificates",
+              "issuedByLink": null,
+              "issuedByLogo": {
+                "url": null,
+                "sizes": []
+              }
+            },
+            {
+              "title": "Front-End Web UI Frameworks and Tools",
+              "issuedAt": "Issued May 2016",
+              "link": "https://www.coursera.org/account/accomplishments/records/9HLWQGYMDKXH",
+              "issuedBy": "Coursera Course Certificates",
+              "issuedByLink": null,
+              "issuedByLogo": {
+                "url": null,
+                "sizes": []
+              }
+            },
+            {
+              "title": "HTML, CSS and JavaScript",
+              "issuedAt": "Issued Feb 2016",
+              "link": "https://www.coursera.org/account/accomplishments/records/YVYZLGK46UN9",
+              "issuedBy": "Coursera Course Certificates",
+              "issuedByLink": null,
+              "issuedByLogo": {
+                "url": null,
+                "sizes": []
+              }
+            },
+            {
+              "title": "Git with Github",
+              "issuedAt": "Issued Aug 2016",
+              "link": "https://www.udemy.com/certificate/UC-FYVTVPZH/",
+              "issuedBy": "Udemy",
+              "issuedByLink": "https://www.linkedin.com/company/822535/",
+              "issuedByLogo": {
+                "url": "https://media.licdn.com/dms/image/v2/D560BAQEf_NHzN2yVQg/company-logo_400_400/company-logo_400_400/0/1723593046388/udemy_logo?e=1772668800&v=beta&t=seURjRxuiCotY5Zt12seU3F0QN97ezRVYok_yTdIbcs",
+                "sizes": [
+                  {
+                    "url": "https://media.licdn.com/dms/image/v2/D560BAQEf_NHzN2yVQg/company-logo_400_400/company-logo_400_400/0/1723593046388/udemy_logo?e=1772668800&v=beta&t=seURjRxuiCotY5Zt12seU3F0QN97ezRVYok_yTdIbcs",
+                    "width": 400,
+                    "height": 400,
+                    "expiresAt": 1772668800000
+                  },
+                  {
+                    "url": "https://media.licdn.com/dms/image/v2/D560BAQEf_NHzN2yVQg/company-logo_200_200/company-logo_200_200/0/1723593046388/udemy_logo?e=1772668800&v=beta&t=59p4nGrV_4w5OYWJQTqUtvx9QbxA5_j0q5pfJ7DXji0",
+                    "width": 200,
+                    "height": 200,
+                    "expiresAt": 1772668800000
+                  },
+                  {
+                    "url": "https://media.licdn.com/dms/image/v2/D560BAQEf_NHzN2yVQg/company-logo_100_100/company-logo_100_100/0/1723593046388/udemy_logo?e=1772668800&v=beta&t=RM493d9iLTN4P8px-FIwX8P4vnyk9-6Q_2MlKPPnrz4",
+                    "width": 100,
+                    "height": 100,
+                    "expiresAt": 1772668800000
+                  }
+                ]
+              }
+            },
+            {
+              "title": "Create a WordPress Website for Your Web Design Business",
+              "issuedAt": "Issued Feb 2016",
+              "link": "https://www.udemy.com/certificate/UC-4HKMOGRA/",
+              "issuedBy": "Udemy",
+              "issuedByLink": "https://www.linkedin.com/company/822535/",
+              "issuedByLogo": {
+                "url": "https://media.licdn.com/dms/image/v2/D560BAQEf_NHzN2yVQg/company-logo_400_400/company-logo_400_400/0/1723593046388/udemy_logo?e=1772668800&v=beta&t=seURjRxuiCotY5Zt12seU3F0QN97ezRVYok_yTdIbcs",
+                "sizes": [
+                  {
+                    "url": "https://media.licdn.com/dms/image/v2/D560BAQEf_NHzN2yVQg/company-logo_400_400/company-logo_400_400/0/1723593046388/udemy_logo?e=1772668800&v=beta&t=seURjRxuiCotY5Zt12seU3F0QN97ezRVYok_yTdIbcs",
+                    "width": 400,
+                    "height": 400,
+                    "expiresAt": 1772668800000
+                  },
+                  {
+                    "url": "https://media.licdn.com/dms/image/v2/D560BAQEf_NHzN2yVQg/company-logo_200_200/company-logo_200_200/0/1723593046388/udemy_logo?e=1772668800&v=beta&t=59p4nGrV_4w5OYWJQTqUtvx9QbxA5_j0q5pfJ7DXji0",
+                    "width": 200,
+                    "height": 200,
+                    "expiresAt": 1772668800000
+                  },
+                  {
+                    "url": "https://media.licdn.com/dms/image/v2/D560BAQEf_NHzN2yVQg/company-logo_100_100/company-logo_100_100/0/1723593046388/udemy_logo?e=1772668800&v=beta&t=RM493d9iLTN4P8px-FIwX8P4vnyk9-6Q_2MlKPPnrz4",
+                    "width": 100,
+                    "height": 100,
+                    "expiresAt": 1772668800000
+                  }
+                ]
+              }
+            }
+          ],
+          "projects": [],
+          "volunteering": [],
+          "receivedRecommendations": [
+            {
+              "givenBy": "Thomas Vogt",
+              "givenByHeadline": "CTO at Keirón",
+              "givenAt": "September 25, 2024, Thomas managed Henry directly",
+              "givenByLink": "https://www.linkedin.com/in/thomas-vogt",
+              "description": "I had the pleasure of working with Henry Angulo at Keiron, and I can confidently say that he is an exceptional senior software engineer. His deep technical knowledge and skills in ReactJS, NodeJS, NestJS, and NextJS are impressive.\n\nHenry not only approaches complex problems with innovative solutions but is also a natural leader who fosters collaboration and growth within the team. His ability to communicate technical concepts clearly and his experience in project management ensure successful outcomes and timely deliveries.\n\nI wholeheartedly recommend Henry for any technical challenge or leadership position in the field of software engineering.",
+              "givenByPicture": {
+                "url": null,
+                "sizes": []
+              }
+            }
+          ],
+          "skills": [
+            {
+              "name": "JavaScript",
+              "positions": [
+                "4 experiences across Deel and 1 other company",
+                "Endorsed by 4 colleagues at Keirón"
+              ]
+            },
+            {
+              "name": "React.js",
+              "positions": [
+                "3 experiences at Keirón"
+              ],
+              "endorsements": "1 endorsement"
+            },
+            {
+              "name": "Node.js",
+              "positions": [
+                "4 experiences across Deel and 1 other company"
+              ]
+            },
+            {
+              "name": "NestJS",
+              "positions": [
+                "2 experiences at Keirón"
+              ]
+            },
+            {
+              "name": "Amazon Web Services (AWS)",
+              "positions": [
+                "4 experiences across Deel and 1 other company"
+              ]
+            },
+            {
+              "name": "Docker",
+              "positions": [
+                "3 experiences at Keirón"
+              ]
+            },
+            {
+              "name": "MySQL",
+              "endorsements": "2 endorsements"
+            },
+            {
+              "name": "Git",
+              "endorsements": "2 endorsements"
+            },
+            {
+              "name": "SQL",
+              "endorsements": "2 endorsements"
+            },
+            {
+              "name": "Microsoft Excel",
+              "endorsements": "4 endorsements"
+            },
+            {
+              "name": "backend",
+              "positions": [
+                "Senior Backend Engineer at Deel"
+              ]
+            },
+            {
+              "name": "TypeScript",
+              "positions": [
+                "4 experiences across Deel and 1 other company"
+              ]
+            },
+            {
+              "name": "Desarrollo del front-end",
+              "endorsements": "4 endorsements"
+            },
+            {
+              "name": "Programación",
+              "endorsements": "2 endorsements"
+            },
+            {
+              "name": "Traducción",
+              "endorsements": "2 endorsements"
+            },
+            {
+              "name": "Inglés",
+              "endorsements": "2 endorsements"
+            }
+          ],
+          "publications": [],
+          "courses": [],
+          "patents": [],
+          "honorsAndAwards": [
+            {
+              "title": "Reconocimiento academico",
+              "issuedBy": "Universidad Jose Antonio Paez.",
+              "issuedAt": "Feb 2016",
+              "description": "Reconocimiento al merito academico emitido por la universidad por estar entre los primeros 30 entre casi 1000 estudiantes de la escuela de Ingenieria Industrial, habiendo obtenido el 2do lugar.",
+              "associatedWith": "Associated with Universidad José Antonio Páez",
+              "associatedWithLink": "https://www.linkedin.com/company/15102759/"
+            },
+            {
+              "title": "Reconocimiento academico",
+              "issuedBy": "Universidad Jose Antonio Paez.",
+              "issuedAt": "Sep 2015",
+              "description": "Reconocimiento al merito academico emitido por la universidad por estar entre los primeros 30 entre casi 1000 estudiantes de la escuela de Ingenieria Industrial, habiendo obtenido el lugar 26.",
+              "associatedWith": "Associated with Universidad José Antonio Páez",
+              "associatedWithLink": "https://www.linkedin.com/company/15102759/"
+            },
+            {
+              "title": "Reconocimiento academico",
+              "issuedBy": "Universidad Jose Antonio Paez.",
+              "issuedAt": "Apr 2015",
+              "description": "Reconocimiento al merito academico emitido por la universidad por estar entre los primeros 30 entre casi 1000 estudiantes de la escuela de Ingenieria Industrial, habiendo obtenido el lugar 21.",
+              "associatedWith": "Associated with Universidad José Antonio Páez",
+              "associatedWithLink": "https://www.linkedin.com/company/15102759/"
+            }
+          ],
+          "languages": [
+            {
+              "name": "English",
+              "proficiency": "Full professional proficiency"
+            },
+            {
+              "name": "Español",
+              "proficiency": "Native or bilingual proficiency"
+            },
+            {
+              "name": "Frances",
+              "proficiency": "Elementary proficiency"
+            }
+          ],
+          "causes": [
+            "Arts and Culture",
+            "Disaster and Humanitarian Relief",
+            "Science and Technology",
+            "Education",
+            "Economic Empowerment",
+            "Poverty Alleviation"
+          ],
+          "featured": null,
+          "moreProfiles": [
+            {
+              "id": "ACoAACxmc9MBEY557efyOaqCha0uASS5u2veR2g",
+              "firstName": "Alexander",
+              "lastName": "Susa",
+              "publicIdentifier": "alexander-susa",
+              "linkedinUrl": "https://www.linkedin.com/in/alexander-susa"
+            },
+            {
+              "id": "ACoAADG_-UUBbfzAl8q4frcqbBnJMts6-4jHHpc",
+              "firstName": "ALEXIS HERNÁN",
+              "lastName": "SUSANIBAR ROSAS",
+              "publicIdentifier": "alexis-hernán-susanibar-rosas-71963b1b3",
+              "linkedinUrl": "https://www.linkedin.com/in/alexis-hernán-susanibar-rosas-71963b1b3"
+            },
+            {
+              "id": "ACoAAAXShk8B1KQvUYF6XD4yGXYSXpkWc5u61gY",
+              "firstName": "Alex",
+              "lastName": "Bouaziz",
+              "publicIdentifier": "alexbouaziz",
+              "linkedinUrl": "https://www.linkedin.com/in/alexbouaziz"
+            },
+            {
+              "id": "ACoAABORDTQBubXmaQ0KF63af325jIb7JVy63Uc",
+              "firstName": "Carlos",
+              "lastName": "Molina Benavente",
+              "publicIdentifier": "carlos-molina-benavente-b04b3091",
+              "linkedinUrl": "https://www.linkedin.com/in/carlos-molina-benavente-b04b3091"
+            },
+            {
+              "id": "ACoAABU7F4cBRJQ_wrPWIvStbJ8nFQXaRn_hFME",
+              "firstName": "Jose Vicente",
+              "lastName": "R.",
+              "publicIdentifier": "jose-vicente-r-a873569b",
+              "linkedinUrl": "https://www.linkedin.com/in/jose-vicente-r-a873569b"
+            },
+            {
+              "id": "ACoAABkz2DwBLrZqDyORC-T5dKGTVdOEbktnLUk",
+              "firstName": "Francisco",
+              "lastName": "Piaggio",
+              "publicIdentifier": "francisco-piaggio-224730b9",
+              "linkedinUrl": "https://www.linkedin.com/in/francisco-piaggio-224730b9"
+            },
+            {
+              "id": "ACoAABzufEgBwguuCE231bpgAy4bzxZ_ZK9C_4g",
+              "firstName": "Henry Danilo",
+              "lastName": "Angulo Miranda",
+              "publicIdentifier": "henry-danilo-angulo-miranda-9a0681116",
+              "linkedinUrl": "https://www.linkedin.com/in/henry-danilo-angulo-miranda-9a0681116"
+            },
+            {
+              "id": "ACoAACXINBYBJOhEN74Xu0BLcgIo_AgZNt09TPU",
+              "firstName": "Julián",
+              "lastName": "C.",
+              "publicIdentifier": "juliancardenasgonzalez",
+              "linkedinUrl": "https://www.linkedin.com/in/juliancardenasgonzalez"
+            },
+            {
+              "id": "ACoAAD9aRP8BXFFSJQy0_v6Rrsr4l_4USG_w_mU",
+              "firstName": "Samuel",
+              "lastName": "Castro",
+              "publicIdentifier": "samuel-castro-a7bb58257",
+              "linkedinUrl": "https://www.linkedin.com/in/samuel-castro-a7bb58257"
+            },
+            {
+              "id": "ACoAACGt7wYBzXGJ3BmNrsvjEpBdbfg1RysvVf0",
+              "firstName": "Alessandro",
+              "lastName": "Rodrigo",
+              "publicIdentifier": "alessandro-rodrigo-fresneda-perez-junior",
+              "linkedinUrl": "https://www.linkedin.com/in/alessandro-rodrigo-fresneda-perez-junior"
+            },
+            {
+              "id": "ACoAAFP7cAkBTNj689PvEyNq7nmM7Y4mZPMsHHY",
+              "firstName": "Emmanuel",
+              "lastName": "Morales Inzunza",
+              "publicIdentifier": "emmanuel-morales-inzunza-0b5a4a333",
+              "linkedinUrl": "https://www.linkedin.com/in/emmanuel-morales-inzunza-0b5a4a333"
+            },
+            {
+              "id": "ACoAAFA2AKEBLK0kR3PxrFRjfzupW56_WPHAKHw",
+              "firstName": "HOPE",
+              "lastName": "MWANJIRA",
+              "publicIdentifier": "hope-mwanjira-081817316",
+              "linkedinUrl": "https://www.linkedin.com/in/hope-mwanjira-081817316"
+            },
+            {
+              "id": "ACoAAB9h35cBf77J8XmTZel9S8NTkWb95kUXYO4",
+              "firstName": "Diego Ernesto",
+              "lastName": "Parra Parra",
+              "publicIdentifier": "diego-parra-1073b0128",
+              "linkedinUrl": "https://www.linkedin.com/in/diego-parra-1073b0128"
+            },
+            {
+              "id": "ACoAAAK4PoMBEv9coTNPBrqZ_weRirJETKe9mA8",
+              "firstName": "Wladimir",
+              "lastName": "Quiroz",
+              "publicIdentifier": "wladimir-quiroz-85734513",
+              "linkedinUrl": "https://www.linkedin.com/in/wladimir-quiroz-85734513"
+            },
+            {
+              "id": "ACoAAAuhckUBQ9eB_j-43UGHWkdAfPdRmiv89Mw",
+              "firstName": "Manuel",
+              "lastName": "Valor Aragón",
+              "publicIdentifier": "manuel-valor-aragón-4b142255",
+              "linkedinUrl": "https://www.linkedin.com/in/manuel-valor-aragón-4b142255"
+            },
+            {
+              "id": "ACoAAB-45OMBSpCESBnKd-EMOpdyXcZECwLe-CM",
+              "firstName": "Cristian",
+              "lastName": "Sprohnle",
+              "publicIdentifier": "cristian-sprohnle-5172a012a",
+              "linkedinUrl": "https://www.linkedin.com/in/cristian-sprohnle-5172a012a"
+            },
+            {
+              "id": "ACoAAB6qh7gBGi2CbAAJV9dtBYnWlU_PXihaETM",
+              "firstName": "Miguel Angel",
+              "lastName": "Varona Da Costa",
+              "publicIdentifier": "miguel-angel-varona-da-costa-760376124",
+              "linkedinUrl": "https://www.linkedin.com/in/miguel-angel-varona-da-costa-760376124"
+            },
+            {
+              "id": "ACoAAARAzPkBV1CnOJXZ2id7ZVEhIg8piP0mflc",
+              "firstName": "Laura Estefanía",
+              "lastName": "C.",
+              "publicIdentifier": "lauraecorvalan",
+              "linkedinUrl": "https://www.linkedin.com/in/lauraecorvalan"
+            },
+            {
+              "id": "ACoAACGiTmABnehjdRzyKb7OdxGflMRE3H5Rp64",
+              "firstName": "Indira ",
+              "lastName": "Perez Flores",
+              "publicIdentifier": "indira-perez-flores-a00b89138",
+              "linkedinUrl": "https://www.linkedin.com/in/indira-perez-flores-a00b89138"
+            },
+            {
+              "id": "ACoAABVelukBnedKN6FhhYyIz3fVS-xO_eFZxEU",
+              "firstName": "Matheus",
+              "lastName": "Campos Cardoso",
+              "publicIdentifier": "mcamposcardoso",
+              "linkedinUrl": "https://www.linkedin.com/in/mcamposcardoso"
+            },
+            {
+              "id": "ACoAAEmuq0YBD5HmKZap0aM3o7cPOsD9tp1X2Vs",
+              "firstName": "Marcos",
+              "lastName": "Pulgar",
+              "position": "Electronics Engineer | Electronics | Industrial Automation & Instrumentation | Maintenance | Embedded Systems",
+              "publicIdentifier": "mpulgar",
+              "linkedinUrl": "https://www.linkedin.com/in/mpulgar"
+            },
+            {
+              "id": "ACoAAFjOee0BdRFThgCASEpzxXt1B0-95Si0IJA",
+              "firstName": "Angel",
+              "lastName": "Hidalgo",
+              "position": "Licenciado en Mercadeo | Analista de Mercadeo | Investigación de Mercado| Fidelización de Clientes | Comunicación Institucional ",
+              "publicIdentifier": "angel-hidalgo-091b82356",
+              "linkedinUrl": "https://www.linkedin.com/in/angel-hidalgo-091b82356"
+            },
+            {
+              "id": "ACoAAEkv7RYB2Hp1nFwjoPVVfmBLIS53R402o7Q",
+              "firstName": "Mauricio",
+              "lastName": "González",
+              "position": "Ing. Electrónico",
+              "publicIdentifier": "mauricio-gonzález-41a2692a3",
+              "linkedinUrl": "https://www.linkedin.com/in/mauricio-gonzález-41a2692a3"
+            },
+            {
+              "id": "ACoAAD4P2FsBR4QMGd2l47Eia-93pUNlo_jDUg0",
+              "firstName": "Adriana",
+              "lastName": "Cannata",
+              "position": "Psicologo mención Clínico y actualmente en Organizaciones ",
+              "publicIdentifier": "adriana-cannata-2a3855250",
+              "linkedinUrl": "https://www.linkedin.com/in/adriana-cannata-2a3855250"
+            },
+            {
+              "id": "ACoAAF5lRxcBo6XqC8sihGqr9Qdkh8NSsNu_a8Y",
+              "firstName": "Ada Antonieta",
+              "lastName": "Berroteran Duque",
+              "position": "Gerente de RR. HH. en Nucitec ",
+              "publicIdentifier": "ada-antonieta-berroteran-duque-647462382",
+              "linkedinUrl": "https://www.linkedin.com/in/ada-antonieta-berroteran-duque-647462382"
+            },
+            {
+              "id": "ACoAADmKoosBBjTMqJ_UNgiNhvynzOjoxi0xpYQ",
+              "firstName": "Astrid",
+              "lastName": "Aguilar",
+              "position": "Acompaño a profesionales, empresas y emprendedores a crear marcas memorables. \nSocial Media Manager | Abogado | Politólogo | Estratega",
+              "publicIdentifier": "astrid-aguilar-b7738022b",
+              "linkedinUrl": "https://www.linkedin.com/in/astrid-aguilar-b7738022b"
+            },
+            {
+              "id": "ACoAADkI9doB-UTmsz1bLckEUSdFE6n1m84ceQg",
+              "firstName": "Patricia",
+              "lastName": "Chacón Morales",
+              "position": "Atención al Cliente. Telemarketing. Supervisor/ Coordinador de Ventas y Call Center. CRM y Base de datos. Ventas.",
+              "publicIdentifier": "patricia-chacón-morales-b36562228",
+              "linkedinUrl": "https://www.linkedin.com/in/patricia-chacón-morales-b36562228"
+            },
+            {
+              "id": "ACoAAD0Jw5YBedoY5aJrLCH6IGsJSWuY2TAov4E",
+              "firstName": "Enzo Daniel",
+              "lastName": "Cicero",
+              "position": "Sales Development Representative en Clío",
+              "publicIdentifier": "enzo-daniel-cicero-69ab51246",
+              "linkedinUrl": "https://www.linkedin.com/in/enzo-daniel-cicero-69ab51246"
+            },
+            {
+              "id": "ACoAAEH_obgBY3tN8taNz6YU-y0_pd8Q0K4S_W0",
+              "firstName": "Ruannys",
+              "lastName": "Aguiar",
+              "position": "Lcda. en Relaciones Industriales I Analista de personal I Remuneración de ventas I Beneficios de personal",
+              "publicIdentifier": "ruannys-aguiar-5889a626a",
+              "linkedinUrl": "https://www.linkedin.com/in/ruannys-aguiar-5889a626a"
+            },
+            {
+              "id": "ACoAAElevq0BpKr6v9zKox0ES35BwjUtocY4Va8",
+              "firstName": "Ana Karina",
+              "lastName": "Hernández Mosqueda",
+              "position": "Analista administrativo en Alimentos Safiro, C.A.",
+              "publicIdentifier": "ana-karina-hernández-mosqueda-ba52a82a4",
+              "linkedinUrl": "https://www.linkedin.com/in/ana-karina-hernández-mosqueda-ba52a82a4"
+            }
+          ],
+          "openProfile": false,
+          "_meta": {
+            "pagination": {
+              "totalElements": 657,
+              "totalPages": 27,
+              "pageNumber": 1,
+              "previousElements": 0,
+              "pageSize": 25
+            }
+          }
+        }
+      }
+    ]
+  },
   "connections": {
     "Every 4 Hours": {
       "main": [
@@ -1073,7 +3191,7 @@
     "availableInMCP": false,
     "errorWorkflow": "tK9wOKSzk63ZLLhI"
   },
-  "versionId": "dcff275d-b20b-477c-b9c0-69f5ad106d3d",
+  "versionId": "9790b5a0-00c7-413a-863a-feb1fdfe9eaa",
   "meta": {
     "instanceId": "79a7aa25fa1a526575e9d16be2e37e3eb8dbd841332f42a9d7ebcef52a77cfbc"
   },

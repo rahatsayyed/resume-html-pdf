@@ -753,6 +753,25 @@
           }
         }
       }
+    ],
+    "Job Match AI": [
+      {
+        "json": {
+          "output": {
+            "relevancy": true,
+            "score": "25%",
+            "justification": [
+              "Only 3+ years experience vs required 5+ years.",
+              "No hands-on Kubernetes, Helm, OpenShift, or GitOps experience.",
+              "Limited cloud exposure (AWS EC2 only, no GCP/Azure depth).",
+              "Missing IaC tools like Ansible/Terraform and CI/CD like Jenkins.",
+              "No evidence of Linux (RHEL), networking, Grafana, or SQL skills.",
+              "Resume focuses on frontend, blockchain, AI vs DevOps/infrastructure.",
+              "Docker and MongoDB are minor matches."
+            ]
+          }
+        }
+      }
     ]
   },
   "connections": {
@@ -875,7 +894,13 @@
     },
     "xAI Grok Chat Model": {
       "ai_languageModel": [
-        []
+        [
+          {
+            "node": "Job Match AI",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
       ]
     },
     "If Relevant": {
@@ -1051,13 +1076,7 @@
     },
     "Google Gemini Chat Model": {
       "ai_languageModel": [
-        [
-          {
-            "node": "Job Match AI",
-            "type": "ai_languageModel",
-            "index": 0
-          }
-        ]
+        []
       ]
     }
   },
@@ -1072,7 +1091,7 @@
     "availableInMCP": false,
     "errorWorkflow": "tK9wOKSzk63ZLLhI"
   },
-  "versionId": "72e7ad16-8371-4f84-a320-ede8f2ffc7ce",
+  "versionId": "b7069031-1817-4a4e-bc7d-371054060be3",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "79a7aa25fa1a526575e9d16be2e37e3eb8dbd841332f42a9d7ebcef52a77cfbc"
