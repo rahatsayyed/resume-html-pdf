@@ -1,0 +1,327 @@
+{
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "trg_manual",
+      "name": "When clicking 'Test'",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [-1360, 0]
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "triggerAtHour": 10
+            }
+          ]
+        }
+      },
+      "id": "trg_sched",
+      "name": "Every day 10 AM",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.3,
+      "position": [-1360, 208]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "s1",
+              "name": "serperApiKey",
+              "value": "<PASTE_YOUR_API_KEY>",
+              "type": "string"
+            },
+            {
+              "id": "s2",
+              "name": "roleTerms",
+              "value": "react OR \"full stack\" OR node OR typescript OR \"full-stack\" OR Developer",
+              "type": "string"
+            },
+            {
+              "id": "s3",
+              "name": "serperGl",
+              "value": "in",
+              "type": "string"
+            },
+            {
+              "id": "s4",
+              "name": "serperNum",
+              "value": "20",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "cfg",
+      "name": "Config",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [-1120, 112]
+    },
+    {
+      "parameters": {
+        "jsCode": "const c = $input.first().json;\nconst roles = c.roleTerms || 'software engineer';\nconst gl = c.serperGl || 'us';\nconst num = Number(c.serperNum || 20);\nconst geo = gl === 'in' ? 'india' : '';\nconst queries = [\n  `site:linkedin.com/posts (\"we're hiring\" OR \"we are hiring\" OR \"I'm hiring\") (${roles}) ${geo}`.trim(),\n  `site:linkedin.com/posts (\"join our team\" OR \"now hiring\" OR \"hiring alert\") (\"software engineer\" OR \"developer\") (${roles})`.trim(),\n  `site:linkedin.com/posts (\"#hiring\" OR \"#nowhiring\") (${roles}) (remote OR ${geo || 'usa'})`.trim()\n];\nreturn queries.map(q => ({ json: { q, num, gl } }));"
+      },
+      "id": "build_queries",
+      "name": "Build Queries",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [-880, 112]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://google.serper.dev/search",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "X-API-KEY",
+              "value": "={{ $('Config').first().json.serperApiKey }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ q: $json.q, num: $json.num, gl: $json.gl }) }}",
+        "options": {}
+      },
+      "id": "http_serper",
+      "name": "Serper",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [-624, 112],
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "jsCode": "const out = [];\nfor (const it of $input.all()) {\n  const j = it.json || {};\n  const q = (j.searchParameters && j.searchParameters.q) || null;\n  const organic = j.organic || [];\n  for (const o of organic) {\n    const link = (o.link || '').split('?')[0];\n    if (!link || !link.includes('linkedin.com/posts')) continue;\n    let poster = null;\n    const t = o.title || '';\n    const m = t.match(/^(.*?)\\s+on LinkedIn/i);\n    if (m) poster = m[1].trim();\n    out.push({ json: {\n      id: link,\n      post_url: link,\n      title: o.title ?? null,\n      snippet: o.snippet ?? null,\n      poster_name: poster,\n      poster_profile_url: null,\n      company_name: null,\n      query: q,\n      keywords: null,\n      status: 'new'\n    }});\n  }\n}\nreturn out;"
+      },
+      "id": "norm_posts",
+      "name": "Normalize Posts",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [-368, 112]
+    },
+    {
+      "parameters": {
+        "tableId": "hiring_posts",
+        "dataToSend": "autoMapInputData"
+      },
+      "id": "save_posts",
+      "name": "Save Hiring Posts (Supabase)",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [640, 32],
+      "retryOnFail": true,
+      "maxTries": 2,
+      "waitBetweenTries": 2000,
+      "credentials": {
+        "supabaseApi": {
+          "id": "UgJZt2YIwF9raxzT",
+          "name": "Supabase account"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "chatId": "1125208540",
+        "text": "=LinkedIn hiring-post dorks ✅\nNew saved: {{ $json.newCount }}\nAlready existed (skipped): {{ $json.skipped }}\nTotal found this run: {{ $json.total }}",
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "id": "notify",
+      "name": "Notify (Telegram)",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [448, 208],
+      "webhookId": "460aa4f0-7524-44e5-b0fa-9419639baeb9",
+      "credentials": {
+        "telegramApi": {
+          "id": "zR5TTxftQEm2MYTo",
+          "name": "Job Automation Bot"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "jsCode": "const rows = $input.all().map(i => i.json);\nconst ids = rows.map(r => r.id).filter(Boolean);\nconst q = ids.map(id => '\"' + String(id).replace(/\"/g, '') + '\"').join(',');\nconst filter = ids.length ? ('id=in.(' + q + ')') : 'id=eq.__none__';\nreturn [{ json: { rows, filter, total: rows.length } }];"
+      },
+      "id": "fadd3e20-3ae3-438e-a9a4-8c32fa15a551",
+      "name": "Collect",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [-160, 112]
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "tableId": "hiring_posts",
+        "returnAll": true,
+        "filterType": "string",
+        "filterString": "={{ $json.filter }}"
+      },
+      "id": "a6c31ff4-61cb-4a88-b3e4-d8c49153a1e1",
+      "name": "Fetch Existing",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [48, 112],
+      "alwaysOutputData": true,
+      "credentials": {
+        "supabaseApi": {
+          "id": "UgJZt2YIwF9raxzT",
+          "name": "Supabase account"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "jsCode": "const rows = $('Collect').first().json.rows || [];\nconst existing = $input.all().map(i => i.json).filter(x => x && x.id);\nconst existingIds = new Set(existing.map(x => x.id));\nconst newRows = rows.filter(r => !existingIds.has(r.id));\nconst total = rows.length;\nconst newCount = newRows.length;\nconst skipped = total - newCount;\nreturn [{ json: { total, newCount, skipped, newRows } }];"
+      },
+      "id": "6bbed697-9e45-412c-b87a-183fb0d2ee9f",
+      "name": "Plan",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [240, 112]
+    },
+    {
+      "parameters": {
+        "jsCode": "return (($input.first().json.newRows) || []).map(r => ({ json: r }));"
+      },
+      "id": "8d572d19-9105-4ae9-9e46-2c9513c872ec",
+      "name": "Explode New",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [448, 32]
+    }
+  ],
+  "connections": {
+    "When clicking 'Test'": {
+      "main": [
+        [
+          {
+            "node": "Config",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Every day 10 AM": {
+      "main": [
+        [
+          {
+            "node": "Config",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Config": {
+      "main": [
+        [
+          {
+            "node": "Build Queries",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Build Queries": {
+      "main": [
+        [
+          {
+            "node": "Serper",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Serper": {
+      "main": [
+        [
+          {
+            "node": "Normalize Posts",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Normalize Posts": {
+      "main": [
+        [
+          {
+            "node": "Collect",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Collect": {
+      "main": [
+        [
+          {
+            "node": "Fetch Existing",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch Existing": {
+      "main": [
+        [
+          {
+            "node": "Plan",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Plan": {
+      "main": [
+        [
+          {
+            "node": "Explode New",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Notify (Telegram)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Explode New": {
+      "main": [
+        [
+          {
+            "node": "Save Hiring Posts (Supabase)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "meta": {
+    "instanceId": "79a7aa25fa1a526575e9d16be2e37e3eb8dbd841332f42a9d7ebcef52a77cfbc"
+  }
+}

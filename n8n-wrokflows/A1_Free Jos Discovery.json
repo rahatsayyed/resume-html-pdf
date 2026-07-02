@@ -1,0 +1,471 @@
+{
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "trg_manual",
+      "name": "When clicking 'Test'",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [-1360, 0]
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "triggerAtHour": 9
+            }
+          ]
+        }
+      },
+      "id": "trg_sched",
+      "name": "Every day 9 AM",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.3,
+      "position": [-1360, 208]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "a1",
+              "name": "adzunaCountry",
+              "value": "in",
+              "type": "string"
+            },
+            {
+              "id": "a2",
+              "name": "adzunaWhat",
+              "value": "full stack developer",
+              "type": "string"
+            },
+            {
+              "id": "a3",
+              "name": "adzunaWhere",
+              "value": "",
+              "type": "string"
+            },
+            {
+              "id": "a4",
+              "name": "adzunaAppId",
+              "value": "<PASTE_YOUR_APP_ID>",
+              "type": "string"
+            },
+            {
+              "id": "a5",
+              "name": "adzunaAppKey",
+              "value": "<PASTE_YOUR_API_KEY>",
+              "type": "string"
+            },
+            {
+              "id": "a6",
+              "name": "resultsPerPage",
+              "value": "50",
+              "type": "string"
+            },
+            {
+              "id": "a7",
+              "name": "remotiveSearch",
+              "value": "react",
+              "type": "string"
+            },
+            {
+              "id": "a8",
+              "name": "remoteokKeyword",
+              "value": "react",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "cfg",
+      "name": "Config",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [-1120, 112]
+    },
+    {
+      "parameters": {
+        "url": "=https://api.adzuna.com/v1/api/jobs/{{ $json.adzunaCountry }}/search/1",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "app_id",
+              "value": "={{ $json.adzunaAppId }}"
+            },
+            {
+              "name": "app_key",
+              "value": "={{ $json.adzunaAppKey }}"
+            },
+            {
+              "name": "results_per_page",
+              "value": "={{ $json.resultsPerPage }}"
+            },
+            {
+              "name": "what",
+              "value": "={{ $json.adzunaWhat }}"
+            },
+            {
+              "name": "where",
+              "value": "={{ $json.adzunaWhere }}"
+            },
+            {
+              "name": "content-type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "http_adzuna",
+      "name": "Adzuna",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [-880, -128],
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "url": "=https://remotive.com/api/remote-jobs?search={{ $json.remotiveSearch }}&limit=50",
+        "options": {}
+      },
+      "id": "http_remotive",
+      "name": "Remotive",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [-880, 112],
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "url": "https://remoteok.com/api",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "User-Agent",
+              "value": "Mozilla/5.0 (compatible; job-agent/1.0)"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "http_remoteok",
+      "name": "RemoteOK",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [-880, 320],
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "jsCode": "const out = [];\nfor (const it of $input.all()) {\n  const results = it.json.results || [];\n  for (const j of results) {\n    out.push({ json: {\n      id: 'adzuna:' + (j.id ?? ''),\n      job_title: j.title ?? null,\n      job_description: j.description ?? null,\n      job_url: j.redirect_url ?? null,\n      company_name: (j.company && j.company.display_name) ? j.company.display_name : null,\n      company_url: null,\n      seniority_level: null,\n      employment_type: j.contract_time ?? null,\n      time_posted: j.created ?? null,\n      apply_url: j.redirect_url ?? null,\n      job_poster_name: null,\n      job_poster_profile_url: null,\n      source: 'adzuna',\n      apply_type: 'external'\n    }});\n  }\n}\nreturn out;"
+      },
+      "id": "norm_adzuna",
+      "name": "Normalize Adzuna",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [-624, -128]
+    },
+    {
+      "parameters": {
+        "jsCode": "const out = [];\nfor (const it of $input.all()) {\n  const jobs = it.json.jobs || [];\n  for (const j of jobs) {\n    out.push({ json: {\n      id: 'remotive:' + (j.id ?? ''),\n      job_title: j.title ?? null,\n      job_description: j.description ?? null,\n      job_url: j.url ?? null,\n      company_name: j.company_name ?? null,\n      company_url: null,\n      seniority_level: null,\n      employment_type: j.job_type ?? null,\n      time_posted: j.publication_date ?? null,\n      apply_url: j.url ?? null,\n      job_poster_name: null,\n      job_poster_profile_url: null,\n      source: 'remotive',\n      apply_type: 'external'\n    }});\n  }\n}\nreturn out;"
+      },
+      "id": "norm_remotive",
+      "name": "Normalize Remotive",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [-624, 112]
+    },
+    {
+      "parameters": {
+        "jsCode": "const extra = ($('Config').first().json.remoteokKeyword || '').trim().toLowerCase();\nconst kws = ['react','node','typescript','javascript','frontend','front end','full stack','fullstack','full-stack','software engineer','web developer','backend','next.js','nextjs'];\nif (extra) { for (const t of extra.split(',')) { const s = t.trim().toLowerCase(); if (s) kws.push(s); } }\nconst items = $input.all();\nlet jobs = [];\nif (items.length === 1 && Array.isArray(items[0].json)) {\n  jobs = items[0].json;\n} else {\n  jobs = items.map(i => i.json);\n}\nconst out = [];\nfor (const j of jobs) {\n  if (!j || (!j.id && !j.position)) continue;\n  const hay = ((j.position || '') + ' ' + (Array.isArray(j.tags) ? j.tags.join(' ') : '')).toLowerCase();\n  if (kws.length && !kws.some(k => hay.includes(k))) continue;\n  out.push({ json: {\n    id: 'remoteok:' + (j.id ?? j.slug ?? ''),\n    job_title: j.position ?? null,\n    job_description: j.description ?? null,\n    job_url: j.url ?? null,\n    company_name: j.company ?? null,\n    company_url: j.company_url ?? null,\n    seniority_level: null,\n    employment_type: null,\n    time_posted: j.date ?? null,\n    apply_url: j.apply_url ?? j.url ?? null,\n    job_poster_name: null,\n    job_poster_profile_url: null,\n    source: 'remoteok',\n    apply_type: 'external'\n  }});\n}\nreturn out;"
+      },
+      "id": "norm_remoteok",
+      "name": "Normalize RemoteOK",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [-624, 320]
+    },
+    {
+      "parameters": {
+        "tableId": "jobs",
+        "dataToSend": "autoMapInputData"
+      },
+      "id": "save_jobs",
+      "name": "Save Jobs (Supabase)",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [560, 32],
+      "credentials": {
+        "supabaseApi": {
+          "id": "UgJZt2YIwF9raxzT",
+          "name": "Supabase account"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "chatId": "1125208540",
+        "text": "=Free Job Discovery ✅\nNew saved: {{ $json.newCount }}\nAlready existed (skipped): {{ $json.skipped }}\nTotal found this run: {{ $json.total }} (Adzuna + Remotive + RemoteOK)",
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "id": "notify",
+      "name": "Notify (Telegram)",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [368, 224],
+      "webhookId": "e7f4a17a-483f-4762-a9b9-36fd58edeaa0",
+      "credentials": {
+        "telegramApi": {
+          "id": "zR5TTxftQEm2MYTo",
+          "name": "Job Automation Bot"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "numberInputs": 3
+      },
+      "id": "fd21c2fe-78d3-487b-b40c-859fdb87fe39",
+      "name": "Merge Sources",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [-432, 112]
+    },
+    {
+      "parameters": {
+        "jsCode": "const rows = $input.all().map(i => i.json);\nconst ids = rows.map(r => r.id).filter(Boolean);\nconst q = ids.map(id => '\"' + String(id).replace(/\"/g, '') + '\"').join(',');\nconst filter = ids.length ? ('id=in.(' + q + ')') : 'id=eq.__none__';\nreturn [{ json: { rows, filter, total: rows.length } }];"
+      },
+      "id": "da40bbb6-d1f7-4742-813f-60a0d5e601f5",
+      "name": "Collect",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [-240, 112]
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "tableId": "jobs",
+        "returnAll": true,
+        "filterType": "string",
+        "filterString": "={{ $json.filter }}"
+      },
+      "id": "0cf3fe67-b8c6-4206-b2b1-b14d3ac53f39",
+      "name": "Fetch Existing",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [-48, 112],
+      "alwaysOutputData": true,
+      "credentials": {
+        "supabaseApi": {
+          "id": "UgJZt2YIwF9raxzT",
+          "name": "Supabase account"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "jsCode": "const rows = $('Collect').first().json.rows || [];\nconst existing = $input.all().map(i => i.json).filter(x => x && x.id);\nconst existingIds = new Set(existing.map(x => x.id));\nconst newRows = rows.filter(r => !existingIds.has(r.id));\nconst total = rows.length;\nconst newCount = newRows.length;\nconst skipped = total - newCount;\nreturn [{ json: { total, newCount, skipped, newRows } }];"
+      },
+      "id": "e9a69193-944b-43a8-9b30-ee7a8624224a",
+      "name": "Plan",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [160, 112]
+    },
+    {
+      "parameters": {
+        "jsCode": "return (($input.first().json.newRows) || []).map(r => ({ json: r }));"
+      },
+      "id": "19f0bc85-19b2-4f3c-a5f2-e2ea410add0f",
+      "name": "Explode New",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [368, 32]
+    }
+  ],
+  "connections": {
+    "When clicking 'Test'": {
+      "main": [
+        [
+          {
+            "node": "Config",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Every day 9 AM": {
+      "main": [
+        [
+          {
+            "node": "Config",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Config": {
+      "main": [
+        [
+          {
+            "node": "Adzuna",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Remotive",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "RemoteOK",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Adzuna": {
+      "main": [
+        [
+          {
+            "node": "Normalize Adzuna",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Remotive": {
+      "main": [
+        [
+          {
+            "node": "Normalize Remotive",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "RemoteOK": {
+      "main": [
+        [
+          {
+            "node": "Normalize RemoteOK",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Normalize Adzuna": {
+      "main": [
+        [
+          {
+            "node": "Merge Sources",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Normalize Remotive": {
+      "main": [
+        [
+          {
+            "node": "Merge Sources",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Normalize RemoteOK": {
+      "main": [
+        [
+          {
+            "node": "Merge Sources",
+            "type": "main",
+            "index": 2
+          }
+        ]
+      ]
+    },
+    "Merge Sources": {
+      "main": [
+        [
+          {
+            "node": "Collect",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Collect": {
+      "main": [
+        [
+          {
+            "node": "Fetch Existing",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch Existing": {
+      "main": [
+        [
+          {
+            "node": "Plan",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Plan": {
+      "main": [
+        [
+          {
+            "node": "Explode New",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Notify (Telegram)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Explode New": {
+      "main": [
+        [
+          {
+            "node": "Save Jobs (Supabase)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "meta": {
+    "instanceId": "79a7aa25fa1a526575e9d16be2e37e3eb8dbd841332f42a9d7ebcef52a77cfbc"
+  }
+}
